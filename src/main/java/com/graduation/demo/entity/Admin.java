@@ -8,18 +8,18 @@ import java.io.Serializable;
 @ApiModel("管理员信息")
 public class Admin implements Serializable {
     @ApiModelProperty(name = "管理员ID", dataType = "String")
-    private String adminId;
+    private String aid;
     @ApiModelProperty(name = "管理员密码", dataType = "String")
     private String password;
     @ApiModelProperty(name = "管理员名字", dataType = "String")
     private String name;
 
-    public String getAdminId() {
-        return adminId;
+    public String getAid() {
+        return aid;
     }
 
-    public void setAdminId(String adminId) {
-        this.adminId = adminId;
+    public void setAid(String aid) {
+        this.aid = aid;
     }
 
     public String getPassword() {
