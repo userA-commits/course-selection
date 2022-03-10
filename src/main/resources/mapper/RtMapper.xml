@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.RtMapper">
+  <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Rt">
+    <result column="rid" jdbcType="VARCHAR" property="rid" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="section" jdbcType="VARCHAR" property="section" />
+  </resultMap>
+  <insert id="insert" parameterType="com.graduation.demo.entity.Rt">
+    insert into rt (rid, cid, section
+      )
+    values (#{rid,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR}, #{section,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduation.demo.entity.Rt">
+    insert into rt
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="section != null">
+        section,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="section != null">
+        #{section,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

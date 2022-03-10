@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Course">
+    <result column="courseID" jdbcType="INTEGER" property="courseid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="credit" jdbcType="REAL" property="credit" />
+    <result column="grade" jdbcType="INTEGER" property="grade" />
+    <result column="major" jdbcType="INTEGER" property="major" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.graduation.demo.entity.CourseWithBLOBs">
+    <result column="name" jdbcType="LONGVARCHAR" property="name" />
+    <result column="detail" jdbcType="LONGVARCHAR" property="detail" />
+  </resultMap>
+  <sql id="Blob_Column_List">
+    name, detail
+  </sql>
+  <insert id="insert" parameterType="com.graduation.demo.entity.CourseWithBLOBs">
+    insert into course (courseID, type, credit, 
+      grade, major, name, 
+      detail)
+    values (#{courseid,jdbcType=INTEGER}, #{type,jdbcType=INTEGER}, #{credit,jdbcType=REAL}, 
+      #{grade,jdbcType=INTEGER}, #{major,jdbcType=INTEGER}, #{name,jdbcType=LONGVARCHAR}, 
+      #{detail,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduation.demo.entity.CourseWithBLOBs">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="courseid != null">
+        courseID,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="credit != null">
+        credit,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="detail != null">
+        detail,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="courseid != null">
+        #{courseid,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=REAL},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=INTEGER},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="detail != null">
+        #{detail,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Course">
+    <id column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="cname" jdbcType="VARCHAR" property="cname" />
+    <result column="period" jdbcType="VARCHAR" property="period" />
+    <result column="credit" jdbcType="INTEGER" property="credit" />
+    <result column="major" jdbcType="VARCHAR" property="major" />
+    <result column="maximum" jdbcType="INTEGER" property="maximum" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    cid, cname, period, credit, major, maximum, desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where cid = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from course
+    where cid = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.graduation.demo.entity.Course">
+    insert into course (cid, cname, period, 
+      credit, major, maximum, 
+      desc)
+    values (#{cid,jdbcType=VARCHAR}, #{cname,jdbcType=VARCHAR}, #{period,jdbcType=VARCHAR}, 
+      #{credit,jdbcType=INTEGER}, #{major,jdbcType=VARCHAR}, #{maximum,jdbcType=INTEGER}, 
+      #{desc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduation.demo.entity.Course">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="cname != null">
+        cname,
+      </if>
+      <if test="period != null">
+        period,
+      </if>
+      <if test="credit != null">
+        credit,
+      </if>
+      <if test="major != null">
+        major,
+      </if>
+      <if test="maximum != null">
+        maximum,
+      </if>
+      <if test="desc != null">
+        desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="cname != null">
+        #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null">
+        #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="major != null">
+        #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="maximum != null">
+        #{maximum,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null">
+        #{desc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduation.demo.entity.Course">
+    update course
+    <set>
+      <if test="cname != null">
+        cname = #{cname,jdbcType=VARCHAR},
+      </if>
+      <if test="period != null">
+        period = #{period,jdbcType=VARCHAR},
+      </if>
+      <if test="credit != null">
+        credit = #{credit,jdbcType=INTEGER},
+      </if>
+      <if test="major != null">
+        major = #{major,jdbcType=VARCHAR},
+      </if>
+      <if test="maximum != null">
+        maximum = #{maximum,jdbcType=INTEGER},
+      </if>
+      <if test="desc != null">
+        desc = #{desc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduation.demo.entity.Course">
+    update course
+    set cname = #{cname,jdbcType=VARCHAR},
+      period = #{period,jdbcType=VARCHAR},
+      credit = #{credit,jdbcType=INTEGER},
+      major = #{major,jdbcType=VARCHAR},
+      maximum = #{maximum,jdbcType=INTEGER},
+      desc = #{desc,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=VARCHAR}
+  </update>
+</mapper>

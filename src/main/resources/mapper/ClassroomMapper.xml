@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ClassroomMapper">
+  <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Classroom">
+    <id column="rid" jdbcType="VARCHAR" property="rid" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="maximum" jdbcType="INTEGER" property="maximum" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    rid, type, maximum
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from classroom
+    where rid = #{rid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from classroom
+    where rid = #{rid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.graduation.demo.entity.Classroom">
+    insert into classroom (rid, type, maximum
+      )
+    values (#{rid,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{maximum,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduation.demo.entity.Classroom">
+    insert into classroom
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        rid,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="maximum != null">
+        maximum,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rid != null">
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="maximum != null">
+        #{maximum,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.graduation.demo.entity.Classroom">
+    update classroom
+    <set>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="maximum != null">
+        maximum = #{maximum,jdbcType=INTEGER},
+      </if>
+    </set>
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.graduation.demo.entity.Classroom">
+    update classroom
+    set type = #{type,jdbcType=INTEGER},
+      maximum = #{maximum,jdbcType=INTEGER}
+    where rid = #{rid,jdbcType=VARCHAR}
+  </update>
+</mapper>

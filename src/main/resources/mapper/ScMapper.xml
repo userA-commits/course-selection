@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.mapper.ScMapper">
+  <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Sc">
+    <result column="sid" jdbcType="VARCHAR" property="sid" />
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+  </resultMap>
+  <insert id="insert" parameterType="com.graduation.demo.entity.Sc">
+    insert into sc (sid, cid, score
+      )
+    values (#{sid,jdbcType=VARCHAR}, #{cid,jdbcType=VARCHAR}, #{score,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.graduation.demo.entity.Sc">
+    insert into sc
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=VARCHAR},
+      </if>
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
