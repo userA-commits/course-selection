@@ -1,8 +1,5 @@
 package com.graduation.demo.entity;
 
-import io.swagger.annotations.ApiModel;
-
-@ApiModel("教室信息")
 public class Classroom {
     private String rid;
 

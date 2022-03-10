@@ -1,7 +1,7 @@
 package com.graduation.demo.entity;
 
 public class Course {
-    private Integer cid;
+    private String cid;
 
     private Integer type;
 
@@ -11,11 +11,11 @@ public class Course {
 
     private Integer major;
 
-    public Integer getCid() {
+    public String getCid() {
         return cid;
     }
 
-    public void setCid(Integer cid) {
+    public void setCid(String cid) {
         this.cid = cid;
     }
 

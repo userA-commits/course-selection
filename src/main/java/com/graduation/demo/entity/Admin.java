@@ -1,17 +1,10 @@
 package com.graduation.demo.entity;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
-import java.io.Serializable;
-
-@ApiModel("管理员信息")
-public class Admin implements Serializable {
-    @ApiModelProperty(name = "管理员ID", dataType = "String")
+public class Admin {
     private String aid;
-    @ApiModelProperty(name = "管理员密码", dataType = "String")
+
     private String password;
-    @ApiModelProperty(name = "管理员名字", dataType = "String")
+
     private String name;
 
     public String getAid() {
@@ -19,7 +12,7 @@ public class Admin implements Serializable {
     }
 
     public void setAid(String aid) {
-        this.aid = aid;
+        this.aid = aid == null ? null : aid.trim();
     }
 
     public String getPassword() {
@@ -27,7 +20,7 @@ public class Admin implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
     }
 
     public String getName() {
@@ -35,6 +28,6 @@ public class Admin implements Serializable {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name == null ? null : name.trim();
     }
 }
