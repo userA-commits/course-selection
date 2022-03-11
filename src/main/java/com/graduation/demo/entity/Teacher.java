@@ -2,6 +2,9 @@ package com.graduation.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -12,17 +15,19 @@ import java.io.Serializable;
  * @author 王奥
  * @since 2022-03-11
  */
+@ApiModel("教师实体")
 public class Teacher implements Serializable {
 
 private static final long serialVersionUID=1L;
 
     @TableId(value = "tid", type = IdType.AUTO)
+    @ApiModelProperty(name = "教师ID", dataType = "String")
     private String tid;
-
+    @ApiModelProperty(name = "教师名", dataType = "String")
     private String tname;
-
+    @ApiModelProperty(name = "性别", dataType = "String")
     private Integer sex;
-
+    @ApiModelProperty(name = "职称", dataType = "String")
     private String title;
 
 

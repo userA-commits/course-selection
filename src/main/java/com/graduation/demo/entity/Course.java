@@ -2,6 +2,9 @@ package com.graduation.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -12,23 +15,25 @@ import java.io.Serializable;
  * @author 王奥
  * @since 2022-03-11
  */
+@ApiModel("课程实体")
 public class Course implements Serializable {
 
 private static final long serialVersionUID=1L;
 
     @TableId(value = "cid", type = IdType.AUTO)
+    @ApiModelProperty(name = "课程ID", dataType = "String")
     private String cid;
-
+    @ApiModelProperty(name = "课程名", dataType = "String")
     private String cname;
-
+    @ApiModelProperty(name = "持续时间", dataType = "String")
     private String period;
-
+    @ApiModelProperty(name = "学分", dataType = "Float")
     private Float credit;
-
+    @ApiModelProperty(name = "专业", dataType = "String")
     private String major;
-
+    @ApiModelProperty(name = "课程最大人数", dataType = "String")
     private Integer maximum;
-
+    @ApiModelProperty(name = "备注", dataType = "String", allowEmptyValue = true)
     private String desc;
 
 

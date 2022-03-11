@@ -2,6 +2,9 @@ package com.graduation.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -12,21 +15,23 @@ import java.io.Serializable;
  * @author 王奥
  * @since 2022-03-11
  */
+@ApiModel("学生实体")
 public class Student implements Serializable {
 
 private static final long serialVersionUID=1L;
 
     @TableId(value = "sid", type = IdType.AUTO)
+    @ApiModelProperty(name = "学生ID", dataType = "String")
     private String sid;
-
+    @ApiModelProperty(name = "学生名", dataType = "String")
     private String sname;
-
+    @ApiModelProperty(name = "密码", dataType = "String")
     private String password;
-
+    @ApiModelProperty(name = "性别", dataType = "String")
     private Integer sex;
-
+    @ApiModelProperty(name = "年级", dataType = "String")
     private String grade;
-
+    @ApiModelProperty(name = "专业", dataType = "String")
     private String major;
 
 
