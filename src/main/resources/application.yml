@@ -6,6 +6,8 @@ spring:
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-mybatis:
+mybatis-plus:
   mapper-locations: mapper/*.xml
   type-aliases-package: com.graduation.demo.entity
+  configuration:
+    map-underscore-to-camel-case: true

@@ -1,15 +1,36 @@
 package com.graduation.demo.entity;
 
-public class Course {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public class Course implements Serializable {
+
+private static final long serialVersionUID=1L;
+
+    @TableId(value = "cid", type = IdType.AUTO)
     private String cid;
 
-    private Integer type;
+    private String cname;
+
+    private String period;
 
     private Float credit;
 
-    private Integer grade;
+    private String major;
 
-    private Integer major;
+    private Integer maximum;
+
+    private String desc;
+
 
     public String getCid() {
         return cid;
@@ -19,12 +40,20 @@ public class Course {
         this.cid = cid;
     }
 
-    public Integer getType() {
-        return type;
+    public String getCname() {
+        return cname;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setCname(String cname) {
+        this.cname = cname;
+    }
+
+    public String getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(String period) {
+        this.period = period;
     }
 
     public Float getCredit() {
@@ -35,19 +64,40 @@ public class Course {
         this.credit = credit;
     }
 
-    public Integer getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Integer grade) {
-        this.grade = grade;
-    }
-
-    public Integer getMajor() {
+    public String getMajor() {
         return major;
     }
 
-    public void setMajor(Integer major) {
+    public void setMajor(String major) {
         this.major = major;
+    }
+
+    public Integer getMaximum() {
+        return maximum;
+    }
+
+    public void setMaximum(Integer maximum) {
+        this.maximum = maximum;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+        "cid=" + cid +
+        ", cname=" + cname +
+        ", period=" + period +
+        ", credit=" + credit +
+        ", major=" + major +
+        ", maximum=" + maximum +
+        ", desc=" + desc +
+        "}";
     }
 }

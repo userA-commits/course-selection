@@ -1,18 +1,35 @@
 package com.graduation.demo.entity;
 
-public class Classroom {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public class Classroom implements Serializable {
+
+private static final long serialVersionUID=1L;
+
+    @TableId(value = "rid", type = IdType.AUTO)
     private String rid;
 
     private Integer type;
 
     private Integer maximum;
 
+
     public String getRid() {
         return rid;
     }
 
     public void setRid(String rid) {
-        this.rid = rid == null ? null : rid.trim();
+        this.rid = rid;
     }
 
     public Integer getType() {
@@ -29,5 +46,14 @@ public class Classroom {
 
     public void setMaximum(Integer maximum) {
         this.maximum = maximum;
+    }
+
+    @Override
+    public String toString() {
+        return "Classroom{" +
+        "rid=" + rid +
+        ", type=" + type +
+        ", maximum=" + maximum +
+        "}";
     }
 }

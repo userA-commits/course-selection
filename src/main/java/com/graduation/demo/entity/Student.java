@@ -1,6 +1,22 @@
 package com.graduation.demo.entity;
 
-public class Student {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public class Student implements Serializable {
+
+private static final long serialVersionUID=1L;
+
+    @TableId(value = "sid", type = IdType.AUTO)
     private String sid;
 
     private String sname;
@@ -13,12 +29,13 @@ public class Student {
 
     private String major;
 
+
     public String getSid() {
         return sid;
     }
 
     public void setSid(String sid) {
-        this.sid = sid == null ? null : sid.trim();
+        this.sid = sid;
     }
 
     public String getSname() {
@@ -26,7 +43,7 @@ public class Student {
     }
 
     public void setSname(String sname) {
-        this.sname = sname == null ? null : sname.trim();
+        this.sname = sname;
     }
 
     public String getPassword() {
@@ -34,7 +51,7 @@ public class Student {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
     }
 
     public Integer getSex() {
@@ -50,7 +67,7 @@ public class Student {
     }
 
     public void setGrade(String grade) {
-        this.grade = grade == null ? null : grade.trim();
+        this.grade = grade;
     }
 
     public String getMajor() {
@@ -58,6 +75,18 @@ public class Student {
     }
 
     public void setMajor(String major) {
-        this.major = major == null ? null : major.trim();
+        this.major = major;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+        "sid=" + sid +
+        ", sname=" + sname +
+        ", password=" + password +
+        ", sex=" + sex +
+        ", grade=" + grade +
+        ", major=" + major +
+        "}";
     }
 }

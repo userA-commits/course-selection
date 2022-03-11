@@ -1,31 +1,16 @@
 package com.graduation.demo.mapper;
 
 import com.graduation.demo.entity.Classroom;
-import com.graduation.demo.entity.ClassroomExample;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import java.util.List;
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public interface ClassroomMapper extends BaseMapper<Classroom> {
 
-public interface ClassroomMapper {
-    long countByExample(ClassroomExample example);
-
-    int deleteByExample(ClassroomExample example);
-
-    int deleteByPrimaryKey(String rid);
-
-    int insert(Classroom record);
-
-    int insertSelective(Classroom record);
-
-    List<Classroom> selectByExample(ClassroomExample example);
-
-    Classroom selectByPrimaryKey(String rid);
-
-    int updateByExampleSelective(@Param("record") Classroom record, @Param("example") ClassroomExample example);
-
-    int updateByExample(@Param("record") Classroom record, @Param("example") ClassroomExample example);
-
-    int updateByPrimaryKeySelective(Classroom record);
-
-    int updateByPrimaryKey(Classroom record);
 }

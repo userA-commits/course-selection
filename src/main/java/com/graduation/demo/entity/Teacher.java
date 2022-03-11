@@ -1,6 +1,22 @@
 package com.graduation.demo.entity;
 
-public class Teacher {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public class Teacher implements Serializable {
+
+private static final long serialVersionUID=1L;
+
+    @TableId(value = "tid", type = IdType.AUTO)
     private String tid;
 
     private String tname;
@@ -9,12 +25,13 @@ public class Teacher {
 
     private String title;
 
+
     public String getTid() {
         return tid;
     }
 
     public void setTid(String tid) {
-        this.tid = tid == null ? null : tid.trim();
+        this.tid = tid;
     }
 
     public String getTname() {
@@ -22,7 +39,7 @@ public class Teacher {
     }
 
     public void setTname(String tname) {
-        this.tname = tname == null ? null : tname.trim();
+        this.tname = tname;
     }
 
     public Integer getSex() {
@@ -38,6 +55,16 @@ public class Teacher {
     }
 
     public void setTitle(String title) {
-        this.title = title == null ? null : title.trim();
+        this.title = title;
+    }
+
+    @Override
+    public String toString() {
+        return "Teacher{" +
+        "tid=" + tid +
+        ", tname=" + tname +
+        ", sex=" + sex +
+        ", title=" + title +
+        "}";
     }
 }

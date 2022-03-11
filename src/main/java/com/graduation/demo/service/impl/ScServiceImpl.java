@@ -1,8 +1,8 @@
 package com.graduation.demo.service.impl;
 
-import com.graduation.demo.entity.Admin;
-import com.graduation.demo.mapper.AdminMapper;
-import com.graduation.demo.service.AdminService;
+import com.graduation.demo.entity.Sc;
+import com.graduation.demo.mapper.ScMapper;
+import com.graduation.demo.service.ScService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +15,6 @@ import org.springframework.stereotype.Service;
  * @since 2022-03-11
  */
 @Service
-public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
+public class ScServiceImpl extends ServiceImpl<ScMapper, Sc> implements ScService {
 
 }

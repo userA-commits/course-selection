@@ -1,23 +1,16 @@
 package com.graduation.demo.mapper;
 
 import com.graduation.demo.entity.Sc;
-import com.graduation.demo.entity.ScExample;
-import org.apache.ibatis.annotations.Param;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
-import java.util.List;
+/**
+ * <p>
+ *  Mapper 接口
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public interface ScMapper extends BaseMapper<Sc> {
 
-public interface ScMapper {
-    long countByExample(ScExample example);
-
-    int deleteByExample(ScExample example);
-
-    int insert(Sc record);
-
-    int insertSelective(Sc record);
-
-    List<Sc> selectByExample(ScExample example);
-
-    int updateByExampleSelective(@Param("record") Sc record, @Param("example") ScExample example);
-
-    int updateByExample(@Param("record") Sc record, @Param("example") ScExample example);
 }

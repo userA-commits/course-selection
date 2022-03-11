@@ -1,18 +1,35 @@
 package com.graduation.demo.entity;
 
-public class Admin {
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
+import java.io.Serializable;
+
+/**
+ * <p>
+ * 
+ * </p>
+ *
+ * @author 王奥
+ * @since 2022-03-11
+ */
+public class Admin implements Serializable {
+
+private static final long serialVersionUID=1L;
+
+    @TableId(value = "aid", type = IdType.AUTO)
     private String aid;
 
     private String password;
 
     private String name;
 
+
     public String getAid() {
         return aid;
     }
 
     public void setAid(String aid) {
-        this.aid = aid == null ? null : aid.trim();
+        this.aid = aid;
     }
 
     public String getPassword() {
@@ -20,7 +37,7 @@ public class Admin {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+        this.password = password;
     }
 
     public String getName() {
@@ -28,6 +45,15 @@ public class Admin {
     }
 
     public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+        "aid=" + aid +
+        ", password=" + password +
+        ", name=" + name +
+        "}";
     }
 }
