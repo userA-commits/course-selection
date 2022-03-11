@@ -4,14 +4,14 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Admin">
-        <id column="aId" property="aId" />
+        <id column="aid" property="aid" />
         <result column="password" property="password" />
         <result column="name" property="name" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        aId, password, name
+        aid, password, name
     </sql>
 
 </mapper>
