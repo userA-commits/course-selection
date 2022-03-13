@@ -5,9 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
- * <p>
- * 
- * </p>
+ * 教室排课表
  *
  * @author 王奥
  * @since 2022-03-11
