@@ -1,9 +1,11 @@
 package com.graduation.demo.shiro;
 
 import com.graduation.demo.entity.Admin;
+import com.graduation.demo.entity.Menu;
 import com.graduation.demo.entity.Role;
 import com.graduation.demo.service.AdminService;
 import com.graduation.demo.service.MenuService;
+import com.graduation.demo.service.RoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -21,7 +23,7 @@ public class CustomRealm  extends AuthorizingRealm {
     @Autowired
     private AdminService adminService;
     @Autowired
-    private MenuService menuService;
+    private RoleService roleService;
 
     /**
      * @MethodName doGetAuthorizationInfo
@@ -32,17 +34,17 @@ public class CustomRealm  extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //获取登录用户名
-        String name = (String) principalCollection.getPrimaryPrincipal();
-        //查询用户名称
-        Admin admin = adminService.getById("");
+        //获取登录管理员账号
+        String aid = (String) principalCollection.getPrimaryPrincipal();
+        //获取管理员对象
+        Admin admin = adminService.getById(aid);
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
         //添加角色
-        simpleAuthorizationInfo.addRole("超级管理员");
+        simpleAuthorizationInfo.addRole("管理员");
         //添加权限
-        for (Permissions permissions : role.getPermissions()) {
-            simpleAuthorizationInfo.addStringPermission(permissions.getPermissionsName());
+        for (Menu menu : roleService.getPerms(1)) {
+            simpleAuthorizationInfo.addStringPermission(menu.getPerms());
         }
         return simpleAuthorizationInfo;
     }
@@ -60,14 +62,14 @@ public class CustomRealm  extends AuthorizingRealm {
             return null;
         }
         //获取用户信息
-        String name = authenticationToken.getPrincipal().toString();
-        Admin admin = adminService.getById("");
+        String aid = authenticationToken.getPrincipal().toString();
+        Admin admin = adminService.getById(aid);
         if (admin == null) {
             //这里返回后会报出对应异常
             return null;
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
-            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(name, admin.getPassword().toString(), getName());
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(aid, admin.getPassword().toString(), getName());
             return simpleAuthenticationInfo;
         }
     }
