@@ -35,7 +35,7 @@ public class StudentController {
         studentService.save(student);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/edit")
     public void edit(Student student){
         studentService.updateById(student);
     }

@@ -8,6 +8,7 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,10 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class LoginController {
+    private Logger logger;
     @Autowired
     AdminService adminService;
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public String login(Admin admin){
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();

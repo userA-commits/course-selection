@@ -33,7 +33,7 @@ public class ClassroomController {
         classroomService.save(classroom);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/edit")
     public void edit(Classroom classroom){
         classroomService.updateById(classroom);
     }

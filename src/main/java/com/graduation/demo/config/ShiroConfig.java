@@ -52,6 +52,12 @@ public class ShiroConfig {
         map.put("/**", "authc");
         //登录
         shiroFilterFactoryBean.setLoginUrl("/login");
+        //对swagger开放权限
+        map.put("/swagger_ui.html", "anon");
+        map.put("/webjars/**", "anon");
+        map.put("/v2/**", "anon");
+        map.put("/swagger-resources/**", "anon");
+        map.put("/doc.html/**", "anon");
         //首页
         shiroFilterFactoryBean.setSuccessUrl("/index");
         //错误页面，认证不通过跳转

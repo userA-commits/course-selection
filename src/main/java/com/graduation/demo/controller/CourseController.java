@@ -35,7 +35,7 @@ public class CourseController {
         courseService.save(course);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/edit")
     public void edit(Course course){
         courseService.updateById(course);
     }

@@ -35,7 +35,7 @@ public class AdminController {
         adminService.save(admin);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/edit")
     public void edit(Admin admin){
         adminService.updateById(admin);
     }
