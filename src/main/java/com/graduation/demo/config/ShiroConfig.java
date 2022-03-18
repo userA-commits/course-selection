@@ -1,8 +1,14 @@
 package com.graduation.demo.config;
 
-import com.graduation.demo.shiro.CustomRealm;
+import com.graduation.demo.shiro.AdminRealm;
+import com.graduation.demo.shiro.StudentRealm;
+import com.graduation.demo.shiro.TeacherRealm;
+import com.graduation.demo.shiro.UserModularRealmAuthenticator;
+import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
+import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
 import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
@@ -11,7 +17,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Configuration
@@ -25,19 +33,41 @@ public class ShiroConfig {
         return defaultAAP;
     }
 
-    //将自己的验证方式加入容器
     @Bean
-    public CustomRealm myShiroRealm() {
-        CustomRealm customRealm = new CustomRealm();
-        return customRealm;
+    public AdminRealm adminRealm(){
+        return new AdminRealm();
     }
 
-    //权限管理，配置主要是Realm的管理认证
+    @Bean
+    public TeacherRealm teacherRealm(){
+        return new TeacherRealm();
+    }
+
+    @Bean
+    public StudentRealm studentRealm(){
+        return new StudentRealm();
+    }
+
+    //权限管理，主要功能是链接Realm和用户
     @Bean
     public DefaultSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        securityManager.setRealm(myShiroRealm());
+        //添加多个Realm
+        List<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm());
+        realms.add(teacherRealm());
+        realms.add(studentRealm());
+        //放入容器
+        securityManager.setRealms(realms);
         return securityManager;
+    }
+
+    //注入自己重写的ModularRealmAuthenticator
+    @Bean
+    public ModularRealmAuthenticator modularRealmAuthenticator(){
+        UserModularRealmAuthenticator modularRealmAuthenticator = new UserModularRealmAuthenticator();
+        modularRealmAuthenticator.setAuthenticationStrategy(new AtLeastOneSuccessfulStrategy());
+        return modularRealmAuthenticator;
     }
 
     //Filter工厂，设置对应的过滤条件和跳转条件
@@ -51,7 +81,7 @@ public class ShiroConfig {
         //对所有用户认证
         map.put("/**", "authc");
         //登录
-        shiroFilterFactoryBean.setLoginUrl("/login");
+        shiroFilterFactoryBean.setLoginUrl("/login/**");
         //对swagger开放权限
         map.put("/swagger_ui.html", "anon");
         map.put("/webjars/**", "anon");

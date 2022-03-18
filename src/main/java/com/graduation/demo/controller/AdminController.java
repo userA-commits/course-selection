@@ -3,6 +3,7 @@ package com.graduation.demo.controller;
 
 import com.graduation.demo.entity.Admin;
 import com.graduation.demo.service.AdminService;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +29,15 @@ public class AdminController {
     @RequestMapping("/index")
     public String index(){
         return "index";
+    }
+
+    @PostMapping("/selectAll")
+    @RequiresPermissions("admin:list")
+    public void selectAll(){
+        List<Admin> admins = adminService.list();
+        for(Admin admin : admins){
+            System.out.println(admin);
+        }
     }
 
     @PostMapping("/add")

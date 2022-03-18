@@ -18,36 +18,13 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
-public class CustomRealm  extends AuthorizingRealm {
+public class AdminRealm extends AuthorizingRealm {
 
     @Autowired
     private AdminService adminService;
     @Autowired
     private RoleService roleService;
 
-    /**
-     * @MethodName doGetAuthorizationInfo
-     * @Description 权限配置类
-     * @Param [principalCollection]
-     * @Return AuthorizationInfo
-     * @Author WangShiLin
-     */
-    @Override
-    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        //获取登录管理员账号
-        String aid = (String) principalCollection.getPrimaryPrincipal();
-        //获取管理员对象
-        Admin admin = adminService.getById(aid);
-
-        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        //添加角色
-        simpleAuthorizationInfo.addRole("管理员");
-        //添加权限
-        for (Menu menu : roleService.getPerms(1)) {
-            simpleAuthorizationInfo.addStringPermission(menu.getPerms());
-        }
-        return simpleAuthorizationInfo;
-    }
 
     /**
      * @MethodName doGetAuthenticationInfo
@@ -61,7 +38,7 @@ public class CustomRealm  extends AuthorizingRealm {
         if (StringUtils.isEmpty((CharSequence) authenticationToken.getPrincipal())) {
             return null;
         }
-        //获取用户信息
+        //获取管理员信息
         String aid = authenticationToken.getPrincipal().toString();
         Admin admin = adminService.getById(aid);
         if (admin == null) {
@@ -69,8 +46,31 @@ public class CustomRealm  extends AuthorizingRealm {
             return null;
         } else {
             //这里验证authenticationToken和simpleAuthenticationInfo的信息
-            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(aid, admin.getPassword().toString(), getName());
+            SimpleAuthenticationInfo simpleAuthenticationInfo = new SimpleAuthenticationInfo(
+                    aid,
+                    admin.getPassword().toString(),
+                    getName()
+            );
             return simpleAuthenticationInfo;
         }
+    }
+
+    /**
+     * @MethodName doGetAuthorizationInfo
+     * @Description 权限配置类
+     * @Param [principalCollection]
+     * @Return AuthorizationInfo
+     * @Author WangShiLin
+     */
+    @Override
+    protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+        SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
+        //添加角色
+        simpleAuthorizationInfo.addRole("Admin");
+        //添加权限
+        for (Menu menu : roleService.getPerms(1)) {
+            simpleAuthorizationInfo.addStringPermission(menu.getPerms());
+        }
+        return simpleAuthorizationInfo;
     }
 }

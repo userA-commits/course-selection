@@ -12,10 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- *  教师管理前端控制器
+ * <p>
+ *  前端控制器
+ * </p>
  *
  * @author 王奥
- * @since 2022-03-11
+ * @since 2022-03-19
  */
 @RestController
 @RequestMapping("/teacher")
@@ -42,6 +44,5 @@ public class TeacherController {
     public void remove(List<String> ids){
         teacherService.removeByIds(ids);
     }
-
 }
 

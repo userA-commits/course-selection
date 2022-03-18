@@ -2,9 +2,6 @@ package com.graduation.demo.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 
 /**
@@ -13,22 +10,22 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-03-11
+ * @since 2022-03-19
  */
-@ApiModel("教师实体")
 public class Teacher implements Serializable {
 
 private static final long serialVersionUID=1L;
 
     @TableId(value = "tid", type = IdType.AUTO)
-    @ApiModelProperty(name = "教师ID", dataType = "String")
     private String tid;
-    @ApiModelProperty(name = "教师名", dataType = "String")
+
     private String tname;
-    @ApiModelProperty(name = "性别", dataType = "String")
+
     private Integer sex;
-    @ApiModelProperty(name = "职称", dataType = "String")
+
     private String title;
+
+    private String password;
 
 
     public String getTid() {
@@ -63,6 +60,14 @@ private static final long serialVersionUID=1L;
         this.title = title;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     @Override
     public String toString() {
         return "Teacher{" +
@@ -70,6 +75,7 @@ private static final long serialVersionUID=1L;
         ", tname=" + tname +
         ", sex=" + sex +
         ", title=" + title +
+        ", password=" + password +
         "}";
     }
 }
