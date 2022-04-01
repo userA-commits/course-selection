@@ -3,6 +3,7 @@ package com.graduation.demo.controller;
 
 import com.graduation.demo.entity.Teacher;
 import com.graduation.demo.service.TeacherService;
+import com.graduation.demo.utils.DataResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,24 +26,34 @@ public class TeacherController {
     @Autowired
     TeacherService teacherService;
 
-    @RequestMapping("/index")
+    @PostMapping("/index")
     public String index(){
-        return "index";
+        return "underinstruction";
+    }
+
+    @PostMapping("/query")
+    public DataResult query(){
+        List<Teacher> teachers = teacherService.list();
+        DataResult<List<Teacher>> result = new DataResult<>(teachers);
+        return result;
     }
 
     @PostMapping("/add")
-    public void add(Teacher teacher){
+    public DataResult add(Teacher teacher){
         teacherService.save(teacher);
+        return DataResult.success();
     }
 
     @PostMapping("/edit")
-    public void edit(Teacher teacher){
+    public DataResult edit(Teacher teacher){
         teacherService.updateById(teacher);
+        return DataResult.success();
     }
 
     @PostMapping("/remove")
-    public void remove(List<String> ids){
+    public DataResult remove(List<String> ids){
         teacherService.removeByIds(ids);
+        return DataResult.success();
     }
 }
 

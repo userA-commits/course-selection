@@ -3,6 +3,7 @@ package com.graduation.demo.controller;
 
 import com.graduation.demo.entity.Admin;
 import com.graduation.demo.service.AdminService;
+import com.graduation.demo.utils.DataResult;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,33 +27,34 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @RequestMapping("/index")
+    @PostMapping("/index")
     public String index(){
-        return "index";
+        return "underinstruction";
     }
 
-    @PostMapping("/selectAll")
-    @RequiresPermissions("admin:list")
-    public void selectAll(){
+    @PostMapping("/query")
+    public DataResult query(){
         List<Admin> admins = adminService.list();
-        for(Admin admin : admins){
-            System.out.println(admin);
-        }
+        DataResult<List<Admin>> result = new DataResult<>(admins);
+        return result;
     }
 
     @PostMapping("/add")
-    public void add(Admin admin){
+    public DataResult add(Admin admin){
         adminService.save(admin);
+        return DataResult.success();
     }
 
     @PostMapping("/edit")
-    public void edit(Admin admin){
+    public DataResult edit(Admin admin){
         adminService.updateById(admin);
+        return DataResult.success();
     }
 
     @PostMapping("/remove")
-    public void remove(List<String> ids){
+    public DataResult remove(List<String> ids){
         adminService.removeByIds(ids);
+        return DataResult.success();
     }
 }
 
