@@ -10,10 +10,31 @@
         <result column="title" property="title" />
         <result column="password" property="password" />
     </resultMap>
-
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
         tid, tname, sex, title, password
     </sql>
-
+    <!-- 一对多联查教师与课程 -->
+    <resultMap id="TeacherWithCourseList" type="com.graduation.demo.po.TeacherWithCourse">
+        <id column="tid" property="tid"/>
+        <result column="tname" property="tname" />
+        <result column="sex" property="sex" />
+        <result column="title" property="title" />
+        <result column="password" property="password" />
+        <collection property="courses" ofType="com.graduation.demo.entity.Course">
+            <id column="cid" property="cid" />
+            <result column="cname" property="cname" />
+            <result column="period" property="period" />
+            <result column="credit" property="credit" />
+            <result column="major" property="major" />
+            <result column="maximum" property="maximum" />
+            <result column="desc" property="desc" />
+            <result column="tid" property="tid" />
+        </collection>
+    </resultMap>
+    <!-- 一对多联查列 -->
+    <select id="getTeacherWithCourse" parameterType="String" resultMap="TeacherWithCourseList">
+        select * from teacher t, course c
+        where t.tid = #{tid} and c.tid = #{tid}
+    </select>
 </mapper>
