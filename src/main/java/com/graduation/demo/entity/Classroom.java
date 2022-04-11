@@ -1,10 +1,8 @@
 package com.graduation.demo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 
 /**
@@ -13,28 +11,67 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-03-11
+ * @since 2022-04-11
  */
-@ApiModel("教室实体")
+@TableName("xk_classroom")
 public class Classroom implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    @TableId(value = "rid", type = IdType.AUTO)
-    @ApiModelProperty(name = "教室ID", dataType = "String")
-    private String rid;
-    @ApiModelProperty(name = "教室类型", dataType = "Int")
+    /**
+     * 主键id
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private String id;
+
+    /**
+     * 教室编号
+     */
+    private String classroomNo;
+
+    /**
+     * 教室名称
+     */
+    private String name;
+
+    /**
+     * 教室类别
+     */
     private Integer type;
-    @ApiModelProperty(name = "最大容纳人数", dataType = "Int")
-    private Integer maximum;
+
+    /**
+     * 所在教学楼
+     */
+    private String build;
+
+    /**
+     * 描述
+     */
+    private String desc;
 
 
-    public String getRid() {
-        return rid;
+    public String getId() {
+        return id;
     }
 
-    public void setRid(String rid) {
-        this.rid = rid;
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getClassroomNo() {
+        return classroomNo;
+    }
+
+    public void setClassroomNo(String classroomNo) {
+        this.classroomNo = classroomNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Integer getType() {
@@ -45,20 +82,31 @@ private static final long serialVersionUID=1L;
         this.type = type;
     }
 
-    public Integer getMaximum() {
-        return maximum;
+    public String getBuild() {
+        return build;
     }
 
-    public void setMaximum(Integer maximum) {
-        this.maximum = maximum;
+    public void setBuild(String build) {
+        this.build = build;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     @Override
     public String toString() {
         return "Classroom{" +
-        "rid=" + rid +
+        "id=" + id +
+        ", classroomNo=" + classroomNo +
+        ", name=" + name +
         ", type=" + type +
-        ", maximum=" + maximum +
+        ", build=" + build +
+        ", desc=" + desc +
         "}";
     }
 }

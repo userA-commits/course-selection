@@ -4,36 +4,40 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
-import java.util.Objects;
 
 /**
  * <p>
- * 菜单权限表
+ * 
  * </p>
  *
  * @author 王奥
- * @since 2022-03-14
+ * @since 2022-04-11
  */
-@TableName("sys_menu")
+@TableName("xk_menu")
 public class Menu implements Serializable {
 
 private static final long serialVersionUID=1L;
 
     /**
-     * 菜单ID
+     * 主键id
      */
-    @TableId(value = "menu_id", type = IdType.AUTO)
-    private Long menuId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private String id;
+
+    /**
+     * 菜单编号
+     */
+    private Long menuNo;
 
     /**
      * 菜单名称
      */
-    private String menuName;
+    private String name;
 
     /**
-     * 父菜单ID
+     * 父菜单编号
      */
-    private Long parentId;
+    private Long parentNo;
 
     /**
      * 路由地址
@@ -46,12 +50,12 @@ private static final long serialVersionUID=1L;
     private String component;
 
     /**
-     * 菜单类型（M目录 C菜单 F按钮）
+     * 菜单类型
      */
-    private String menuType;
+    private String type;
 
     /**
-     * 权限标识
+     * 权柄
      */
     private String perms;
 
@@ -61,28 +65,36 @@ private static final long serialVersionUID=1L;
     private String remark;
 
 
-    public Long getMenuId() {
-        return menuId;
+    public String getId() {
+        return id;
     }
 
-    public void setMenuId(Long menuId) {
-        this.menuId = menuId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getMenuName() {
-        return menuName;
+    public Long getMenuNo() {
+        return menuNo;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setMenuNo(Long menuNo) {
+        this.menuNo = menuNo;
     }
 
-    public Long getParentId() {
-        return parentId;
+    public String getName() {
+        return name;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getParentNo() {
+        return parentNo;
+    }
+
+    public void setParentNo(Long parentNo) {
+        this.parentNo = parentNo;
     }
 
     public String getPath() {
@@ -101,12 +113,12 @@ private static final long serialVersionUID=1L;
         this.component = component;
     }
 
-    public String getMenuType() {
-        return menuType;
+    public String getType() {
+        return type;
     }
 
-    public void setMenuType(String menuType) {
-        this.menuType = menuType;
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getPerms() {
@@ -128,27 +140,15 @@ private static final long serialVersionUID=1L;
     @Override
     public String toString() {
         return "Menu{" +
-        "menuId=" + menuId +
-        ", menuName=" + menuName +
-        ", parentId=" + parentId +
+        "id=" + id +
+        ", menuNo=" + menuNo +
+        ", name=" + name +
+        ", parentNo=" + parentNo +
         ", path=" + path +
         ", component=" + component +
-        ", menuType=" + menuType +
+        ", type=" + type +
         ", perms=" + perms +
         ", remark=" + remark +
         "}";
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Menu)) return false;
-        Menu menu = (Menu) o;
-        return menuId.equals(menu.menuId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(menuId);
     }
 }

@@ -6,36 +6,38 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 
 /**
- * 角色信息表
+ * <p>
+ * 
+ * </p>
  *
  * @author 王奥
- * @since 2022-03-14
+ * @since 2022-04-11
  */
-@TableName("sys_role")
+@TableName("xk_role")
 public class Role implements Serializable {
 
 private static final long serialVersionUID=1L;
 
     /**
-     * 角色ID
+     * 主键id
      */
-    @TableId(value = "role_id", type = IdType.AUTO)
-    private Long roleId;
+    @TableId(value = "id", type = IdType.AUTO)
+    private String id;
+
+    /**
+     * 角色编号
+     */
+    private Long roleNo;
 
     /**
      * 角色名称
      */
-    private String roleName;
+    private String name;
 
     /**
-     * 角色权限字符串
+     * 角色键
      */
     private String roleKey;
-
-    /**
-     * 显示顺序
-     */
-    private Integer roleSort;
 
     /**
      * 备注
@@ -43,20 +45,28 @@ private static final long serialVersionUID=1L;
     private String remark;
 
 
-    public Long getRoleId() {
-        return roleId;
+    public String getId() {
+        return id;
     }
 
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public Long getRoleNo() {
+        return roleNo;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setRoleNo(Long roleNo) {
+        this.roleNo = roleNo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getRoleKey() {
@@ -65,14 +75,6 @@ private static final long serialVersionUID=1L;
 
     public void setRoleKey(String roleKey) {
         this.roleKey = roleKey;
-    }
-
-    public Integer getRoleSort() {
-        return roleSort;
-    }
-
-    public void setRoleSort(Integer roleSort) {
-        this.roleSort = roleSort;
     }
 
     public String getRemark() {
@@ -86,10 +88,10 @@ private static final long serialVersionUID=1L;
     @Override
     public String toString() {
         return "Role{" +
-        "roleId=" + roleId +
-        ", roleName=" + roleName +
+        "id=" + id +
+        ", roleNo=" + roleNo +
+        ", name=" + name +
         ", roleKey=" + roleKey +
-        ", roleSort=" + roleSort +
         ", remark=" + remark +
         "}";
     }

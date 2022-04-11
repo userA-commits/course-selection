@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.graduation.demo.mapper.SelectCourseMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.SelectCourse">
+        <id column="id" property="id" />
+        <result column="select_course_no" property="selectCourseNo" />
+        <result column="teach_course_no" property="teachCourseNo" />
+        <result column="student_no" property="studentNo" />
+        <result column="remark" property="remark" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, select_course_no, teach_course_no, student_no, remark
+    </sql>
+
+</mapper>

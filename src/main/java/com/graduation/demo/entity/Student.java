@@ -1,10 +1,8 @@
 package com.graduation.demo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 
 /**
@@ -13,42 +11,76 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-03-11
+ * @since 2022-04-11
  */
-@ApiModel("学生实体")
+@TableName("xk_student")
 public class Student implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    @TableId(value = "sid", type = IdType.AUTO)
-    @ApiModelProperty(name = "学生ID", dataType = "String")
-    private String sid;
-    @ApiModelProperty(name = "学生名", dataType = "String")
-    private String sname;
-    @ApiModelProperty(name = "密码", dataType = "String")
+    /**
+     * 主键id
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private String id;
+
+    /**
+     * 学生编号
+     */
+    private String studentNo;
+
+    /**
+     * 密码
+     */
     private String password;
-    @ApiModelProperty(name = "性别", dataType = "String")
+
+    /**
+     * 姓名
+     */
+    private String name;
+
+    /**
+     * 用户类别
+     */
     private Integer sex;
-    @ApiModelProperty(name = "年级", dataType = "String")
+
+    /**
+     * 年级
+     */
+    private Integer userType;
+
+    /**
+     * 院系编号
+     */
     private String grade;
-    @ApiModelProperty(name = "专业", dataType = "String")
-    private String major;
+
+    /**
+     * 专业编号
+     */
+    private String deptNo;
+
+    /**
+     * 班级编号
+     */
+    private String najorNo;
+
+    private String clazzNo;
 
 
-    public String getSid() {
-        return sid;
+    public String getId() {
+        return id;
     }
 
-    public void setSid(String sid) {
-        this.sid = sid;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getSname() {
-        return sname;
+    public String getStudentNo() {
+        return studentNo;
     }
 
-    public void setSname(String sname) {
-        this.sname = sname;
+    public void setStudentNo(String studentNo) {
+        this.studentNo = studentNo;
     }
 
     public String getPassword() {
@@ -59,12 +91,28 @@ private static final long serialVersionUID=1L;
         this.password = password;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public Integer getSex() {
         return sex;
     }
 
     public void setSex(Integer sex) {
         this.sex = sex;
+    }
+
+    public Integer getUserType() {
+        return userType;
+    }
+
+    public void setUserType(Integer userType) {
+        this.userType = userType;
     }
 
     public String getGrade() {
@@ -75,23 +123,43 @@ private static final long serialVersionUID=1L;
         this.grade = grade;
     }
 
-    public String getMajor() {
-        return major;
+    public String getDeptNo() {
+        return deptNo;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
+    }
+
+    public String getNajorNo() {
+        return najorNo;
+    }
+
+    public void setNajorNo(String najorNo) {
+        this.najorNo = najorNo;
+    }
+
+    public String getClazzNo() {
+        return clazzNo;
+    }
+
+    public void setClazzNo(String clazzNo) {
+        this.clazzNo = clazzNo;
     }
 
     @Override
     public String toString() {
         return "Student{" +
-        "sid=" + sid +
-        ", sname=" + sname +
+        "id=" + id +
+        ", studentNo=" + studentNo +
         ", password=" + password +
+        ", name=" + name +
         ", sex=" + sex +
+        ", userType=" + userType +
         ", grade=" + grade +
-        ", major=" + major +
+        ", deptNo=" + deptNo +
+        ", najorNo=" + najorNo +
+        ", clazzNo=" + clazzNo +
         "}";
     }
 }

@@ -4,14 +4,17 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Classroom">
-        <id column="rid" property="rid" />
+        <id column="id" property="id" />
+        <result column="classroom_no" property="classroomNo" />
+        <result column="name" property="name" />
         <result column="type" property="type" />
-        <result column="maximum" property="maximum" />
+        <result column="build" property="build" />
+        <result column="desc" property="desc" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        rid, type, maximum
+        id, classroom_no, name, type, build, desc
     </sql>
 
 </mapper>

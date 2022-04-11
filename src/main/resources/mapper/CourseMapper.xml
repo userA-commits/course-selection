@@ -4,19 +4,19 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Course">
-        <id column="cid" property="cid" />
-        <result column="cname" property="cname" />
-        <result column="period" property="period" />
-        <result column="credit" property="credit" />
-        <result column="major" property="major" />
-        <result column="maximum" property="maximum" />
+        <id column="id" property="id" />
+        <result column="course_no" property="courseNo" />
+        <result column="dept_no" property="deptNo" />
+        <result column="name" property="name" />
+        <result column="cridit" property="cridit" />
+        <result column="type" property="type" />
+        <result column="test_type" property="testType" />
         <result column="desc" property="desc" />
-        <result column="tid" property="tid" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        cid, cname, period, credit, major, maximum, desc, tid
+        id, course_no, dept_no, name, cridit, type, test_type, desc
     </sql>
 
 </mapper>

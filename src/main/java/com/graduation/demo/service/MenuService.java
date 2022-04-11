@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
  * <p>
- * 菜单权限表 服务类
+ *  服务类
  * </p>
  *
  * @author 王奥
- * @since 2022-03-14
+ * @since 2022-04-11
  */
 public interface MenuService extends IService<Menu> {
 

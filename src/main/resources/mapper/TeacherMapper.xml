@@ -4,37 +4,21 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Teacher">
-        <id column="tid" property="tid" />
-        <result column="tname" property="tname" />
-        <result column="sex" property="sex" />
-        <result column="title" property="title" />
+        <id column="id" property="id" />
+        <result column="teacher_no" property="teacherNo" />
+        <result column="name" property="name" />
         <result column="password" property="password" />
+        <result column="sex" property="sex" />
+        <result column="user_type" property="userType" />
+        <result column="position" property="position" />
+        <result column="depr_no" property="deprNo" />
+        <result column="telephone" property="telephone" />
+        <result column="emali" property="emali" />
     </resultMap>
+
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        tid, tname, sex, title, password
+        id, teacher_no, name, password, sex, user_type, position, depr_no, telephone, emali
     </sql>
-    <!-- 一对多联查教师与课程 -->
-    <resultMap id="TeacherWithCourseList" type="com.graduation.demo.po.TeacherWithCourse">
-        <id column="tid" property="tid"/>
-        <result column="tname" property="tname" />
-        <result column="sex" property="sex" />
-        <result column="title" property="title" />
-        <result column="password" property="password" />
-        <collection property="courses" ofType="com.graduation.demo.entity.Course">
-            <id column="cid" property="cid" />
-            <result column="cname" property="cname" />
-            <result column="period" property="period" />
-            <result column="credit" property="credit" />
-            <result column="major" property="major" />
-            <result column="maximum" property="maximum" />
-            <result column="desc" property="desc" />
-            <result column="tid" property="tid" />
-        </collection>
-    </resultMap>
-    <!-- 一对多联查列 -->
-    <select id="getTeacherWithCourse" parameterType="String" resultMap="TeacherWithCourseList">
-        select * from teacher t, course c
-        where t.tid = #{tid} and c.tid = #{tid}
-    </select>
+
 </mapper>

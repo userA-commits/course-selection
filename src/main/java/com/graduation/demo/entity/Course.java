@@ -1,9 +1,8 @@
 package com.graduation.demo.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.io.Serializable;
 
 /**
@@ -12,77 +11,109 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-03-24
+ * @since 2022-04-11
  */
+@TableName("xk_course")
 public class Course implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    @TableId(value = "cid", type = IdType.AUTO)
-    @ApiModelProperty(name = "课程ID", dataType = "String")
-    private String cid;
-    @ApiModelProperty(name = "教师ID", dataType = "String")
-    private String tid;
-    @ApiModelProperty(name = "课程名", dataType = "String")
-    private String cname;
-    @ApiModelProperty(name = "持续时间", dataType = "String")
-    private String period;
-    @ApiModelProperty(name = "学分", dataType = "Float")
-    private Float credit;
-    @ApiModelProperty(name = "专业", dataType = "String")
-    private String major;
-    @ApiModelProperty(name = "课程最大人数", dataType = "String")
-    private Integer maximum;
-    @ApiModelProperty(name = "备注", dataType = "String", allowEmptyValue = true)
+    /**
+     * 主键id
+     */
+    @TableId(value = "id", type = IdType.AUTO)
+    private String id;
+
+    /**
+     * 课程编号
+     */
+    private String courseNo;
+
+    /**
+     * 院系编号
+     */
+    private String deptNo;
+
+    /**
+     * 课程名称
+     */
+    private String name;
+
+    /**
+     * 学分
+     */
+    private Float cridit;
+
+    /**
+     * 课程类别
+     */
+    private Integer type;
+
+    /**
+     * 考核方式
+     */
+    private String testType;
+
+    /**
+     * 描述
+     */
     private String desc;
 
 
-    public String getCid() {
-        return cid;
+    public String getId() {
+        return id;
     }
 
-    public void setCid(String cid) {
-        this.cid = cid;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getCname() {
-        return cname;
+    public String getCourseNo() {
+        return courseNo;
     }
 
-    public void setCname(String cname) {
-        this.cname = cname;
+    public void setCourseNo(String courseNo) {
+        this.courseNo = courseNo;
     }
 
-    public String getPeriod() {
-        return period;
+    public String getDeptNo() {
+        return deptNo;
     }
 
-    public void setPeriod(String period) {
-        this.period = period;
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
     }
 
-    public Float getCredit() {
-        return credit;
+    public String getName() {
+        return name;
     }
 
-    public void setCredit(Float credit) {
-        this.credit = credit;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getMajor() {
-        return major;
+    public Float getCridit() {
+        return cridit;
     }
 
-    public void setMajor(String major) {
-        this.major = major;
+    public void setCridit(Float cridit) {
+        this.cridit = cridit;
     }
 
-    public Integer getMaximum() {
-        return maximum;
+    public Integer getType() {
+        return type;
     }
 
-    public void setMaximum(Integer maximum) {
-        this.maximum = maximum;
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
+    public String getTestType() {
+        return testType;
+    }
+
+    public void setTestType(String testType) {
+        this.testType = testType;
     }
 
     public String getDesc() {
@@ -93,25 +124,17 @@ private static final long serialVersionUID=1L;
         this.desc = desc;
     }
 
-    public String getTid() {
-        return tid;
-    }
-
-    public void setTid(String tid) {
-        this.tid = tid;
-    }
-
     @Override
     public String toString() {
         return "Course{" +
-        "cid=" + cid +
-        ", cname=" + cname +
-        ", period=" + period +
-        ", credit=" + credit +
-        ", major=" + major +
-        ", maximum=" + maximum +
+        "id=" + id +
+        ", courseNo=" + courseNo +
+        ", deptNo=" + deptNo +
+        ", name=" + name +
+        ", cridit=" + cridit +
+        ", type=" + type +
+        ", testType=" + testType +
         ", desc=" + desc +
-        ", tid=" + tid +
         "}";
     }
 }

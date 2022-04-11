@@ -4,16 +4,16 @@
 
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Role">
-        <id column="role_id" property="roleId" />
-        <result column="role_name" property="roleName" />
+        <id column="id" property="id" />
+        <result column="role_no" property="roleNo" />
+        <result column="name" property="name" />
         <result column="role_key" property="roleKey" />
-        <result column="role_sort" property="roleSort" />
         <result column="remark" property="remark" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        role_id, role_name, role_key, role_sort, remark
+        id, role_no, name, role_key, remark
     </sql>
 
 </mapper>
