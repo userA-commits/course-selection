@@ -73,7 +73,15 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             //将子菜单项放入临时列表
             tempList.addAll(sonMenuList);
         }
+        List<Menu> menuList = new ArrayList<>(resultSet);
+        //将得到的菜单列表按编号正序排序
+        Collections.sort(menuList, new Comparator<Menu>() {
+            @Override
+            public int compare(Menu o1, Menu o2) {
+                return (int) (o1.getMenuNo() - o2.getMenuNo());
+            }
+        });
 
-        return new ArrayList<>(resultSet);
+        return menuList;
     }
 }
