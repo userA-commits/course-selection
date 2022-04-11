@@ -3,6 +3,8 @@ package com.graduation.demo.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -18,30 +20,20 @@ public class CourseArrange implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    /**
-     * 主键id
-     */
+    @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    /**
-     * 授课编号
-     */
+    @ApiModelProperty(value = "授课编号")
     private String teachCourseNo;
 
-    /**
-     * 教室编号
-     */
+    @ApiModelProperty(value = "教室编号")
     private String classroomNo;
 
-    /**
-     * 使用时间段
-     */
+    @ApiModelProperty(value = "使用时间段")
     private Integer period;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
 

@@ -3,6 +3,8 @@ package com.graduation.demo.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -18,55 +20,35 @@ public class Teacher implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    /**
-     * 主键id
-     */
+    @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    /**
-     * 教师编号
-     */
+    @ApiModelProperty(value = "教师编号")
     private String teacherNo;
 
-    /**
-     * 姓名
-     */
+    @ApiModelProperty(value = "姓名")
     private String name;
 
-    /**
-     * 密码
-     */
+    @ApiModelProperty(value = "密码")
     private String password;
 
-    /**
-     * 性别
-     */
+    @ApiModelProperty(value = "性别")
     private Integer sex;
 
-    /**
-     * 用户类别
-     */
+    @ApiModelProperty(value = "用户类别")
     private Integer userType;
 
-    /**
-     * 职位
-     */
+    @ApiModelProperty(value = "职位")
     private String position;
 
-    /**
-     * 院系编号
-     */
+    @ApiModelProperty(value = "院系编号")
     private String deptNo;
 
-    /**
-     * 电话
-     */
+    @ApiModelProperty(value = "电话")
     private String telephone;
 
-    /**
-     * 邮箱
-     */
+    @ApiModelProperty(value = "邮箱")
     private String emali;
 
 

@@ -20,40 +20,22 @@ public class Admin implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    /**
-     * 主键id
-     */
     @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    /**
-     * 管理员编号
-     */
     @ApiModelProperty(value = "管理员编号")
     private String adminNo;
 
-    /**
-     * 密码
-     */
     @ApiModelProperty(value = "密码")
     private String password;
 
-    /**
-     * 名字
-     */
     @ApiModelProperty(value = "名字")
     private String name;
 
-    /**
-     * 用户类别
-     */
     @ApiModelProperty(value = "用户类别")
     private Integer userType;
 
-    /**
-     * 邮箱
-     */
     @ApiModelProperty(value = "邮箱")
     private String email;
 

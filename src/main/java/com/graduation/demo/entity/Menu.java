@@ -3,6 +3,8 @@ package com.graduation.demo.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -18,50 +20,32 @@ public class Menu implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    /**
-     * 主键id
-     */
+    @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    /**
-     * 菜单编号
-     */
+    @ApiModelProperty(value = "菜单编号")
     private Long menuNo;
 
-    /**
-     * 菜单名称
-     */
+    @ApiModelProperty(value = "菜单名称")
     private String name;
 
-    /**
-     * 父菜单编号
-     */
+    @ApiModelProperty(value = "父菜单编号")
     private Long parentNo;
 
-    /**
-     * 路由地址
-     */
+    @ApiModelProperty(value = "路由地址")
     private String path;
 
-    /**
-     * 组件路径
-     */
+    @ApiModelProperty(value = "组件路径")
     private String component;
 
-    /**
-     * 菜单类型
-     */
+    @ApiModelProperty(value = "菜单类型")
     private String type;
 
-    /**
-     * 权柄
-     */
+    @ApiModelProperty(value = "权柄")
     private String perms;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
 

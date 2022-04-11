@@ -3,6 +3,8 @@ package com.graduation.demo.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -18,30 +20,20 @@ public class Role implements Serializable {
 
 private static final long serialVersionUID=1L;
 
-    /**
-     * 主键id
-     */
+    @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    /**
-     * 角色编号
-     */
+    @ApiModelProperty(value = "角色编号")
     private Long roleNo;
 
-    /**
-     * 角色名称
-     */
+    @ApiModelProperty(value = "角色名称")
     private String name;
 
-    /**
-     * 角色键
-     */
+    @ApiModelProperty(value = "角色键")
     private String roleKey;
 
-    /**
-     * 备注
-     */
+    @ApiModelProperty(value = "备注")
     private String remark;
 
 
