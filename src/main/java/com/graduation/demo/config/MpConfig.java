@@ -50,7 +50,7 @@ public class MpConfig {
         StrategyConfig strategyConfig = new StrategyConfig();
         strategyConfig
                 .setCapitalMode(true)// 开启全局大写命名
-                .setInclude("xk_teacher")// 设置要映射的表
+                .setInclude("xk_student")// 设置要映射的表
                 .setTablePrefix("xk_")// 去掉表前缀
                 .setNaming(NamingStrategy.underline_to_camel)// 下划线到驼峰的命名方式
                 .setColumnNaming(NamingStrategy.underline_to_camel)// 下划线到驼峰的命名方式

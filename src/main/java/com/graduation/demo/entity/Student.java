@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-04-11
+ * @since 2022-04-12
  */
 @TableName("xk_student")
 public class Student implements Serializable {
@@ -62,7 +62,7 @@ private static final long serialVersionUID=1L;
     /**
      * 班级编号
      */
-    private String najorNo;
+    private String majorNo;
 
     private String clazzNo;
 
@@ -131,12 +131,12 @@ private static final long serialVersionUID=1L;
         this.deptNo = deptNo;
     }
 
-    public String getNajorNo() {
-        return najorNo;
+    public String getMajorNo() {
+        return majorNo;
     }
 
-    public void setNajorNo(String najorNo) {
-        this.najorNo = najorNo;
+    public void setMajorNo(String majorNo) {
+        this.majorNo = majorNo;
     }
 
     public String getClazzNo() {
@@ -158,7 +158,7 @@ private static final long serialVersionUID=1L;
         ", userType=" + userType +
         ", grade=" + grade +
         ", deptNo=" + deptNo +
-        ", najorNo=" + najorNo +
+        ", majorNo=" + majorNo +
         ", clazzNo=" + clazzNo +
         "}";
     }

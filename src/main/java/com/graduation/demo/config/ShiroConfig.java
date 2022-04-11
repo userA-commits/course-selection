@@ -1,6 +1,9 @@
 package com.graduation.demo.config;
 
 
+import com.graduation.demo.shiro.AdminRealm;
+import com.graduation.demo.shiro.StudentRealm;
+import com.graduation.demo.shiro.TeacherRealm;
 import com.graduation.demo.shiro.UserModularRealmAuthenticator;
 import org.apache.shiro.authc.pam.AtLeastOneSuccessfulStrategy;
 import org.apache.shiro.authc.pam.ModularRealmAuthenticator;
@@ -31,12 +34,30 @@ public class ShiroConfig {
         return defaultAAP;
     }
 
+    @Bean
+    public AdminRealm adminRealm(){
+        return new AdminRealm();
+    }
+
+    @Bean
+    public TeacherRealm teacherRealm(){
+        return new TeacherRealm();
+    }
+
+    @Bean
+    public StudentRealm studentRealm(){
+        return new StudentRealm();
+    }
+
     //权限管理，主要功能是链接Realm和用户
     @Bean
     public DefaultSecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         //添加多个Realm
         List<Realm> realms = new ArrayList<>();
+        realms.add(adminRealm());
+        realms.add(teacherRealm());
+        realms.add(studentRealm());
         //放入容器
         securityManager.setRealms(realms);
         return securityManager;

@@ -57,7 +57,7 @@ private static final long serialVersionUID=1L;
     /**
      * 院系编号
      */
-    private String deprNo;
+    private String deptNo;
 
     /**
      * 电话
@@ -126,12 +126,12 @@ private static final long serialVersionUID=1L;
         this.position = position;
     }
 
-    public String getDeprNo() {
-        return deprNo;
+    public String getDeptNo() {
+        return deptNo;
     }
 
-    public void setDeprNo(String deprNo) {
-        this.deprNo = deprNo;
+    public void setDeptNo(String deptNo) {
+        this.deptNo = deptNo;
     }
 
     public String getTelephone() {
@@ -160,7 +160,7 @@ private static final long serialVersionUID=1L;
         ", sex=" + sex +
         ", userType=" + userType +
         ", position=" + position +
-        ", deprNo=" + deprNo +
+        ", deptNo=" + deptNo +
         ", telephone=" + telephone +
         ", emali=" + emali +
         "}";
