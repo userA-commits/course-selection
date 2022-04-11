@@ -9,12 +9,12 @@
         <result column="password" property="password" />
         <result column="name" property="name" />
         <result column="user_type" property="userType" />
-        <result column="emali" property="emali" />
+        <result column="email" property="email" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, admin_no, password, name, user_type, emali
+        id, admin_no, password, name, user_type, email
     </sql>
 
 </mapper>

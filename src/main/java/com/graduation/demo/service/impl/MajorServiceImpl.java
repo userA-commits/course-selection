@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author 王奥
- * @since 2022-04-11
+ * @since 2022-04-12
  */
 @Service
 public class MajorServiceImpl extends ServiceImpl<MajorMapper, Major> implements MajorService {

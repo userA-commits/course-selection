@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-04-11
+ * @since 2022-04-12
  */
 @TableName("xk_clazz")
 public class Clazz implements Serializable {
@@ -47,7 +47,7 @@ private static final long serialVersionUID=1L;
     /**
      * 描述
      */
-    private String desc;
+    private String description;
 
 
     public String getId() {
@@ -90,12 +90,12 @@ private static final long serialVersionUID=1L;
         this.type = type;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -106,7 +106,7 @@ private static final long serialVersionUID=1L;
         ", majorNo=" + majorNo +
         ", name=" + name +
         ", type=" + type +
-        ", desc=" + desc +
+        ", description=" + description +
         "}";
     }
 }

@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-04-11
+ * @since 2022-04-12
  */
 @TableName("xk_course")
 public class Course implements Serializable {

@@ -9,12 +9,12 @@
         <result column="name" property="name" />
         <result column="type" property="type" />
         <result column="build" property="build" />
-        <result column="desc" property="desc" />
+        <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, classroom_no, name, type, build, desc
+        id, classroom_no, name, type, build, description
     </sql>
 
 </mapper>

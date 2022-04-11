@@ -8,12 +8,12 @@
         <result column="major_no" property="majorNo" />
         <result column="dept_no" property="deptNo" />
         <result column="name" property="name" />
-        <result column="desc" property="desc" />
+        <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, major_no, dept_no, name, desc
+        id, major_no, dept_no, name, description
     </sql>
 
 </mapper>

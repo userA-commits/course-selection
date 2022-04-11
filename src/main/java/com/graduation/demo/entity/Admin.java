@@ -3,6 +3,8 @@ package com.graduation.demo.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.io.Serializable;
 
 /**
@@ -11,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-04-11
+ * @since 2022-04-12
  */
 @TableName("xk_admin")
 public class Admin implements Serializable {
@@ -21,33 +23,39 @@ private static final long serialVersionUID=1L;
     /**
      * 主键id
      */
+    @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
     /**
      * 管理员编号
      */
+    @ApiModelProperty(value = "管理员编号")
     private String adminNo;
 
     /**
      * 密码
      */
+    @ApiModelProperty(value = "密码")
     private String password;
 
     /**
      * 名字
      */
+    @ApiModelProperty(value = "名字")
     private String name;
 
     /**
      * 用户类别
      */
+    @ApiModelProperty(value = "用户类别")
     private Integer userType;
 
     /**
      * 邮箱
      */
-    private String emali;
+    @ApiModelProperty(value = "邮箱")
+    private String email;
 
 
     public String getId() {
@@ -90,12 +98,12 @@ private static final long serialVersionUID=1L;
         this.userType = userType;
     }
 
-    public String getEmali() {
-        return emali;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmali(String emali) {
-        this.emali = emali;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -106,7 +114,7 @@ private static final long serialVersionUID=1L;
         ", password=" + password +
         ", name=" + name +
         ", userType=" + userType +
-        ", emali=" + emali +
+        ", email=" + email +
         "}";
     }
 }

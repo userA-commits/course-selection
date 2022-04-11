@@ -9,12 +9,12 @@
         <result column="major_no" property="majorNo" />
         <result column="name" property="name" />
         <result column="type" property="type" />
-        <result column="desc" property="desc" />
+        <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, clazz_no, major_no, name, type, desc
+        id, clazz_no, major_no, name, type, description
     </sql>
 
 </mapper>
