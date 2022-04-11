@@ -8,15 +8,16 @@
         <result column="course_no" property="courseNo" />
         <result column="dept_no" property="deptNo" />
         <result column="name" property="name" />
-        <result column="cridit" property="cridit" />
-        <result column="type" property="type" />
+        <result column="credit" property="credit" />
+        <result column="classroom_type" property="classroomType" />
+        <result column="is_required" property="isRequired" />
         <result column="test_type" property="testType" />
-        <result column="desc" property="desc" />
+        <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, course_no, dept_no, name, cridit, type, test_type, desc
+        id, course_no, dept_no, name, credit, classroom_type, is_required, test_type, description
     </sql>
 
 </mapper>

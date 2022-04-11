@@ -34,16 +34,19 @@ private static final long serialVersionUID=1L;
     private String name;
 
     @ApiModelProperty(value = "学分")
-    private Float cridit;
+    private Float credit;
 
-    @ApiModelProperty(value = "课程类别")
-    private Integer type;
+    @ApiModelProperty(value = "需要教室类型，0为普通，1为特殊")
+    private Integer classroomType;
+
+    @ApiModelProperty(value = "课程类别，0必修，1选修")
+    private Integer isRequired;
 
     @ApiModelProperty(value = "考核方式")
     private String testType;
 
     @ApiModelProperty(value = "描述")
-    private String desc;
+    private String description;
 
 
     public String getId() {
@@ -78,20 +81,28 @@ private static final long serialVersionUID=1L;
         this.name = name;
     }
 
-    public Float getCridit() {
-        return cridit;
+    public Float getCredit() {
+        return credit;
     }
 
-    public void setCridit(Float cridit) {
-        this.cridit = cridit;
+    public void setCredit(Float credit) {
+        this.credit = credit;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getClassroomType() {
+        return classroomType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setClassroomType(Integer classroomType) {
+        this.classroomType = classroomType;
+    }
+
+    public Integer getIsRequired() {
+        return isRequired;
+    }
+
+    public void setIsRequired(Integer isRequired) {
+        this.isRequired = isRequired;
     }
 
     public String getTestType() {
@@ -102,12 +113,12 @@ private static final long serialVersionUID=1L;
         this.testType = testType;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     @Override
@@ -117,10 +128,11 @@ private static final long serialVersionUID=1L;
         ", courseNo=" + courseNo +
         ", deptNo=" + deptNo +
         ", name=" + name +
-        ", cridit=" + cridit +
-        ", type=" + type +
+        ", credit=" + credit +
+        ", classroomType=" + classroomType +
+        ", isRequired=" + isRequired +
         ", testType=" + testType +
-        ", desc=" + desc +
+        ", description=" + description +
         "}";
     }
 }

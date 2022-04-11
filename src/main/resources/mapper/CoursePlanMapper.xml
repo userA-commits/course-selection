@@ -5,15 +5,58 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.CoursePlan">
         <id column="id" property="id" />
+        <result column="dept_no" property="deptNo" />
         <result column="major_no" property="majorNo" />
         <result column="course_no" property="courseNo" />
+        <result column="grade" property="grade" />
+        <result column="semester" property="semester" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <!-- 教学计划联查集 -->
+    <resultMap id="CoursePlanMap" type="com.graduation.demo.vo.MajorWithCourse">
+        <id column="id" property="id" />
+        <result column="dept_no" property="deptNo" />
+        <result column="dept_name" property="deptName" />
+        <result column="major_no" property="majorNo" />
+        <result column="major_name" property="majorName" />
+        <result column="grade" property="grade" />
+        <result column="course_no" property="courseNo" />
+        <result column="course_name" property="courseName" />
+        <result column="credit" property="credit" />
+        <result column="is_required" property="isRequired" />
+        <result column="test_type" property="testType" />
         <result column="semester" property="semester" />
         <result column="remark" property="remark" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, major_no, course_no, semester, remark
+        id, dept_no, major_no, course_no, grade, semester, remark
     </sql>
+
+    <!-- 管理员用教学计划联查结果列 -->
+    <select id="getMajorWithCourseForAdm" resultMap="CoursePlanMap">
+        select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
+        cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
+        cp.semester, cp.remark
+        from xk_course_plan cp, xk_dept d, xk_major m, xk_course c
+        where cp.course_no = c.course_no
+        and cp.dept_no = d.dept_no
+        and cp.major_no = m.major_no
+    </select>
+
+    <!-- 学生用教学计划联查结果列 -->
+    <select id="getMajorWithCourseForStu" parameterType="com.graduation.demo.entity.Student" resultMap="CoursePlanMap">
+        select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
+        cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
+        cp.semester, cp.remark
+        from xk_course_plan cp, xk_dept d, xk_major m, xk_course c
+        where cp.dept_no = #{deptNo}
+        and cp.major_no = #{majorNo}
+        and cp.grade = #{grade}
+        and cp.course_no = c.course_no
+        and cp.dept_no = d.dept_no
+        and cp.major_no = m.major_no
+    </select>
 
 </mapper>

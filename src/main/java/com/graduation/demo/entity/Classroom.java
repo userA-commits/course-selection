@@ -20,6 +20,7 @@ public class Classroom implements Serializable {
 
 private static final long serialVersionUID=1L;
 
+
     @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
@@ -30,8 +31,8 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "教室名称")
     private String name;
 
-    @ApiModelProperty(value = "教室类别")
-    private Integer type;
+    @ApiModelProperty(value = "教室类别，0为普通，1为特殊")
+    private Integer classroomType;
 
     @ApiModelProperty(value = "所在教学楼")
     private String build;
@@ -64,12 +65,12 @@ private static final long serialVersionUID=1L;
         this.name = name;
     }
 
-    public Integer getType() {
-        return type;
+    public Integer getClassroomType() {
+        return classroomType;
     }
 
-    public void setType(Integer type) {
-        this.type = type;
+    public void setClassroomType(Integer classroomType) {
+        this.classroomType = classroomType;
     }
 
     public String getBuild() {
@@ -94,7 +95,7 @@ private static final long serialVersionUID=1L;
         "id=" + id +
         ", classroomNo=" + classroomNo +
         ", name=" + name +
-        ", type=" + type +
+        ", classroomType=" + classroomType +
         ", build=" + build +
         ", description=" + description +
         "}";

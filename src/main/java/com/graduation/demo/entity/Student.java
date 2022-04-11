@@ -33,21 +33,22 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "姓名")
     private String name;
 
-    @ApiModelProperty(value = "用户类别")
+    @ApiModelProperty(value = "性别")
     private Integer sex;
 
-    @ApiModelProperty(value = "年级")
+    @ApiModelProperty(value = "用户类别")
     private Integer userType;
 
-    @ApiModelProperty(value = "院系编号")
+    @ApiModelProperty(value = "年级")
     private String grade;
 
-    @ApiModelProperty(value = "专业编号")
+    @ApiModelProperty(value = "院系编号")
     private String deptNo;
 
-    @ApiModelProperty(value = "班级编号")
+    @ApiModelProperty(value = "专业编号")
     private String majorNo;
 
+    @ApiModelProperty(value = "班级编号")
     private String clazzNo;
 
 

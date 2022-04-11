@@ -7,14 +7,14 @@
         <id column="id" property="id" />
         <result column="classroom_no" property="classroomNo" />
         <result column="name" property="name" />
-        <result column="type" property="type" />
+        <result column="classroom_type" property="classroomType" />
         <result column="build" property="build" />
         <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, classroom_no, name, type, build, description
+        id, classroom_no, name, classroom_type, build, description
     </sql>
 
 </mapper>
