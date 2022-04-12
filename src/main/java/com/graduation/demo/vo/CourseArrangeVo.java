@@ -1,42 +1,38 @@
-package com.graduation.demo.entity;
+package com.graduation.demo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author 王奥
- * @since 2022-04-11
- */
-@TableName("xk_course_arrange")
-public class CourseArrange implements Serializable {
+public class CourseArrangeVo implements Serializable {
 
-private static final long serialVersionUID=1L;
+    private static final long serialVersionUID=1L;
 
-    @ApiModelProperty(value = "主键id")
+    @ApiModelProperty(value = "主键id", notes = "form course arrange")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    @ApiModelProperty(value = "授课编号")
+    @ApiModelProperty(value = "授课编号", notes = "form course arrange")
     private String teachCourseNo;
 
-    @ApiModelProperty(value = "教室编号")
+    @ApiModelProperty(value = "教室编号", notes = "form course arrange")
     private String classroomNo;
 
-    @ApiModelProperty(value = "星期，1到7代表周一到周天")
+    @ApiModelProperty(value = "教室名称", notes = "form classroom")
+    private String classroomName;
+
+    @ApiModelProperty(value = "教室类别，0为普通，1为特殊", notes = "form classroom")
+    private Integer classroomType;
+
+    @ApiModelProperty(value = "星期，1到7代表周一到周天", notes = "form course arrange")
     private Integer week;
 
-    @ApiModelProperty(value = "使用时间段")
+    @ApiModelProperty(value = "使用时间段", notes = "form course arrange")
     private Integer period;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "备注", notes = "form course arrange")
     private String remark;
 
 
@@ -62,6 +58,22 @@ private static final long serialVersionUID=1L;
 
     public void setClassroomNo(String classroomNo) {
         this.classroomNo = classroomNo;
+    }
+
+    public String getClassroomName() {
+        return classroomName;
+    }
+
+    public void setClassroomName(String classroomName) {
+        this.classroomName = classroomName;
+    }
+
+    public Integer getClassroomType() {
+        return classroomType;
+    }
+
+    public void setClassroomType(Integer classroomType) {
+        this.classroomType = classroomType;
     }
 
     public Integer getWeek() {
@@ -90,10 +102,12 @@ private static final long serialVersionUID=1L;
 
     @Override
     public String toString() {
-        return "CourseArrange{" +
+        return "CourseArrangeVo{" +
                 "id='" + id + '\'' +
                 ", teachCourseNo='" + teachCourseNo + '\'' +
                 ", classroomNo='" + classroomNo + '\'' +
+                ", classroomName='" + classroomName + '\'' +
+                ", classroomType=" + classroomType +
                 ", week=" + week +
                 ", period=" + period +
                 ", remark='" + remark + '\'' +

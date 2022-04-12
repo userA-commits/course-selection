@@ -7,13 +7,42 @@
         <id column="id" property="id" />
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="classroom_no" property="classroomNo" />
+        <result column="week" property="week" />
+        <result column="period" property="period" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <!-- 排课管理联查集 -->
+    <resultMap id="CourseArrangeMap" type="com.graduation.demo.vo.CourseArrangeVo">
+        <id column="id" property="id" />
+        <result column="teach_course_no" property="teachCourseNo" />
+        <result column="classroom_no" property="classroomNo" />
+        <result column="classroom_name" property="classroomName" />
+        <result column="classroom_type" property="classroomType" />
+        <result column="week" property="week" />
         <result column="period" property="period" />
         <result column="remark" property="remark" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, teach_course_no, classroom_no, period, remark
+        id, teach_course_no, classroom_no, week, period, remark
     </sql>
+
+    <!-- 管理员用排课管理联查结果列 -->
+    <select id="getCourseArrangeVoForAdm" resultMap="CourseArrangeMap">
+        select ca.id, ca.teach_course_no, ca.classroom_no, c.name classroom_name,
+        c.classroom_type, ca.week, ca.period, ca.remark
+        from xk_course_arrange ca, xk_classroom c
+        where ca.classroom_no = c.classroom_no
+    </select>
+
+    <!-- 通过授课号查看排课管理联查结果列 -->
+    <select id="getCourseArrangeVoByNo" parameterType="String" resultMap="CourseArrangeMap">
+        select ca.id, ca.teach_course_no, ca.classroom_no, c.name classroom_name,
+        c.classroom_type, ca.week, ca.period, ca.remark
+        from xk_course_arrange ca, xk_classroom c
+        where ca.teach_course_no = #{teachCourseNo}
+        and ca.classroom_no = c.classroom_no
+    </select>
 
 </mapper>
