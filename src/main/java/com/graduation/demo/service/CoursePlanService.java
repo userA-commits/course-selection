@@ -3,7 +3,9 @@ package com.graduation.demo.service;
 import com.graduation.demo.entity.CoursePlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.demo.entity.Student;
-import com.graduation.demo.vo.MajorWithCourse;
+import com.graduation.demo.vo.CoursePlanVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,7 +17,7 @@ import com.graduation.demo.vo.MajorWithCourse;
  */
 public interface CoursePlanService extends IService<CoursePlan> {
 
-    MajorWithCourse getMajorWithCourseForStu(Student student);
+    List<CoursePlanVo> getCoursePlanVoForStu(Student student);
 
-    MajorWithCourse getMajorWithCourseForAdm();
+    List<CoursePlanVo> getCoursePlanVoForAdm();
 }

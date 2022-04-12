@@ -27,7 +27,7 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "教师编号")
     private String teacherNo;
 
-    @ApiModelProperty(value = "姓名")
+    @ApiModelProperty(value = "教师姓名")
     private String name;
 
     @ApiModelProperty(value = "密码")

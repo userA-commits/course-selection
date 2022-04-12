@@ -28,7 +28,7 @@ private static final long serialVersionUID=1L;
     private String teachCourseNo;
 
     @ApiModelProperty(value = "教师编号")
-    private String teacharNo;
+    private String teacherNo;
 
     @ApiModelProperty(value = "课程编号")
     private String courseNo;
@@ -56,12 +56,12 @@ private static final long serialVersionUID=1L;
         this.teachCourseNo = teachCourseNo;
     }
 
-    public String getTeacharNo() {
-        return teacharNo;
+    public String getTeacherNo() {
+        return teacherNo;
     }
 
-    public void setTeacharNo(String teacharNo) {
-        this.teacharNo = teacharNo;
+    public void setTeacherNo(String teacharNo) {
+        this.teacherNo = teacharNo;
     }
 
     public String getCourseNo() {
@@ -93,7 +93,7 @@ private static final long serialVersionUID=1L;
         return "TeachCourse{" +
         "id=" + id +
         ", teachCourseNo=" + teachCourseNo +
-        ", teacharNo=" + teacharNo +
+        ", teacherNo=" + teacherNo +
         ", courseNo=" + courseNo +
         ", clazzNo=" + clazzNo +
         ", remark=" + remark +

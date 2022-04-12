@@ -6,15 +6,63 @@
     <resultMap id="BaseResultMap" type="com.graduation.demo.entity.TeachCourse">
         <id column="id" property="id" />
         <result column="teach_course_no" property="teachCourseNo" />
-        <result column="teachar_no" property="teacharNo" />
+        <result column="teacher_no" property="teacherNo" />
         <result column="course_no" property="courseNo" />
         <result column="clazz_no" property="clazzNo" />
+        <result column="remark" property="remark" />
+    </resultMap>
+    <!-- 授课管理联查集 -->
+    <resultMap id="TeachCourseMap" type="com.graduation.demo.vo.TeachCourseVo">
+        <id column="id" property="id" />
+        <result column="teach_course_no" property="teachCourseNo" />
+        <result column="teacher_no" property="teacherNo" />
+        <result column="teacher_name" property="teacherName" />
+        <result column="course_no" property="courseNo" />
+        <result column="course_name" property="courseName" />
+        <result column="credit" property="credit" />
+        <result column="clazz_no" property="clazzNo" />
+        <result column="clazz_name" property="clazzName" />
+        <result column="clazz_type" property="clazzType" />
         <result column="remark" property="remark" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, teach_course_no, teachar_no, course_no, clazz_no, remark
+        id, teach_course_no, teacher_no, course_no, clazz_no, remark
     </sql>
 
+    <!-- 管理员用授课管理联查结果列 -->
+    <select id="getTeachCourseVoForAdm" resultMap="TeachCourseMap">
+        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
+        cr.name course_name, cr.credit, tc.clazz_no, cz.name clazz_name,
+        cz.type clazz_type, tc.remark
+        from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
+        where tc.teacher_no = t.teacher_no
+        and tc.course_no = cr.course_no
+        and tc.clazz_no = cz.clazz_no
+    </select>
+
+    <!-- 教师用授课管理联查结果列 -->
+    <select id="getTeachCourseVoForTea" parameterType="com.graduation.demo.entity.Teacher" resultMap="TeachCourseMap">
+        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
+        cr.name course_name, cr.credit, tc.clazz_no, cz.name clazz_name,
+        cz.type clazz_type, tc.remark
+        from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
+        where tc.teacher_no = #{teacherNo}
+        and tc.teacher_no = t.teacher_no
+        and tc.course_no = cr.course_no
+        and tc.clazz_no = cz.clazz_no
+    </select>
+
+    <!-- 通过授课编号查询授课管理联查结果列 -->
+    <select id="getTeachCourseVoByNo" parameterType="String" resultMap="TeachCourseMap">
+        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
+        cr.name course_name, cr.credit, tc.clazz_no, cz.name clazz_name,
+        cz.type clazz_type, tc.remark
+        from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
+        where tc.teach_course_no = #{teachCourseNo}
+        and tc.teacher_no = t.teacher_no
+        and tc.course_no = cr.course_no
+        and tc.clazz_no = cz.clazz_no
+    </select>
 </mapper>

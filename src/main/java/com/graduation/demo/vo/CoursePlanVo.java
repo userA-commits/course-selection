@@ -12,7 +12,7 @@ import java.io.Serializable;
  * @author 王奥
  * @since 2022-04-12
  */
-public class MajorWithCourse implements Serializable {
+public class CoursePlanVo implements Serializable {
     private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "教学计划主键id")

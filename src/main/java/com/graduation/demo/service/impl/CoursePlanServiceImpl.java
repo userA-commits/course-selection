@@ -5,9 +5,11 @@ import com.graduation.demo.entity.Student;
 import com.graduation.demo.mapper.CoursePlanMapper;
 import com.graduation.demo.service.CoursePlanService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.graduation.demo.vo.MajorWithCourse;
+import com.graduation.demo.vo.CoursePlanVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -23,12 +25,12 @@ public class CoursePlanServiceImpl extends ServiceImpl<CoursePlanMapper, CourseP
     CoursePlanMapper coursePlanMapper;
 
     @Override
-    public MajorWithCourse getMajorWithCourseForStu(Student student) {
-        return coursePlanMapper.getMajorWithCourseForStu(student);
+    public List<CoursePlanVo> getCoursePlanVoForStu(Student student) {
+        return coursePlanMapper.getCoursePlanVoForStu(student);
     }
 
     @Override
-    public MajorWithCourse getMajorWithCourseForAdm() {
-        return coursePlanMapper.getMajorWithCourseForAdm();
+    public List<CoursePlanVo> getCoursePlanVoForAdm() {
+        return coursePlanMapper.getCoursePlanVoForAdm();
     }
 }

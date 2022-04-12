@@ -13,7 +13,7 @@
         <result column="remark" property="remark" />
     </resultMap>
     <!-- 教学计划联查集 -->
-    <resultMap id="CoursePlanMap" type="com.graduation.demo.vo.MajorWithCourse">
+    <resultMap id="CoursePlanMap" type="com.graduation.demo.vo.CoursePlanVo">
         <id column="id" property="id" />
         <result column="dept_no" property="deptNo" />
         <result column="dept_name" property="deptName" />
@@ -35,7 +35,7 @@
     </sql>
 
     <!-- 管理员用教学计划联查结果列 -->
-    <select id="getMajorWithCourseForAdm" resultMap="CoursePlanMap">
+    <select id="getCoursePlanVoForAdm" resultMap="CoursePlanMap">
         select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
         cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
         cp.semester, cp.remark
@@ -46,7 +46,7 @@
     </select>
 
     <!-- 学生用教学计划联查结果列 -->
-    <select id="getMajorWithCourseForStu" parameterType="com.graduation.demo.entity.Student" resultMap="CoursePlanMap">
+    <select id="getCoursePlanVoForStu" parameterType="com.graduation.demo.entity.Student" resultMap="CoursePlanMap">
         select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
         cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
         cp.semester, cp.remark
