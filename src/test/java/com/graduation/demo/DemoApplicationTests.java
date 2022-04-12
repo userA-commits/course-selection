@@ -11,10 +11,10 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    CourseArrangeService courseArrangeService;
+    SelectCourseService selectCourseService;
     @Test
     void test(){
-        System.out.println(courseArrangeService.getCourseArrangeVoForAdm());
+        System.out.println(selectCourseService.getSelectCourseVoForAdm());
     }
 
 }

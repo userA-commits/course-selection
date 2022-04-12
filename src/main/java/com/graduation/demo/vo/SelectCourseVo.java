@@ -1,48 +1,50 @@
-package com.graduation.demo.entity;
+package com.graduation.demo.vo;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author 王奥
- * @since 2022-04-11
- */
-@TableName("xk_select_course")
-public class SelectCourse implements Serializable {
+public class SelectCourseVo implements Serializable {
 
-private static final long serialVersionUID=1L;
+    private static final long serialVersionUID=1L;
 
     @ApiModelProperty(value = "主键id")
     @TableId(value = "id", type = IdType.AUTO)
     private String id;
 
-    @ApiModelProperty(value = "授课编号")
+    @ApiModelProperty(value = "授课编号", notes = "form select course")
     private String teachCourseNo;
 
-    @ApiModelProperty(value = "学生编号")
+    @ApiModelProperty(value = "学生编号", notes = "form select course")
     private String studentNo;
 
-    @ApiModelProperty(value = "修读学期")
+    @ApiModelProperty(value = "学生姓名", notes = "form student")
+    private String studentName;
+
+    @ApiModelProperty(value = "课程编号", notes = "form teach course")
+    private String courseNo;
+
+    @ApiModelProperty(value = "课程名称", notes = "form course")
+    private String courseName;
+
+    @ApiModelProperty(value = "学分", notes = "form course")
+    private Float credit;
+
+    @ApiModelProperty(value = "修读学期", notes = "form select course")
     private Integer semester;
 
-    @ApiModelProperty(value = "平时成绩")
+    @ApiModelProperty(value = "平时成绩", notes = "form select course")
     private Integer normalScore;
 
-    @ApiModelProperty(value = "考试成绩")
+    @ApiModelProperty(value = "考试成绩", notes = "form select course")
     private Integer examScore;
 
-    @ApiModelProperty(value = "总成绩")
+    @ApiModelProperty(value = "总成绩", notes = "form select course")
     private Integer totalScore;
 
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "备注", notes = "form select course")
     private String remark;
 
 
@@ -68,6 +70,38 @@ private static final long serialVersionUID=1L;
 
     public void setStudentNo(String studentNo) {
         this.studentNo = studentNo;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getCourseNo() {
+        return courseNo;
+    }
+
+    public void setCourseNo(String courseNo) {
+        this.courseNo = courseNo;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public Float getCredit() {
+        return credit;
+    }
+
+    public void setCredit(Float credit) {
+        this.credit = credit;
     }
 
     public Integer getSemester() {
@@ -112,10 +146,14 @@ private static final long serialVersionUID=1L;
 
     @Override
     public String toString() {
-        return "SelectCourse{" +
+        return "SelectCourseVo{" +
                 "id='" + id + '\'' +
                 ", teachCourseNo='" + teachCourseNo + '\'' +
                 ", studentNo='" + studentNo + '\'' +
+                ", studentName='" + studentName + '\'' +
+                ", courseNo='" + courseNo + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", credit=" + credit +
                 ", semester=" + semester +
                 ", normalScore=" + normalScore +
                 ", examScore=" + examScore +

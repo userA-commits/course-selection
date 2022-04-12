@@ -2,6 +2,9 @@ package com.graduation.demo.mapper;
 
 import com.graduation.demo.entity.SelectCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.graduation.demo.vo.SelectCourseVo;
+
+import java.util.List;
 
 /**
  * <p>
@@ -12,5 +15,5 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * @since 2022-04-11
  */
 public interface SelectCourseMapper extends BaseMapper<SelectCourse> {
-
+    List<SelectCourseVo> getSelectCourseVoForAdm();
 }
