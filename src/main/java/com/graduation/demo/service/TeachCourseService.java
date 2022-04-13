@@ -16,9 +16,7 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface TeachCourseService extends IService<TeachCourse> {
-    List<TeachCourseVo> getTeachCourseVoForAdm();
+    List<TeachCourseVo> getTeachCourseVo();
 
-    List<TeachCourseVo> getTeachCourseVoForTea(Teacher teacher);
-
-    List<TeachCourseVo> getTeachCourseVoByNo(String teachCourseNo);
+    List<TeachCourseVo> getTeachCourseVoWithCond(TeachCourse teachCourse);
 }

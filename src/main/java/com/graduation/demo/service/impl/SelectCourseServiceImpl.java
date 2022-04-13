@@ -22,8 +22,14 @@ import java.util.List;
 public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, SelectCourse> implements SelectCourseService {
     @Autowired
     SelectCourseMapper selectCourseMapper;
+
     @Override
-    public List<SelectCourseVo> getSelectCourseVoForAdm() {
-        return selectCourseMapper.getSelectCourseVoForAdm();
+    public List<SelectCourseVo> getSelectCourseVo() {
+        return selectCourseMapper.getSelectCourseVo();
+    }
+
+    @Override
+    public List<SelectCourseVo> getSelectCourseVoWithCond(SelectCourse selectCourse) {
+        return selectCourseMapper.getSelectCourseVoWithCond(selectCourse);
     }
 }

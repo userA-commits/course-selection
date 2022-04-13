@@ -28,21 +28,24 @@
         id, teach_course_no, classroom_no, week, period, remark
     </sql>
 
-    <!-- 管理员用排课管理联查结果列 -->
-    <select id="getCourseArrangeVoForAdm" resultMap="CourseArrangeMap">
+    <!-- 排课管理联查结果列 -->
+    <select id="getCourseArrangeVo" resultMap="CourseArrangeMap">
         select ca.id, ca.teach_course_no, ca.classroom_no, c.name classroom_name,
         c.classroom_type, ca.week, ca.period, ca.remark
         from xk_course_arrange ca, xk_classroom c
         where ca.classroom_no = c.classroom_no
     </select>
 
-    <!-- 通过授课号查看排课管理联查结果列 -->
-    <select id="getCourseArrangeVoByNo" parameterType="String" resultMap="CourseArrangeMap">
+    <!-- 排课管理条件查询联查结果列 -->
+    <select id="getCourseArrangeVoWithCond" parameterType="com.graduation.demo.entity.CourseArrange" resultMap="CourseArrangeMap">
         select ca.id, ca.teach_course_no, ca.classroom_no, c.name classroom_name,
         c.classroom_type, ca.week, ca.period, ca.remark
         from xk_course_arrange ca, xk_classroom c
-        where ca.teach_course_no = #{teachCourseNo}
-        and ca.classroom_no = c.classroom_no
+        where  ca.classroom_no = c.classroom_no
+        <if test="teachCourseNo != null">and ca.teach_course_no = #{teachCourseNo}</if>
+        <if test="classroomNo != null">and ca.classroom_no = #{classroomNo}</if>
+        <if test="week != null">and ca.week = #{week}</if>
+        <if test="period != null">and ca.period = #{period}</if>
     </select>
 
 </mapper>

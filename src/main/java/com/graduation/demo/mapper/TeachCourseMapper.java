@@ -16,9 +16,8 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface TeachCourseMapper extends BaseMapper<TeachCourse> {
-    List<TeachCourseVo> getTeachCourseVoForAdm();
+    List<TeachCourseVo> getTeachCourseVo();
 
-    List<TeachCourseVo> getTeachCourseVoForTea(Teacher teacher);
+    List<TeachCourseVo> getTeachCourseVoWithCond(TeachCourse teachCourse);
 
-    List<TeachCourseVo> getTeachCourseVoByNo(String teachCourseNO);
 }

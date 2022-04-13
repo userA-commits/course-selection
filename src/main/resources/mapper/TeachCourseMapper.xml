@@ -31,8 +31,8 @@
         id, teach_course_no, teacher_no, course_no, clazz_no, remark
     </sql>
 
-    <!-- 管理员用授课管理联查结果列 -->
-    <select id="getTeachCourseVoForAdm" resultMap="TeachCourseMap">
+    <!-- 授课管理联查结果列 -->
+    <select id="getTeachCourseVo" resultMap="TeachCourseMap">
         select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
         cr.name course_name, cr.credit, tc.clazz_no, cz.name clazz_name,
         cz.type clazz_type, tc.remark
@@ -42,27 +42,18 @@
         and tc.clazz_no = cz.clazz_no
     </select>
 
-    <!-- 教师用授课管理联查结果列 -->
-    <select id="getTeachCourseVoForTea" parameterType="com.graduation.demo.entity.Teacher" resultMap="TeachCourseMap">
+    <!-- 授课管理条件查询联查结果列 -->
+    <select id="getTeachCourseVoWithCond" parameterType="com.graduation.demo.entity.TeachCourse" resultMap="TeachCourseMap">
         select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
         cr.name course_name, cr.credit, tc.clazz_no, cz.name clazz_name,
         cz.type clazz_type, tc.remark
         from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
-        where tc.teacher_no = #{teacherNo}
-        and tc.teacher_no = t.teacher_no
+        where tc.teacher_no = t.teacher_no
         and tc.course_no = cr.course_no
         and tc.clazz_no = cz.clazz_no
-    </select>
-
-    <!-- 通过授课编号查询授课管理联查结果列 -->
-    <select id="getTeachCourseVoByNo" parameterType="String" resultMap="TeachCourseMap">
-        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
-        cr.name course_name, cr.credit, tc.clazz_no, cz.name clazz_name,
-        cz.type clazz_type, tc.remark
-        from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
-        where tc.teach_course_no = #{teachCourseNo}
-        and tc.teacher_no = t.teacher_no
-        and tc.course_no = cr.course_no
-        and tc.clazz_no = cz.clazz_no
+        <if test="teachCourseNo != null">and tc.teach_course_no = #{teachCourseNo}</if>
+        <if test="teacherNo != null">and tc.teacher_no = #{teacherNo}</if>
+        <if test="courseNo != null">and tc.course_no = #{courseNo}</if>
+        <if test="clazzNo != null">and tc.clazz_no = #{clazzNo}</if>
     </select>
 </mapper>

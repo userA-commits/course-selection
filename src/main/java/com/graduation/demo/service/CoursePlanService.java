@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface CoursePlanService extends IService<CoursePlan> {
 
-    List<CoursePlanVo> getCoursePlanVoForStu(Student student);
+    List<CoursePlanVo> getCoursePlanVo();
 
-    List<CoursePlanVo> getCoursePlanVoForAdm();
+    List<CoursePlanVo> getCoursePlanVoWithCond(CoursePlan coursePlan);
 }

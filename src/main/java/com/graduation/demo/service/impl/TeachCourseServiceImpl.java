@@ -25,17 +25,13 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
     TeachCourseMapper teachCourseMapper;
 
     @Override
-    public List<TeachCourseVo> getTeachCourseVoForAdm() {
-        return teachCourseMapper.getTeachCourseVoForAdm();
+    public List<TeachCourseVo> getTeachCourseVo() {
+        return teachCourseMapper.getTeachCourseVo();
     }
 
     @Override
-    public List<TeachCourseVo> getTeachCourseVoForTea(Teacher teacher) {
-        return teachCourseMapper.getTeachCourseVoForTea(teacher);
+    public List<TeachCourseVo> getTeachCourseVoWithCond(TeachCourse teachCourse) {
+        return teachCourseMapper.getTeachCourseVoWithCond(teachCourse);
     }
 
-    @Override
-    public List<TeachCourseVo> getTeachCourseVoByNo(String teachCourseNo) {
-        return teachCourseMapper.getTeachCourseVoByNo(teachCourseNo);
-    }
 }

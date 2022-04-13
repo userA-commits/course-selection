@@ -15,8 +15,8 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface CourseArrangeService extends IService<CourseArrange> {
-    List<CourseArrangeVo> getCourseArrangeVoForAdm();
+    List<CourseArrangeVo> getCourseArrangeVo();
 
-    List<CourseArrangeVo> getCourseArrangeVoByNo(String teachCourseNo);
+    List<CourseArrangeVo> getCourseArrangeVoWithCond(CourseArrange courseArrange);
 
 }

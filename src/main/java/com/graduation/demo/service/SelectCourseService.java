@@ -15,5 +15,7 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface SelectCourseService extends IService<SelectCourse> {
-    List<SelectCourseVo> getSelectCourseVoForAdm();
+    List<SelectCourseVo> getSelectCourseVo();
+
+    List<SelectCourseVo> getSelectCourseVoWithCond(SelectCourse selectCourse);
 }

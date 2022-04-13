@@ -34,8 +34,8 @@
         id, dept_no, major_no, course_no, grade, semester, remark
     </sql>
 
-    <!-- 管理员用教学计划联查结果列 -->
-    <select id="getCoursePlanVoForAdm" resultMap="CoursePlanMap">
+    <!-- 教学计划联查结果列 -->
+    <select id="getCoursePlanVo" resultMap="CoursePlanMap">
         select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
         cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
         cp.semester, cp.remark
@@ -45,18 +45,20 @@
         and cp.major_no = m.major_no
     </select>
 
-    <!-- 学生用教学计划联查结果列 -->
-    <select id="getCoursePlanVoForStu" parameterType="com.graduation.demo.entity.Student" resultMap="CoursePlanMap">
+    <!-- 教学计划条件查询联查结果列 -->
+    <select id="getCoursePlanVoWithCond" parameterType="com.graduation.demo.entity.CoursePlan" resultMap="CoursePlanMap">
         select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
         cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
         cp.semester, cp.remark
         from xk_course_plan cp, xk_dept d, xk_major m, xk_course c
-        where cp.dept_no = #{deptNo}
-        and cp.major_no = #{majorNo}
-        and cp.grade = #{grade}
-        and cp.course_no = c.course_no
+        where cp.course_no = c.course_no
         and cp.dept_no = d.dept_no
         and cp.major_no = m.major_no
+        <if test="deptNo != null">and cp.dept_no = #{deptNo}</if>
+        <if test="majorNo != null">and cp.major_no = #{majorNo}</if>
+        <if test="courseNo != null">and cp.course_no = #{courseNo}</if>
+        <if test="grade != null">and cp.grade = #{grade}</if>
+        <if test="semester != null">and cp.semester = #{semester}</if>
     </select>
 
 </mapper>

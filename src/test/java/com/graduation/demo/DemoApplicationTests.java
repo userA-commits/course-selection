@@ -1,6 +1,6 @@
 package com.graduation.demo;
 
-import com.graduation.demo.entity.Student;
+import com.graduation.demo.entity.*;
 import com.graduation.demo.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,12 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    SelectCourseService selectCourseService;
+    CoursePlanService coursePlanService;
     @Test
     void test(){
-        System.out.println(selectCourseService.getSelectCourseVoForAdm());
+        CoursePlan coursePlan = new CoursePlan();
+        coursePlan.setGrade("2018");
+        System.out.println(coursePlanService.getCoursePlanVoWithCond(coursePlan));
     }
 
 }

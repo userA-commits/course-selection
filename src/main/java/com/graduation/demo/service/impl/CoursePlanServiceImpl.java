@@ -25,12 +25,12 @@ public class CoursePlanServiceImpl extends ServiceImpl<CoursePlanMapper, CourseP
     CoursePlanMapper coursePlanMapper;
 
     @Override
-    public List<CoursePlanVo> getCoursePlanVoForStu(Student student) {
-        return coursePlanMapper.getCoursePlanVoForStu(student);
+    public List<CoursePlanVo> getCoursePlanVo() {
+        return coursePlanMapper.getCoursePlanVo();
     }
 
     @Override
-    public List<CoursePlanVo> getCoursePlanVoForAdm() {
-        return coursePlanMapper.getCoursePlanVoForAdm();
+    public List<CoursePlanVo> getCoursePlanVoWithCond(CoursePlan coursePlan) {
+        return coursePlanMapper.getCoursePlanVoWithCond(coursePlan);
     }
 }

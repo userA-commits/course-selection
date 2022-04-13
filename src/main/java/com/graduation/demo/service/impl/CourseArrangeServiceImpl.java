@@ -23,13 +23,14 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
     @Autowired
     CourseArrangeMapper courseArrangeMapper;
 
+
     @Override
-    public List<CourseArrangeVo> getCourseArrangeVoForAdm() {
-        return courseArrangeMapper.getCourseArrangeVoForAdm();
+    public List<CourseArrangeVo> getCourseArrangeVo() {
+        return courseArrangeMapper.getCourseArrangeVo();
     }
 
     @Override
-    public List<CourseArrangeVo> getCourseArrangeVoByNo(String teachCourseNo) {
-        return courseArrangeMapper.getCourseArrangeVoByNo(teachCourseNo);
+    public List<CourseArrangeVo> getCourseArrangeVoWithCond(CourseArrange courseArrange) {
+        return courseArrangeMapper.getCourseArrangeVoWithCond(courseArrange);
     }
 }
