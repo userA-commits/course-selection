@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 公告管理控制器
+ * 公告管理前端控制器
  *
  * @author 王奥
  * @since 2022-03-19
