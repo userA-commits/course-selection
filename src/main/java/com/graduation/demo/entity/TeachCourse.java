@@ -33,6 +33,9 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "课程编号")
     private String courseNo;
 
+    @ApiModelProperty(value = "状态，0代表正使用，1代表已结束")
+    private int state;
+
     @ApiModelProperty(value = "学生人数")
     private int studentNum;
 
@@ -68,6 +71,14 @@ private static final long serialVersionUID=1L;
 
     public void setTeacherNo(String teacherNo) {
         this.teacherNo = teacherNo;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public String getCourseNo() {
@@ -117,6 +128,7 @@ private static final long serialVersionUID=1L;
                 ", teachCourseNo='" + teachCourseNo + '\'' +
                 ", teacherNo='" + teacherNo + '\'' +
                 ", courseNo='" + courseNo + '\'' +
+                ", state=" + state +
                 ", studentNum=" + studentNum +
                 ", upperNum=" + upperNum +
                 ", clazzNo='" + clazzNo + '\'' +

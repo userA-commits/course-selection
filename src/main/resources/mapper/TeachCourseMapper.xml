@@ -8,6 +8,7 @@
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="teacher_no" property="teacherNo" />
         <result column="course_no" property="courseNo" />
+        <result column="state" property="state" />
         <result column="student_num" property="studentNum" />
         <result column="upper_num" property="upperNum" />
         <result column="clazz_no" property="clazzNo" />
@@ -22,6 +23,7 @@
         <result column="course_no" property="courseNo" />
         <result column="course_name" property="courseName" />
         <result column="credit" property="credit" />
+        <result column="state" property="state" />
         <result column="student_num" property="studentNum" />
         <result column="upper_num" property="upperNum" />
         <result column="clazz_no" property="clazzNo" />
@@ -32,13 +34,13 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, teach_course_no, teacher_no, course_no, student_num, upper_num, clazz_no, remark
+        id, teach_course_no, teacher_no, course_no, state, student_num, upper_num, clazz_no, remark
     </sql>
 
     <!-- 授课管理联查结果列 -->
     <select id="getTeachCourseVo" resultMap="TeachCourseMap">
         select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
-        cr.name course_name, cr.credit, tc.student_num, tc.upper_num, tc.clazz_no,
+        cr.name course_name, cr.credit, tc.state, tc.student_num, tc.upper_num, tc.clazz_no,
         cz.name clazz_name, cz.type clazz_type, tc.remark
         from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
         where tc.teacher_no = t.teacher_no
@@ -49,7 +51,7 @@
     <!-- 授课管理条件查询联查结果列 -->
     <select id="getTeachCourseVoWithCond" parameterType="com.graduation.demo.entity.TeachCourse" resultMap="TeachCourseMap">
         select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
-        cr.name course_name, cr.credit, tc.student_num, tc.upper_num, tc.clazz_no,
+        cr.name course_name, cr.credit, tc.state, tc.student_num, tc.upper_num, tc.clazz_no,
         cz.name clazz_name, cz.type clazz_type, tc.remark
         from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
         where tc.teacher_no = t.teacher_no
@@ -58,6 +60,6 @@
         <if test="teachCourseNo != null">and tc.teach_course_no = #{teachCourseNo}</if>
         <if test="teacherNo != null">and tc.teacher_no = #{teacherNo}</if>
         <if test="courseNo != null">and tc.course_no = #{courseNo}</if>
-        <if test="clazzNo != null">and tc.clazz_no = #{clazzNo}</if>
+        <if test="state != null">and tc.state = #{state}</if>
     </select>
 </mapper>

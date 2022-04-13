@@ -31,6 +31,9 @@ public class TeachCourseVo  implements Serializable {
     @ApiModelProperty(value = "课程编号", notes = "form teach course")
     private String courseNo;
 
+    @ApiModelProperty(value = "状态，0代表正使用，1代表已结束")
+    private int state;
+
     @ApiModelProperty(value = "课程名称", notes = "form course")
     private String courseName;
 
@@ -54,10 +57,6 @@ public class TeachCourseVo  implements Serializable {
 
     @ApiModelProperty(value = "备注", notes = "form teach course")
     private String remark;
-
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
 
     public String getId() {
         return id;
@@ -97,6 +96,14 @@ public class TeachCourseVo  implements Serializable {
 
     public void setCourseNo(String courseNo) {
         this.courseNo = courseNo;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
     }
 
     public String getCourseName() {
@@ -171,6 +178,7 @@ public class TeachCourseVo  implements Serializable {
                 ", teacherNo='" + teacherNo + '\'' +
                 ", TeacherName='" + TeacherName + '\'' +
                 ", courseNo='" + courseNo + '\'' +
+                ", state=" + state +
                 ", courseName='" + courseName + '\'' +
                 ", credit=" + credit +
                 ", studentNum=" + studentNum +

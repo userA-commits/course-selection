@@ -14,7 +14,9 @@ class DemoApplicationTests {
     TeachCourseService teachCourseService;
     @Test
     void test(){
-        System.out.println(teachCourseService.getTeachCourseVo());
+        TeachCourse teachCourse = new TeachCourse();
+        teachCourse.setState(1);
+        System.out.println(teachCourseService.getTeachCourseVoWithCond(teachCourse));
     }
 
 }
