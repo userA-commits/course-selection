@@ -33,6 +33,12 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "课程编号")
     private String courseNo;
 
+    @ApiModelProperty(value = "学生人数")
+    private int studentNum;
+
+    @ApiModelProperty(value = "学生人数上限")
+    private int upperNum;
+
     @ApiModelProperty(value = "班级编号")
     private String clazzNo;
 
@@ -60,8 +66,8 @@ private static final long serialVersionUID=1L;
         return teacherNo;
     }
 
-    public void setTeacherNo(String teacharNo) {
-        this.teacherNo = teacharNo;
+    public void setTeacherNo(String teacherNo) {
+        this.teacherNo = teacherNo;
     }
 
     public String getCourseNo() {
@@ -70,6 +76,22 @@ private static final long serialVersionUID=1L;
 
     public void setCourseNo(String courseNo) {
         this.courseNo = courseNo;
+    }
+
+    public int getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(int studentNum) {
+        this.studentNum = studentNum;
+    }
+
+    public int getUpperNum() {
+        return upperNum;
+    }
+
+    public void setUpperNum(int upperNum) {
+        this.upperNum = upperNum;
     }
 
     public String getClazzNo() {
@@ -91,12 +113,14 @@ private static final long serialVersionUID=1L;
     @Override
     public String toString() {
         return "TeachCourse{" +
-        "id=" + id +
-        ", teachCourseNo=" + teachCourseNo +
-        ", teacherNo=" + teacherNo +
-        ", courseNo=" + courseNo +
-        ", clazzNo=" + clazzNo +
-        ", remark=" + remark +
-        "}";
+                "id='" + id + '\'' +
+                ", teachCourseNo='" + teachCourseNo + '\'' +
+                ", teacherNo='" + teacherNo + '\'' +
+                ", courseNo='" + courseNo + '\'' +
+                ", studentNum=" + studentNum +
+                ", upperNum=" + upperNum +
+                ", clazzNo='" + clazzNo + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
     }
 }

@@ -37,6 +37,12 @@ public class TeachCourseVo  implements Serializable {
     @ApiModelProperty(value = "学分", notes = "form course")
     private Float credit;
 
+    @ApiModelProperty(value = "学生人数", notes = "form teach course")
+    private int studentNum;
+
+    @ApiModelProperty(value = "学生人数上限", notes = "form teach course")
+    private int upperNum;
+
     @ApiModelProperty(value = "班级编号", notes = "form teach course")
     private String clazzNo;
 
@@ -109,6 +115,22 @@ public class TeachCourseVo  implements Serializable {
         this.credit = credit;
     }
 
+    public int getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(int studentNum) {
+        this.studentNum = studentNum;
+    }
+
+    public int getUpperNum() {
+        return upperNum;
+    }
+
+    public void setUpperNum(int upperNum) {
+        this.upperNum = upperNum;
+    }
+
     public String getClazzNo() {
         return clazzNo;
     }
@@ -151,6 +173,8 @@ public class TeachCourseVo  implements Serializable {
                 ", courseNo='" + courseNo + '\'' +
                 ", courseName='" + courseName + '\'' +
                 ", credit=" + credit +
+                ", studentNum=" + studentNum +
+                ", upperNum=" + upperNum +
                 ", clazzNo='" + clazzNo + '\'' +
                 ", clazzName='" + clazzName + '\'' +
                 ", clazzType='" + clazzType + '\'' +

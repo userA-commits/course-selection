@@ -33,6 +33,9 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "班级名称")
     private String name;
 
+    @ApiModelProperty(value = "班级人数")
+    private int studentNum;
+
     @ApiModelProperty(value = "班级类别")
     private String type;
 
@@ -72,6 +75,14 @@ private static final long serialVersionUID=1L;
         this.name = name;
     }
 
+    public int getStudentNum() {
+        return studentNum;
+    }
+
+    public void setStudentNum(int studentNum) {
+        this.studentNum = studentNum;
+    }
+
     public String getType() {
         return type;
     }
@@ -91,12 +102,13 @@ private static final long serialVersionUID=1L;
     @Override
     public String toString() {
         return "Clazz{" +
-        "id=" + id +
-        ", clazzNo=" + clazzNo +
-        ", majorNo=" + majorNo +
-        ", name=" + name +
-        ", type=" + type +
-        ", description=" + description +
-        "}";
+                "id='" + id + '\'' +
+                ", clazzNo='" + clazzNo + '\'' +
+                ", majorNo='" + majorNo + '\'' +
+                ", name='" + name + '\'' +
+                ", studentNum=" + studentNum +
+                ", type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
     }
 }
