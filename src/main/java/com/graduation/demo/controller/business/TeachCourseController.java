@@ -62,22 +62,17 @@ public class TeachCourseController {
     public DataResult add(TeachCourse teachCourse){
         //当教师学院编号与课程学院编号相同时，执行插入，否则提示失败
         if(teachCourseService.isSameDept(teachCourse)){
-            teachCourseService.save(teachCourse);
+            //存储时，存入对应的学生选课信息
+            teachCourseService.saveRequired(teachCourse);
             return DataResult.success();
         }else{
             return DataResult.getResult(401, "不能让给教师赋予非本院课程");
         }
     }
 
-    @PostMapping("/edit")
-    public DataResult edit(TeachCourse teachCourse){
-        teachCourseService.updateById(teachCourse);
-        return DataResult.success();
-    }
-
     @PostMapping("/remove")
     public DataResult remove(List<String> ids){
-        teachCourseService.removeByIds(ids);
+        teachCourseService.removeRequired(ids);
         return DataResult.success();
     }
 }

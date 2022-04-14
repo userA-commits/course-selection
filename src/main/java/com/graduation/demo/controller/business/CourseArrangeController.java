@@ -4,6 +4,7 @@ package com.graduation.demo.controller.business;
 import com.graduation.demo.entity.CourseArrange;
 import com.graduation.demo.service.CourseArrangeService;
 import com.graduation.demo.utils.DataResult;
+import com.graduation.demo.vo.CourseArrangeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +24,23 @@ public class CourseArrangeController {
     @Autowired
     CourseArrangeService courseArrangeService;
 
-    //TODO:需要当排课完成时自动同步对应班级学生的选课列表
-    //TODO:需要以教师为分组的列表
-    //TODO:需要以学生和学期为分组的列表
-
     @PostMapping("/index")
     public String index(){
         return "underinstruction";
+    }
+
+    @PostMapping("/getCourseArrangeVos")
+    public DataResult getCourseArrangeVos(){
+        List<CourseArrangeVo> courseArrangeVos = courseArrangeService.getCourseArrangeVo();
+        DataResult<List<CourseArrangeVo>> result = new DataResult<>(courseArrangeVos);
+        return result;
+    }
+
+    @PostMapping("/getCourseArrangeVosWithCond")
+    public DataResult getCourseArrangeVosWithCond(CourseArrange courseArrange){
+        List<CourseArrangeVo> courseArrangeVos = courseArrangeService.getCourseArrangeVoWithCond(courseArrange);
+        DataResult<List<CourseArrangeVo>> result = new DataResult<>(courseArrangeVos);
+        return result;
     }
 
     @PostMapping("/query")

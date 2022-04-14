@@ -21,16 +21,14 @@ import java.util.List;
  */
 @Service
 public class CoursePlanServiceImpl extends ServiceImpl<CoursePlanMapper, CoursePlan> implements CoursePlanService {
-    @Autowired
-    CoursePlanMapper coursePlanMapper;
 
     @Override
     public List<CoursePlanVo> getCoursePlanVo() {
-        return coursePlanMapper.getCoursePlanVo();
+        return this.getBaseMapper().getCoursePlanVo();
     }
 
     @Override
     public List<CoursePlanVo> getCoursePlanVoWithCond(CoursePlan coursePlan) {
-        return coursePlanMapper.getCoursePlanVoWithCond(coursePlan);
+        return this.getBaseMapper().getCoursePlanVoWithCond(coursePlan);
     }
 }

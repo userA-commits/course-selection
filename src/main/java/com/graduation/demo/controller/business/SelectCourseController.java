@@ -25,6 +25,7 @@ public class SelectCourseController {
     SelectCourseService selectCourseService;
 
     //TODO:需要当排课完成时自动同步插入班级学生的选课列表
+    //TODO:选课允许对选修课进行操作，必修课只允许查看
 
     @PostMapping("/index")
     public String index(){
