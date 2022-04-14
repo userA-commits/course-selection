@@ -24,6 +24,7 @@ public class CourseArrangeController {
     @Autowired
     CourseArrangeService courseArrangeService;
 
+
     @PostMapping("/index")
     public String index(){
         return "underinstruction";
@@ -49,18 +50,15 @@ public class CourseArrangeController {
         DataResult<List<CourseArrange>> result = new DataResult<>(courseArranges);
         return result;
     }
-
+    //对添加排课进行冲突检测
     @PostMapping("/add")
     public DataResult add(CourseArrange courseArrange){
-        courseArrangeService.save(courseArrange);
-        return DataResult.success();
+        CourseArrange conflict = courseArrangeService.addWithConflictCheck(courseArrange);
+        if(conflict == null) return DataResult.success();
+
+        return DataResult.getResult(401, "存在课程冲突，无法添加成功", conflict);
     }
 
-    @PostMapping("/edit")
-    public DataResult edit(CourseArrange courseArrange){
-        courseArrangeService.updateById(courseArrange);
-        return DataResult.success();
-    }
 
     @PostMapping("/remove")
     public DataResult remove(List<String> ids){

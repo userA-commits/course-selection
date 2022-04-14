@@ -18,4 +18,6 @@ public interface SelectCourseService extends IService<SelectCourse> {
     List<SelectCourseVo> getSelectCourseVo();
 
     List<SelectCourseVo> getSelectCourseVoWithCond(SelectCourse selectCourse);
+
+    boolean haveConflict(SelectCourse selectCourse);
 }

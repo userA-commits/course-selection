@@ -19,4 +19,8 @@ public interface CourseArrangeService extends IService<CourseArrange> {
 
     List<CourseArrangeVo> getCourseArrangeVoWithCond(CourseArrange courseArrange);
 
+    CourseArrange addWithConflictCheck(CourseArrange courseArrange);
+
+    CourseArrange haveConflict(CourseArrange courseArrange);
+
 }

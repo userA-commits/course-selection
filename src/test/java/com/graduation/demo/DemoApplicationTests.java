@@ -12,22 +12,15 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    TeachCourseService teachCourseService;
+    CourseArrangeService courseArrangeService;
     @Test
     void test(){
-//        TeachCourse teachCourse = new TeachCourse();
-//        teachCourse.setTeacherNo("teacher2");
-//        teachCourse.setClazzNo("CS181");
-//        teachCourse.setCourseNo("MS0001");
-//        teachCourse.setTeachCourseNo("MS0001.teacher2.CS181");
-//        teachCourse.setState(0);
-//        //存储时，存入对应的学生选课信息
-//        teachCourseService.saveRequired(teachCourse);
-
-
-        List<String> ids = new ArrayList<>();
-        ids.add("2");
-        teachCourseService.removeRequired(ids);
+        CourseArrange courseArrange = new CourseArrange();
+        courseArrange.setTeachCourseNo("MS0001.teacher2.CS181");
+        courseArrange.setClassroomNo("H4001");
+        courseArrange.setWeek(1);
+        courseArrange.setPeriod(3);
+        System.out.println(courseArrangeService.addWithConflictCheck(courseArrange));
     }
 
 }

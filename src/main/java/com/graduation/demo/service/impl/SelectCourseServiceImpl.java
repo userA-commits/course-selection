@@ -20,16 +20,22 @@ import java.util.List;
  */
 @Service
 public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, SelectCourse> implements SelectCourseService {
-    @Autowired
-    SelectCourseMapper selectCourseMapper;
+
 
     @Override
     public List<SelectCourseVo> getSelectCourseVo() {
-        return selectCourseMapper.getSelectCourseVo();
+        return this.getBaseMapper().getSelectCourseVo();
     }
 
     @Override
     public List<SelectCourseVo> getSelectCourseVoWithCond(SelectCourse selectCourse) {
-        return selectCourseMapper.getSelectCourseVoWithCond(selectCourse);
+        return this.getBaseMapper().getSelectCourseVoWithCond(selectCourse);
+    }
+
+    //对选课信息进行冲突检测
+    @Override
+    public boolean haveConflict(SelectCourse selectCourse){
+        //对学生课程安排进行检测
+        return true;
     }
 }
