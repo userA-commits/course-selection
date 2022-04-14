@@ -75,6 +75,7 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
             selectCourse = new SelectCourse();
             selectCourse.setStudentNo(student.getStudentNo());
             selectCourse.setTeachCourseNo(teachCourse.getTeachCourseNo());
+            //TODO:考虑一个可靠的学期生成方式
             selectCourse.setSemester(1);
             selectCourseService.save(selectCourse);
         }

@@ -39,7 +39,7 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "需要教室类型，0为普通，1为特殊")
     private Integer classroomType;
 
-    @ApiModelProperty(value = "课程类别，0必修，1选修")
+    @ApiModelProperty(value = "课程类别，0选修，1必修")
     private Integer isRequired;
 
     @ApiModelProperty(value = "考核方式")

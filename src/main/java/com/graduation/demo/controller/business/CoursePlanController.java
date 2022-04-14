@@ -31,7 +31,7 @@ public class CoursePlanController {
         return "underinstruction";
     }
 
-    //用于获取对应年级专业的所有排课信息
+    //用于获取对应年级专业的所有教学计划信息
     @PostMapping("/getCoursePlanVosByCond")
     public DataResult getCoursePlanVosByCond(CoursePlan coursePlan){
         List<CoursePlanVo> coursePlanVos = coursePlanService.getCoursePlanVoWithCond(coursePlan);
