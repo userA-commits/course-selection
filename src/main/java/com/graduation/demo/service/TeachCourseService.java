@@ -19,4 +19,6 @@ public interface TeachCourseService extends IService<TeachCourse> {
     List<TeachCourseVo> getTeachCourseVo();
 
     List<TeachCourseVo> getTeachCourseVoWithCond(TeachCourse teachCourse);
+
+    boolean isSameDept(TeachCourse teachCourse);
 }

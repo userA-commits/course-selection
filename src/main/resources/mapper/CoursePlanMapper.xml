@@ -43,6 +43,7 @@
         where cp.course_no = c.course_no
         and cp.dept_no = d.dept_no
         and cp.major_no = m.major_no
+        order by cp.semester asc
     </select>
 
     <!-- 教学计划条件查询联查结果列 -->
@@ -59,6 +60,7 @@
         <if test="courseNo != null">and cp.course_no = #{courseNo}</if>
         <if test="grade != null">and cp.grade = #{grade}</if>
         <if test="semester != null">and cp.semester = #{semester}</if>
+        order by cp.semester asc
     </select>
 
 </mapper>

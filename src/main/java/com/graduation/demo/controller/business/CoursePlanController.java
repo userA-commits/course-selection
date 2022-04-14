@@ -1,9 +1,11 @@
 package com.graduation.demo.controller.business;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.demo.entity.CoursePlan;
 import com.graduation.demo.service.CoursePlanService;
 import com.graduation.demo.utils.DataResult;
+import com.graduation.demo.vo.CoursePlanVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,11 +26,24 @@ public class CoursePlanController {
     @Autowired
     CoursePlanService coursePlanService;
 
-    //TODO:需要按照推荐修课学期正序排列，并且以专业为分组的课程计划表
-
     @PostMapping("/index")
     public String index(){
         return "underinstruction";
+    }
+
+    //用于获取对应年级专业的所有排课信息
+    @PostMapping("/getCoursePlanVosByCond")
+    public DataResult getCoursePlanVosByCond(CoursePlan coursePlan){
+        List<CoursePlanVo> coursePlanVos = coursePlanService.getCoursePlanVoWithCond(coursePlan);
+        DataResult<List<CoursePlanVo>> result = new DataResult<>(coursePlanVos);
+        return result;
+    }
+
+    @PostMapping("/getCoursePlanVos")
+    public DataResult getCoursePlanVos(){
+        List<CoursePlanVo> coursePlanVos = coursePlanService.getCoursePlanVo();
+        DataResult<List<CoursePlanVo>> result = new DataResult<>(coursePlanVos);
+        return result;
     }
 
     @PostMapping("/query")
