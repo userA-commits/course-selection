@@ -8,6 +8,7 @@ import com.graduation.demo.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.graduation.demo.vo.TeachCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
     @Autowired
     CourseService courseService;
     @Autowired
+    @Lazy
     SelectCourseService selectCourseService;
 
     @Override

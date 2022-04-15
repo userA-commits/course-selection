@@ -12,15 +12,12 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    CourseArrangeService courseArrangeService;
+    CourseTableService courseTableService;
     @Test
     void test(){
-        CourseArrange courseArrange = new CourseArrange();
-        courseArrange.setTeachCourseNo("MS0001.teacher2.CS181");
-        courseArrange.setClassroomNo("H4001");
-        courseArrange.setWeek(1);
-        courseArrange.setPeriod(3);
-        System.out.println(courseArrangeService.addWithConflictCheck(courseArrange));
+        Teacher teacher = new Teacher();
+        teacher.setTeacherNo("teacher2");
+        System.out.println(courseTableService.getCourseTableForTea(teacher));
     }
 
 }

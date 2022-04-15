@@ -14,6 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/course-score")
 public class CourseScoreController {
-
+    //todo:教师录入分数和学生查看成绩列表
 }
 

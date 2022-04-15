@@ -31,7 +31,7 @@ public class TeachCourseVo  implements Serializable {
     @ApiModelProperty(value = "课程编号", notes = "form teach course")
     private String courseNo;
 
-    @ApiModelProperty(value = "状态，0代表正使用，1代表已结束")
+    @ApiModelProperty(value = "状态，0代表正使用，1代表已结束", notes = "form teach course")
     private int state;
 
     @ApiModelProperty(value = "课程名称", notes = "form course")

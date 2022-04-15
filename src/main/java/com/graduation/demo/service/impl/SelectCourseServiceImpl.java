@@ -14,6 +14,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.graduation.demo.service.TeachCourseService;
 import com.graduation.demo.vo.SelectCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +30,10 @@ import java.util.List;
 @Service
 public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, SelectCourse> implements SelectCourseService {
     @Autowired
+    @Lazy
     CourseArrangeService courseArrangeService;
     @Autowired
+    @Lazy
     TeachCourseService teachCourseService;
     @Autowired
     CourseService courseService;
