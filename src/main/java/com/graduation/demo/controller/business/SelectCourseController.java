@@ -59,6 +59,7 @@ public class SelectCourseController {
         if(msg.equals("OK")) return DataResult.success();
         else return DataResult.getResult(401, msg);
     }
+
     //只允许取消选修课。在删除选课时，自动减一对应的授课人数
     @PostMapping("/remove")
     public DataResult remove(List<String> ids){

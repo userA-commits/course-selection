@@ -45,6 +45,7 @@
         where sc.teach_course_no = tc.teach_course_no
         and sc.student_no = s.student_no
         and tc.course_no = c.course_no
+        order by teach_course_no asc
     </select>
 
     <!-- 选课管理条件查询联查结果列 -->
@@ -60,5 +61,6 @@
         <if test="teachCourseNo != null">and sc.teach_course_no = #{teachCourseNo}</if>
         <if test="studentNo != null">and sc.student_no = #{studentNo}</if>
         <if test="semester != null">and sc.semester = #{semester}</if>
+        order by teach_course_no asc
     </select>
 </mapper>

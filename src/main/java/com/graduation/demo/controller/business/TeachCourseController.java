@@ -11,6 +11,7 @@ import com.graduation.demo.service.TeacherService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.vo.TeachCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -28,6 +29,7 @@ import java.util.List;
 @RequestMapping("/teach-course")
 public class TeachCourseController {
     @Autowired
+    @Lazy
     TeachCourseService teachCourseService;
 
 
