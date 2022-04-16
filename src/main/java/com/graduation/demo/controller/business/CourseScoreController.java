@@ -66,7 +66,7 @@ public class CourseScoreController {
         return DataResult.success();
     }
     //学生查看成绩列表
-    @PostMapping("getCourseScoreVosForStu")
+    @PostMapping("/getCourseScoreVosForStu")
     public DataResult getCourseScoreVosForStu(String studentNo, int semester){
         SelectCourse selectCourse = new SelectCourse();
         selectCourse.setStudentNo(studentNo);
