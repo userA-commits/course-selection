@@ -1,6 +1,7 @@
 package com.graduation.demo.config;
 
 
+import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import com.graduation.demo.shiro.AdminRealm;
 import com.graduation.demo.shiro.StudentRealm;
 import com.graduation.demo.shiro.TeacherRealm;
@@ -103,5 +104,10 @@ public class ShiroConfig {
         AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor = new AuthorizationAttributeSourceAdvisor();
         authorizationAttributeSourceAdvisor.setSecurityManager(securityManager);
         return authorizationAttributeSourceAdvisor;
+    }
+    //配置整合shiro与thymeleaf
+    @Bean
+    public ShiroDialect getShiroDialect(){
+        return new ShiroDialect();
     }
 }

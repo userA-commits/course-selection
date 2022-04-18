@@ -8,6 +8,7 @@ import com.graduation.demo.service.AdminService;
 import com.graduation.demo.service.StudentService;
 import com.graduation.demo.service.TeacherService;
 import com.graduation.demo.shiro.UserToken;
+import com.graduation.demo.utils.DataResult;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -20,6 +21,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 /**
  * 登录前端控制器
@@ -37,8 +44,18 @@ public class LoginController {
     @Autowired
     StudentService studentService;
 
-    @PostMapping("/adminLogin")
-    public String adminLogin(Admin admin){
+    @GetMapping("/index")
+    public ModelAndView index(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("login");
+        return modelAndView;
+    }
+
+    @GetMapping("/adminLogin")
+    public ModelAndView adminLogin(Admin admin) {
+
+        ModelAndView modelAndView = new ModelAndView();
+
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UserToken userToken = new UserToken(
@@ -52,18 +69,25 @@ public class LoginController {
 //            subject.checkRole("admin");
 //            subject.checkPermissions("query", "add");
         } catch (UnknownAccountException e) {
-            return "用户名不存在！";
+            modelAndView.setViewName("login");
+            modelAndView.addObject("msg", "用户名不存在！");
+            return modelAndView;
         } catch (AuthenticationException e) {
-            return "账号或密码错误！";
+            modelAndView.setViewName("login");
+            modelAndView.addObject("msg", "账号或密码错误！");
+            return modelAndView;
         } catch (AuthorizationException e) {
-            return "没有权限";
+            modelAndView.setViewName("login");
+            modelAndView.addObject("msg", "没有权限");
+            return modelAndView;
         }
+        modelAndView.setViewName("index");
 
-        return "index";
+        return modelAndView;
     }
 
     @PostMapping("/teacherLogin")
-    public String teacherLogin(Teacher teacher){
+    public DataResult teacherLogin(Teacher teacher) {
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UserToken userToken = new UserToken(
@@ -77,18 +101,18 @@ public class LoginController {
 //            subject.checkRole("admin");
 //            subject.checkPermissions("query", "add");
         } catch (UnknownAccountException e) {
-            return "用户名不存在！";
+            return DataResult.getResult(401, "用户名不存在！");
         } catch (AuthenticationException e) {
-            return "账号或密码错误！";
+            return DataResult.getResult(401, "账号或密码错误！");
         } catch (AuthorizationException e) {
-            return "没有权限";
+            return DataResult.getResult(401, "没有权限");
         }
 
-        return "index";
+        return DataResult.success();
     }
 
     @PostMapping("/studentLogin")
-    public String studentLogin(Student student){
+    public DataResult studentLogin(Student student) {
         //用户认证信息
         Subject subject = SecurityUtils.getSubject();
         UserToken userToken = new UserToken(
@@ -102,13 +126,13 @@ public class LoginController {
 //            subject.checkRole("admin");
 //            subject.checkPermissions("query", "add");
         } catch (UnknownAccountException e) {
-            return "用户名不存在！";
+            return DataResult.getResult(401, "用户名不存在！");
         } catch (AuthenticationException e) {
-            return "账号或密码错误！";
+            return DataResult.getResult(401, "账号或密码错误！");
         } catch (AuthorizationException e) {
-            return "没有权限";
+            return DataResult.getResult(401, "没有权限");
         }
 
-        return "index";
+        return DataResult.success();
     }
 }
