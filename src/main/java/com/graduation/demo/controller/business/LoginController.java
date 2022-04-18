@@ -1,5 +1,6 @@
 package com.graduation.demo.controller.business;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.demo.entity.Admin;
 import com.graduation.demo.entity.Student;
 import com.graduation.demo.entity.Teacher;
@@ -51,23 +52,55 @@ public class LoginController {
         return modelAndView;
     }
 
-    @GetMapping("/adminLogin")
-    public ModelAndView adminLogin(Admin admin) {
+    @GetMapping("/login")
+    public ModelAndView login(String no, String password, int userType) {
 
         ModelAndView modelAndView = new ModelAndView();
-
-        //用户认证信息
+        UserToken userToken = null;
         Subject subject = SecurityUtils.getSubject();
-        UserToken userToken = new UserToken(
-                admin.getAdminNo(),
-                admin.getPassword(),
-                LoginType.ADMIN.toString()
-        );
+
+        if(userType == 1){
+            Admin admin = adminService.getOne(new QueryWrapper<Admin>()
+                    .select("*")
+                    .eq("admin_no", no)
+                    .eq("password", password)
+            );
+            //管理员认证
+            userToken = new UserToken(
+                    admin.getAdminNo(),
+                    admin.getPassword(),
+                    LoginType.ADMIN.toString()
+            );
+        }else if(userType == 2){
+            Teacher teacher = teacherService.getOne(new QueryWrapper<Teacher>()
+                    .select("*")
+                    .eq("teacher_no", no)
+                    .eq("password", password)
+            );
+            //教师认证
+            userToken = new UserToken(
+                    teacher.getTeacherNo(),
+                    teacher.getPassword(),
+                    LoginType.ADMIN.toString()
+            );
+        }else{
+            Student student = studentService.getOne(new QueryWrapper<Student>()
+                    .select("*")
+                    .eq("student_no", no)
+                    .eq("password", password)
+            );
+            //学生认证
+            userToken = new UserToken(
+                    student.getStudentNo(),
+                    student.getPassword(),
+                    LoginType.ADMIN.toString()
+            );
+        }
+
         try {
             //进行验证，这里可以捕获异常，然后返回对应信息
             subject.login(userToken);
-//            subject.checkRole("admin");
-//            subject.checkPermissions("query", "add");
+
         } catch (UnknownAccountException e) {
             modelAndView.setViewName("login");
             modelAndView.addObject("msg", "用户名不存在！");
@@ -84,55 +117,5 @@ public class LoginController {
         modelAndView.setViewName("index");
 
         return modelAndView;
-    }
-
-    @PostMapping("/teacherLogin")
-    public DataResult teacherLogin(Teacher teacher) {
-        //用户认证信息
-        Subject subject = SecurityUtils.getSubject();
-        UserToken userToken = new UserToken(
-                teacher.getTeacherNo(),
-                teacher.getPassword(),
-                LoginType.TEACHER.toString()
-        );
-        try {
-            //进行验证，这里可以捕获异常，然后返回对应信息
-            subject.login(userToken);
-//            subject.checkRole("admin");
-//            subject.checkPermissions("query", "add");
-        } catch (UnknownAccountException e) {
-            return DataResult.getResult(401, "用户名不存在！");
-        } catch (AuthenticationException e) {
-            return DataResult.getResult(401, "账号或密码错误！");
-        } catch (AuthorizationException e) {
-            return DataResult.getResult(401, "没有权限");
-        }
-
-        return DataResult.success();
-    }
-
-    @PostMapping("/studentLogin")
-    public DataResult studentLogin(Student student) {
-        //用户认证信息
-        Subject subject = SecurityUtils.getSubject();
-        UserToken userToken = new UserToken(
-                student.getStudentNo(),
-                student.getPassword(),
-                LoginType.TEACHER.toString()
-        );
-        try {
-            //进行验证，这里可以捕获异常，然后返回对应信息
-            subject.login(userToken);
-//            subject.checkRole("admin");
-//            subject.checkPermissions("query", "add");
-        } catch (UnknownAccountException e) {
-            return DataResult.getResult(401, "用户名不存在！");
-        } catch (AuthenticationException e) {
-            return DataResult.getResult(401, "账号或密码错误！");
-        } catch (AuthorizationException e) {
-            return DataResult.getResult(401, "没有权限");
-        }
-
-        return DataResult.success();
     }
 }
