@@ -28,8 +28,7 @@ public class AdminRealm extends AuthorizingRealm {
 
 
     /**
-     * @MethodName doGetAuthenticationInfo
-     * @Description 认证配置类
+     * @Description 认证类
      * @Param [authenticationToken]
      * @Return AuthenticationInfo
      * @Author WangShiLin
@@ -61,8 +60,7 @@ public class AdminRealm extends AuthorizingRealm {
     }
 
     /**
-     * @MethodName doGetAuthorizationInfo
-     * @Description 权限配置类
+     * @Description 授权类
      * @Param [principalCollection]
      * @Return AuthorizationInfo
      * @Author WangShiLin

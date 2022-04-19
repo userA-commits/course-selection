@@ -78,22 +78,26 @@ public class ShiroConfig {
         ShiroFilterFactoryBean shiroFilterFactoryBean = new ShiroFilterFactoryBean();
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> map = new HashMap<>();
-//        //登出
-//        map.put("/logout", "logout");
-//        //对所有用户认证
-//        map.put("/**", "authc");
-//        //登录
-//        shiroFilterFactoryBean.setLoginUrl("/login/**");
-//        //对swagger开放权限
-//        map.put("/swagger_ui.html", "anon");
-//        map.put("/webjars/**", "anon");
-//        map.put("/v2/**", "anon");
-//        map.put("/swagger-resources/**", "anon");
-//        map.put("/doc.html/**", "anon");
-//        //首页
-//        shiroFilterFactoryBean.setSuccessUrl("/index");
-//        //错误页面，认证不通过跳转
-//        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
+        //登出
+        map.put("/sys/logout", "logout");
+        //对所有用户认证
+        map.put("/**", "authc");
+        //对swagger开放权限
+        map.put("/swagger_ui.html", "anon");
+        map.put("/webjars/**", "anon");
+        map.put("/v2/**", "anon");
+        map.put("/swagger-resources/**", "anon");
+        map.put("/doc.html/**", "anon");
+        //对前端静态资源开放权限
+        map.put("/resources/**","anon");
+        map.put("/layui/**","anon");
+        map.put("/login/**","anon");
+        //登录
+        shiroFilterFactoryBean.setLoginUrl("/sys/toLogin");
+        //首页
+        shiroFilterFactoryBean.setSuccessUrl("/sys/index");
+        //错误页面，认证不通过跳转
+        shiroFilterFactoryBean.setUnauthorizedUrl("/error");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(map);
         return shiroFilterFactoryBean;
     }
