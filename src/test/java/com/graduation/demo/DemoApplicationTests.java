@@ -12,12 +12,10 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    CourseTableService courseTableService;
+    RoleService roleService;
     @Test
     void test(){
-        Teacher teacher = new Teacher();
-        teacher.setTeacherNo("teacher2");
-        System.out.println(courseTableService.getCourseTableForTea(teacher));
+        System.out.println(roleService.getMenus(1));
     }
 
 }

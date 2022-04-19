@@ -40,10 +40,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
     public List<Menu> getMenus(int roleNo) {
         //存放角色与权限对应关系
         List<RoleMenu> roleMenuList;
-        //暂存权限菜单列表
-        LinkedList<Menu> tempList = new LinkedList<>();
-        //结果权限列表
-        Set<Menu> resultSet = new HashSet<>();
+        //菜单列表
+        LinkedList<Menu> menuList = new LinkedList<>();
 
         //查询传入角色的权限对应关系
         QueryWrapper<RoleMenu> roleMenuQueryWrapper = new QueryWrapper<>();
@@ -58,24 +56,9 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             menuQueryWrapper
                     .select("*")
                     .eq("menu_no", roleMenu.getMenuNo());
-            tempList.add(menuService.getOne(menuQueryWrapper));
+            menuList.add(menuService.getOne(menuQueryWrapper));
         }
 
-        while(tempList.size() != 0){
-            //从临时列表弹出菜单放入结果集合
-            Menu menu = tempList.pollFirst();
-            resultSet.add(menu);
-
-            //查询当前菜单项目的子菜单
-            QueryWrapper<Menu> menuQueryWrapper = new QueryWrapper<>();
-            menuQueryWrapper
-                    .select("*")
-                    .eq("parent_no", menu.getMenuNo());
-            List<Menu> sonMenuList = menuService.list(menuQueryWrapper);
-            //将子菜单项放入临时列表
-            tempList.addAll(sonMenuList);
-        }
-        List<Menu> menuList = new ArrayList<>(resultSet);
         //将得到的菜单列表按编号正序排序
         Collections.sort(menuList, new Comparator<Menu>() {
             @Override
