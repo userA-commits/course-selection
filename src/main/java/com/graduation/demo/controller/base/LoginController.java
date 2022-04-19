@@ -1,11 +1,13 @@
 package com.graduation.demo.controller.base;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.graduation.demo.common.ActiveUser;
 import com.graduation.demo.entity.Admin;
 import com.graduation.demo.entity.Student;
 import com.graduation.demo.entity.Teacher;
 import com.graduation.demo.enums.LoginType;
 import com.graduation.demo.service.AdminService;
+import com.graduation.demo.service.RoleService;
 import com.graduation.demo.service.StudentService;
 import com.graduation.demo.service.TeacherService;
 import com.graduation.demo.shiro.UserToken;
@@ -36,12 +38,15 @@ public class LoginController {
     TeacherService teacherService;
     @Autowired
     StudentService studentService;
+    @Autowired
+    RoleService roleService;
 
     @RequestMapping("/login")
     public DataResult login(String no, String password, int userType){
 
 
         UserToken userToken = null;
+        ActiveUser user = null;
         Subject subject = SecurityUtils.getSubject();
 
         try {
@@ -57,6 +62,7 @@ public class LoginController {
                         admin.getPassword(),
                         LoginType.ADMIN.toString()
                 );
+                user = new ActiveUser(admin, roleService.getPerms(roleService.getMenus(1)));
             }else if(userType == 2){
                 Teacher teacher = teacherService.getOne(new QueryWrapper<Teacher>()
                         .select("*")
@@ -69,12 +75,14 @@ public class LoginController {
                         teacher.getPassword(),
                         LoginType.ADMIN.toString()
                 );
+                user = new ActiveUser(teacher, roleService.getPerms(roleService.getMenus(2)));
             }else{
                 Student student = studentService.getOne(new QueryWrapper<Student>()
                         .select("*")
                         .eq("student_no", no)
                         .eq("password", password)
                 );
+                user = new ActiveUser(student, roleService.getPerms(roleService.getMenus(3)));
                 //学生认证
                 userToken = new UserToken(
                         student.getStudentNo(),
@@ -86,7 +94,7 @@ public class LoginController {
             //进行验证，这里可以捕获异常，然后返回对应信息
             subject.login(userToken);
             //将角色编号放入session域
-            WEBUtils.getSession().setAttribute("userNo", no);
+            WEBUtils.getSession().setAttribute("user", user);
         } catch (NullPointerException e) {
             return DataResult.getResult(401, "账号不存在或密码错误");
         } catch (UnknownAccountException e) {

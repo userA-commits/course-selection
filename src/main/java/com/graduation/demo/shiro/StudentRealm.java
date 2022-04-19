@@ -68,8 +68,8 @@ public class StudentRealm extends AuthorizingRealm {
         //添加角色
         simpleAuthorizationInfo.addRole("student");
         //添加权限
-        for (Menu menu : roleService.getPerms(3)) {
-            simpleAuthorizationInfo.addStringPermission(menu.getPerms());
+        for (String perm : roleService.getPerms(roleService.getMenus(3))) {
+            simpleAuthorizationInfo.addStringPermission(perm);
         }
         return simpleAuthorizationInfo;
     }

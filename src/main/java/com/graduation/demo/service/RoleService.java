@@ -19,5 +19,7 @@ public interface RoleService extends IService<Role> {
      * 通过角色获取对应菜单权限
      * @return 菜单列表
      */
-    List<Menu> getPerms(int roleNo);
+    List<Menu> getMenus(int roleNo);
+
+    List<String> getPerms(List<Menu> menus);
 }

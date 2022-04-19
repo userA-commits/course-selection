@@ -7,6 +7,8 @@ import com.graduation.demo.entity.RoleMenu;
 import com.graduation.demo.mapper.MenuMapper;
 import com.graduation.demo.mapper.RoleMapper;
 import com.graduation.demo.mapper.RoleMenuMapper;
+import com.graduation.demo.service.MenuService;
+import com.graduation.demo.service.RoleMenuService;
 import com.graduation.demo.service.RoleService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,17 +27,17 @@ import java.util.*;
 @Service
 public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements RoleService {
     @Autowired
-    MenuMapper menuMapper;
+    MenuService menuService;
     @Autowired
-    RoleMenuMapper roleMenuMapper;
+    RoleMenuService roleMenuService;
 
     /**
-     * 获得角色的所有对应权限
+     * 获得角色的所有对应权限菜单
      * @param roleNo 角色编号
      * @return 角色权限列表
      */
     @Override
-    public List<Menu> getPerms(int roleNo) {
+    public List<Menu> getMenus(int roleNo) {
         //存放角色与权限对应关系
         List<RoleMenu> roleMenuList;
         //暂存权限菜单列表
@@ -48,7 +50,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         roleMenuQueryWrapper
                 .select("role_no", "menu_no")
                 .eq("role_no", roleNo);
-        roleMenuList = roleMenuMapper.selectList(roleMenuQueryWrapper);
+        roleMenuList = roleMenuService.list(roleMenuQueryWrapper);
 
         //将对应菜单放入列表
         for(RoleMenu roleMenu : roleMenuList){
@@ -56,7 +58,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             menuQueryWrapper
                     .select("*")
                     .eq("menu_no", roleMenu.getMenuNo());
-            tempList.add(menuMapper.selectOne(menuQueryWrapper));
+            tempList.add(menuService.getOne(menuQueryWrapper));
         }
 
         while(tempList.size() != 0){
@@ -69,7 +71,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
             menuQueryWrapper
                     .select("*")
                     .eq("parent_no", menu.getMenuNo());
-            List<Menu> sonMenuList = menuMapper.selectList(menuQueryWrapper);
+            List<Menu> sonMenuList = menuService.list(menuQueryWrapper);
             //将子菜单项放入临时列表
             tempList.addAll(sonMenuList);
         }
@@ -83,5 +85,14 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role> implements Ro
         });
 
         return menuList;
+    }
+
+    @Override
+    public List<String> getPerms(List<Menu> menus) {
+        List<String> perms = new ArrayList<>();
+        for(Menu menu : menus){
+            perms.add(menu.getPerms());
+        }
+        return perms;
     }
 }

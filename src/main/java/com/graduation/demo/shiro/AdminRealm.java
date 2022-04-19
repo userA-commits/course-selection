@@ -71,8 +71,8 @@ public class AdminRealm extends AuthorizingRealm {
         //添加角色
         simpleAuthorizationInfo.addRole("admin");
         //添加权限
-        for (Menu menu : roleService.getPerms(1)) {
-            simpleAuthorizationInfo.addStringPermission(menu.getPerms());
+        for (String perm : roleService.getPerms(roleService.getMenus(1))) {
+            simpleAuthorizationInfo.addStringPermission(perm);
         }
         return simpleAuthorizationInfo;
     }
