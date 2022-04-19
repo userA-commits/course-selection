@@ -47,4 +47,8 @@ public class SystemController {
     public String index() {
         return "system/index/index";
     }
+    @RequestMapping("/toDesk")
+    public String toDesk() {
+        return "system/index/main";
+    }
 }
