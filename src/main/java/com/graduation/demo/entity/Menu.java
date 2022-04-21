@@ -33,8 +33,8 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "父菜单编号")
     private Long parentNo;
 
-    @ApiModelProperty(value = "路由地址")
-    private String path;
+    @ApiModelProperty(value = "图标编号")
+    private String icon;
 
     @ApiModelProperty(value = "组件路径")
     private String component;
@@ -48,6 +48,20 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "备注")
     private String remark;
 
+    @Override
+    public String toString() {
+        return "Menu{" +
+                "id='" + id + '\'' +
+                ", menuNo=" + menuNo +
+                ", name='" + name + '\'' +
+                ", parentNo=" + parentNo +
+                ", icon='" + icon + '\'' +
+                ", component='" + component + '\'' +
+                ", type='" + type + '\'' +
+                ", perms='" + perms + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 
     public String getId() {
         return id;
@@ -81,12 +95,12 @@ private static final long serialVersionUID=1L;
         this.parentNo = parentNo;
     }
 
-    public String getPath() {
-        return path;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 
     public String getComponent() {
@@ -119,20 +133,5 @@ private static final long serialVersionUID=1L;
 
     public void setRemark(String remark) {
         this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "Menu{" +
-        "id=" + id +
-        ", menuNo=" + menuNo +
-        ", name=" + name +
-        ", parentNo=" + parentNo +
-        ", path=" + path +
-        ", component=" + component +
-        ", type=" + type +
-        ", perms=" + perms +
-        ", remark=" + remark +
-        "}";
     }
 }

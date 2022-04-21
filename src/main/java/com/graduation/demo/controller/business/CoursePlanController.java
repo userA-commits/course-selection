@@ -1,11 +1,10 @@
 package com.graduation.demo.controller.business;
 
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.demo.entity.CoursePlan;
 import com.graduation.demo.service.CoursePlanService;
 import com.graduation.demo.utils.DataResult;
-import com.graduation.demo.vo.CoursePlanVo;
+import com.graduation.demo.vo.business.CoursePlanVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

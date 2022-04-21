@@ -1,4 +1,4 @@
-package com.graduation.demo.vo;
+package com.graduation.demo.vo.business;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;

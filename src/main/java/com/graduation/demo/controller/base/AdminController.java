@@ -4,15 +4,12 @@ package com.graduation.demo.controller.base;
 import com.graduation.demo.entity.Admin;
 import com.graduation.demo.service.AdminService;
 import com.graduation.demo.utils.DataResult;
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

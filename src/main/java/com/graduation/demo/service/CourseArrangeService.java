@@ -2,7 +2,7 @@ package com.graduation.demo.service;
 
 import com.graduation.demo.entity.CourseArrange;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.graduation.demo.vo.CourseArrangeVo;
+import com.graduation.demo.vo.business.CourseArrangeVo;
 
 import java.util.List;
 

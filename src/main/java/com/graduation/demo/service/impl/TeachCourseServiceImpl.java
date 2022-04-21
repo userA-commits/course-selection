@@ -6,12 +6,11 @@ import com.graduation.demo.entity.*;
 import com.graduation.demo.mapper.TeachCourseMapper;
 import com.graduation.demo.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.graduation.demo.vo.TeachCourseVo;
+import com.graduation.demo.vo.business.TeachCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**

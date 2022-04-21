@@ -2,8 +2,7 @@ package com.graduation.demo.service;
 
 import com.graduation.demo.entity.TeachCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.graduation.demo.entity.Teacher;
-import com.graduation.demo.vo.TeachCourseVo;
+import com.graduation.demo.vo.business.TeachCourseVo;
 
 import java.util.List;
 

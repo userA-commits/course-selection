@@ -11,7 +11,7 @@ public class TreeNode {
     private Long menuNo;
     private Long parentNo;
     private String title;
-    private String icon = null;
+    private String icon;
     private String href;
     private Boolean spread = false;
     private List<TreeNode> children = new ArrayList<>();
@@ -19,10 +19,11 @@ public class TreeNode {
     public TreeNode() {
     }
 
-    public TreeNode(Long menuNo, Long parentNo, String title, String href) {
+    public TreeNode(Long menuNo, Long parentNo, String title, String icon, String href) {
         this.menuNo = menuNo;
         this.parentNo = parentNo;
         this.title = title;
+        this.icon = icon;
         this.href = href;
     }
 

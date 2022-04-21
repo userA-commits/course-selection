@@ -8,7 +8,7 @@
         <result column="menu_no" property="menuNo" />
         <result column="name" property="name" />
         <result column="parent_no" property="parentNo" />
-        <result column="path" property="path" />
+        <result column="icon" property="icon" />
         <result column="component" property="component" />
         <result column="type" property="type" />
         <result column="perms" property="perms" />
@@ -17,7 +17,7 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, menu_no, name, parent_no, path, component, type, perms, remark
+        id, menu_no, name, parent_no, icon, component, type, perms, remark
     </sql>
 
 </mapper>

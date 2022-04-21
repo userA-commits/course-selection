@@ -2,17 +2,13 @@ package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.demo.entity.CourseArrange;
-import com.graduation.demo.entity.SelectCourse;
 import com.graduation.demo.entity.TeachCourse;
-import com.graduation.demo.entity.Teacher;
 import com.graduation.demo.mapper.CourseArrangeMapper;
-import com.graduation.demo.mapper.SelectCourseMapper;
 import com.graduation.demo.service.CourseArrangeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.graduation.demo.service.TeachCourseService;
 import com.graduation.demo.service.TeacherService;
-import com.graduation.demo.utils.DataResult;
-import com.graduation.demo.vo.CourseArrangeVo;
+import com.graduation.demo.vo.business.CourseArrangeVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

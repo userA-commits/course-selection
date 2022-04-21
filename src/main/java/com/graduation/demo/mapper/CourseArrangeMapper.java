@@ -2,7 +2,7 @@ package com.graduation.demo.mapper;
 
 import com.graduation.demo.entity.CourseArrange;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.graduation.demo.vo.CourseArrangeVo;
+import com.graduation.demo.vo.business.CourseArrangeVo;
 
 import java.util.List;
 

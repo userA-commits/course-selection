@@ -1,12 +1,10 @@
 package com.graduation.demo.controller.business;
 
 import com.graduation.demo.entity.Student;
-import com.graduation.demo.entity.TeachCourse;
 import com.graduation.demo.entity.Teacher;
 import com.graduation.demo.service.CourseTableService;
 import com.graduation.demo.utils.DataResult;
-import com.graduation.demo.vo.CourseTableVo;
-import com.graduation.demo.vo.TeachCourseVo;
+import com.graduation.demo.vo.business.CourseTableVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

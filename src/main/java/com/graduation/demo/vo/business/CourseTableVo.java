@@ -1,7 +1,5 @@
-package com.graduation.demo.vo;
+package com.graduation.demo.vo.business;
 
-import com.graduation.demo.entity.CourseArrange;
-import com.graduation.demo.entity.TeachCourse;
 import io.swagger.annotations.ApiModelProperty;
 
 /**

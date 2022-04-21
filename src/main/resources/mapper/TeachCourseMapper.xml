@@ -15,7 +15,7 @@
         <result column="remark" property="remark" />
     </resultMap>
     <!-- 授课管理联查集 -->
-    <resultMap id="TeachCourseMap" type="com.graduation.demo.vo.TeachCourseVo">
+    <resultMap id="TeachCourseMap" type="com.graduation.demo.vo.business.TeachCourseVo">
         <id column="id" property="id" />
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="teacher_no" property="teacherNo" />

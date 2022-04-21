@@ -1,4 +1,4 @@
-package com.graduation.demo.controller.base;
+package com.graduation.demo.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.demo.common.ActiveUser;

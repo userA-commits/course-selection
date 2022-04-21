@@ -12,7 +12,7 @@ import com.graduation.demo.service.CourseService;
 import com.graduation.demo.service.SelectCourseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.graduation.demo.service.TeachCourseService;
-import com.graduation.demo.vo.SelectCourseVo;
+import com.graduation.demo.vo.business.SelectCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;

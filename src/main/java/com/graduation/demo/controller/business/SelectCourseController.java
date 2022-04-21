@@ -4,7 +4,7 @@ package com.graduation.demo.controller.business;
 import com.graduation.demo.entity.SelectCourse;
 import com.graduation.demo.service.SelectCourseService;
 import com.graduation.demo.utils.DataResult;
-import com.graduation.demo.vo.SelectCourseVo;
+import com.graduation.demo.vo.business.SelectCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

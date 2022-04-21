@@ -1,12 +1,10 @@
 package com.graduation.demo.service.impl;
 
 import com.graduation.demo.entity.CoursePlan;
-import com.graduation.demo.entity.Student;
 import com.graduation.demo.mapper.CoursePlanMapper;
 import com.graduation.demo.service.CoursePlanService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.graduation.demo.vo.CoursePlanVo;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.graduation.demo.vo.business.CoursePlanVo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

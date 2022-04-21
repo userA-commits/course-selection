@@ -1,5 +1,4 @@
-package com.graduation.demo.controller.base;
-
+package com.graduation.demo.controller.system;
 
 import com.graduation.demo.common.ActiveUser;
 import com.graduation.demo.common.TreeNode;
@@ -44,7 +43,7 @@ public class MenuController {
         //生成菜单列表
         List<TreeNode> treeNodeList = new ArrayList<>();
         for(Menu menu : menuList){
-            TreeNode treeNode = new TreeNode(menu.getMenuNo(), menu.getParentNo(), menu.getName(), menu.getComponent());
+            TreeNode treeNode = new TreeNode(menu.getMenuNo(), menu.getParentNo(), menu.getName(), menu.getIcon(), menu.getComponent());
             treeNodeList.add(treeNode);
         }
         //生成菜单树

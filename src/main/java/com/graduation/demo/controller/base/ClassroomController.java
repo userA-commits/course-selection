@@ -2,7 +2,6 @@ package com.graduation.demo.controller.base;
 
 
 import com.graduation.demo.entity.Classroom;
-import com.graduation.demo.entity.Classroom;
 import com.graduation.demo.service.ClassroomService;
 import com.graduation.demo.utils.DataResult;
 import org.springframework.beans.factory.annotation.Autowired;
