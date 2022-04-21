@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>学院管理页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="/resources/favicon.ico">
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/resources/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<!-- 工具栏 -->
+<blockquote class="layui-elem-quote">
+    <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">学院编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="deptNo" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">学院名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSearch"><span class="layui-icon layui-icon-search"></span>查询</button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh"></span>重置</button>
+            </div>
+        </div>
+    </form>
+</blockquote>
+
+<!-- 数据表格 -->
+<div>
+    <table class="layui-hide" id="deptTable" lay-filter="deptTable"></table>
+    <!-- 表格顶部按钮 -->
+    <div id="deptToolBar" style="display: none;">
+        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加学院</button>
+        <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>批量删除</button>
+    </div>
+    <!-- 表格行内按钮 -->
+    <div id="deptRowBar" style="display: none;">
+        <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-edit"></span>修改</button>
+        <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
+    </div>
+</div>
+
+<!-- 添加和修改的弹出层 -->
+<div style="display: none; padding: 5px" id="addOrUpdateDiv">
+    <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
+        <div class="layui-form-item input-item">
+            <input type="hidden" name="id">
+            <label for="deptNo">学院编号</label>
+            <input type="text" placeholder="请输入学院编号" autocomplete="off" id="deptNo" name="deptNo" class="layui-input" lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="name">学院名称</label>
+            <input type="text" placeholder="请输入学院名称" autocomplete="off" id="name" name="name" class="layui-input" lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="description">描述</label>
+            <input type="text" placeholder="请输入描述" autocomplete="off" id="description" name="description" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit"><span class="layui-icon layui-icon-add-circle"></span>提交</button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh"></span>重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'layer'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+        var layer = layui.layer;
+
+        //加载表格数据
+        var tableIns = table.render({
+            elem: '#deptTable'
+            ,height: 'full'
+            ,url:'/dept/loadAllDept'
+            ,toolbar: '#deptToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '学院列表'
+            ,page: true
+            ,cols: [ [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', align:'center'}
+                ,{field:'deptNo', title:'学院编号', align:'center'}
+                ,{field:'name', title:'学院名称', align:'center'}
+                ,{field:'description', title:'描述', align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#deptRowBar', align:'center', width:'20%'}
+            ] ]
+        })
+        //工具栏表单模糊查询
+        form.on("submit(doSearch)", function (data) {
+            tableIns.reload({
+                where: data.field,
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
+        //表格顶部监听事件
+        table.on("toolbar(deptTable)",  function(obj){
+            switch(obj.event){
+                case 'add':
+                    openAddLayer();
+                    break;
+                case 'batchDelete':
+                    batchDelete();
+                    break;
+            }
+        })
+        //表格行内监听事件
+        table.on("tool(deptTable)",  function(obj){
+            //获取当前行数据并传入
+            var data = obj.data;
+            switch(obj.event){
+                case 'update':
+                    openUpdateLayer(data);
+                    break;
+                case 'delete':
+                    deleteDept(data);
+                    break;
+            }
+        })
+        //存储弹出层，用于在提交更改后关闭
+        var mainIndex;
+        //存储弹出层对应后端接口
+        var url;
+        //打开用于数据添加的弹出层
+        function openAddLayer() {
+            mainIndex = layer.open({
+                type:1,
+                content:$("#addOrUpdateDiv"),
+                area:['800px', '600px'],
+                title:"新增学院信息",
+                success:function () {
+                    //重置表单
+                    $("#dataFrm")[0].reset();
+                    url = '/dept/addDept';
+                }
+            })
+        }
+        //打开用于数据修改的弹出层
+        function openUpdateLayer(data) {
+            mainIndex = layer.open({
+                type:1,
+                content:$("#addOrUpdateDiv"),
+                area:['800px', '600px'],
+                title:"修改学院信息",
+                success:function () {
+                    //重置表单
+                    $("#dataFrm")[0].reset();
+                    //将原表数据填入表单
+                    form.val("dataFrm", data);
+
+                    url = '/dept/updateDept';
+                }
+            })
+        }
+        //添加和修改的提交
+        form.on("submit(doSubmit)", function(data) {
+            $.post(url, data.field, function (res) {
+                if(res.code == 0){
+                    tableIns.reload();
+                }
+                layer.msg(res.msg);
+                layer.close(mainIndex);
+            })
+
+            return false;
+        })
+        //批量删除方法
+        function batchDelete() {
+            //得到选中行
+            var checkStatus = table.checkStatus('deptTable');
+            //获得选中行数量
+            var dataLength = checkStatus.data.length;
+            if(dataLength > 0){
+                //询问是否删除
+                layer.confirm('确定要删除这些数据吗?', {icon: 3, title:'提示'}, function(index){
+                    //获得选中行数据
+                    var data = checkStatus.data;
+                    //返回字符串
+                    var ids = '';
+                    $.each(data, function (index, item) {
+                        if(index == 0){
+                            ids += "ids=" + item.id;
+                        }else{
+                            ids += "&ids=" + item.id;
+                        }
+                    });
+                    $.post("/dept/batchDeleteDept", ids, function (res) {
+                        if(res.code == 0){
+                            tableIns.reload();
+                        }
+                        layer.msg(res.msg);
+                    })
+                    layer.close(index);
+                });
+            }else{
+                layer.msg("请选中操作行");
+            }
+        }
+        //单条删除方法
+        function deleteDept(data) {
+            //询问是否删除
+            layer.confirm('确定要删除这条数据吗?', {icon: 3, title:'提示'}, function(index){
+                //返回单个id
+                $.post("/dept/deleteDept", {id : data.id}, function (res) {
+                    if(res.code == 0){
+                        tableIns.reload();
+                    }
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+            });
+
+        }
+    })
+</script>
+</body>
+</html>

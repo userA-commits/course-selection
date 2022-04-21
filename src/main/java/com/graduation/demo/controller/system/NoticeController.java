@@ -52,7 +52,7 @@ public class NoticeController {
         try{
             ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
             noticeVo.setCreateBy(user.getAdmin().getName());
-            this.noticeService.saveOrUpdate(noticeVo);
+            this.noticeService.save(noticeVo);
             return Constant.ADD_SUCCESS;
         }catch (Exception e){
             e.printStackTrace();
@@ -65,7 +65,7 @@ public class NoticeController {
         try{
             ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
             noticeVo.setCreateBy(user.getAdmin().getName());
-            this.noticeService.saveOrUpdate(noticeVo);
+            this.noticeService.updateById(noticeVo);
             return Constant.UPDATE_SUCCESS;
         }catch (Exception e){
             e.printStackTrace();

@@ -32,4 +32,9 @@ public class SystemController {
     public String toNotice() {
         return "system/notice/noticeManager";
     }
+    //加载学院管理界面
+    @RequestMapping("/toDept")
+    public String toDept() {
+        return "base/deptManager";
+    }
 }
