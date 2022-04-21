@@ -1,7 +1,7 @@
 package com.graduation.demo.service;
 
-import com.graduation.demo.entity.Menu;
-import com.graduation.demo.entity.Role;
+import com.graduation.demo.entity.system.Menu;
+import com.graduation.demo.entity.system.Role;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;

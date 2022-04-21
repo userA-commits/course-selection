@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.RoleMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Role">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.system.Role">
         <id column="id" property="id" />
         <result column="role_no" property="roleNo" />
         <result column="name" property="name" />

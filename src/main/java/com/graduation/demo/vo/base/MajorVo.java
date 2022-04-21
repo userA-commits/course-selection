@@ -1,6 +1,6 @@
 package com.graduation.demo.vo.base;
 
-import com.graduation.demo.entity.Major;
+import com.graduation.demo.entity.base.Major;
 
 public class MajorVo extends Major {
 

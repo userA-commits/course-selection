@@ -1,8 +1,8 @@
 package com.graduation.demo.common;
 
-import com.graduation.demo.entity.Admin;
-import com.graduation.demo.entity.Student;
-import com.graduation.demo.entity.Teacher;
+import com.graduation.demo.entity.base.Admin;
+import com.graduation.demo.entity.base.Student;
+import com.graduation.demo.entity.base.Teacher;
 
 import java.util.List;
 

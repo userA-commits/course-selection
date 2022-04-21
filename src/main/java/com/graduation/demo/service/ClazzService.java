@@ -1,6 +1,6 @@
 package com.graduation.demo.service;
 
-import com.graduation.demo.entity.Clazz;
+import com.graduation.demo.entity.base.Clazz;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

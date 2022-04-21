@@ -2,8 +2,8 @@ package com.graduation.demo.controller.business;
 
 
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.graduation.demo.entity.SelectCourse;
-import com.graduation.demo.entity.TeachCourse;
+import com.graduation.demo.entity.business.SelectCourse;
+import com.graduation.demo.entity.business.TeachCourse;
 import com.graduation.demo.service.SelectCourseService;
 import com.graduation.demo.service.TeachCourseService;
 import com.graduation.demo.utils.DataResult;

@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.TeachCourseMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.TeachCourse">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.business.TeachCourse">
         <id column="id" property="id" />
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="teacher_no" property="teacherNo" />
@@ -49,7 +49,7 @@
     </select>
 
     <!-- 授课管理条件查询联查结果列 -->
-    <select id="getTeachCourseVoWithCond" parameterType="com.graduation.demo.entity.TeachCourse" resultMap="TeachCourseMap">
+    <select id="getTeachCourseVoWithCond" parameterType="com.graduation.demo.entity.business.TeachCourse" resultMap="TeachCourseMap">
         select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
         cr.name course_name, cr.credit, tc.state, tc.student_num, tc.upper_num, tc.clazz_no,
         cz.name clazz_name, cz.type clazz_type, tc.remark

@@ -1,6 +1,6 @@
 package com.graduation.demo.mapper;
 
-import com.graduation.demo.entity.Clazz;
+import com.graduation.demo.entity.base.Clazz;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

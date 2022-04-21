@@ -1,6 +1,6 @@
 package com.graduation.demo.service.impl;
 
-import com.graduation.demo.entity.Dept;
+import com.graduation.demo.entity.base.Dept;
 import com.graduation.demo.mapper.DeptMapper;
 import com.graduation.demo.service.DeptService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

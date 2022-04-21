@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.CourseArrangeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.CourseArrange">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.business.CourseArrange">
         <id column="id" property="id" />
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="classroom_no" property="classroomNo" />
@@ -37,7 +37,7 @@
     </select>
 
     <!-- 排课管理条件查询联查结果列 -->
-    <select id="getCourseArrangeVoWithCond" parameterType="com.graduation.demo.entity.CourseArrange" resultMap="CourseArrangeMap">
+    <select id="getCourseArrangeVoWithCond" parameterType="com.graduation.demo.entity.business.CourseArrange" resultMap="CourseArrangeMap">
         select ca.id, ca.teach_course_no, ca.classroom_no, c.name classroom_name,
         c.classroom_type, ca.week, ca.period, ca.remark
         from xk_course_arrange ca, xk_classroom c

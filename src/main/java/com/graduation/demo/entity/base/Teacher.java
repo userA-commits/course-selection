@@ -1,4 +1,4 @@
-package com.graduation.demo.entity;
+package com.graduation.demo.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -13,10 +13,10 @@ import java.io.Serializable;
  * </p>
  *
  * @author 王奥
- * @since 2022-04-12
+ * @since 2022-04-11
  */
-@TableName("xk_student")
-public class Student implements Serializable {
+@TableName("xk_teacher")
+public class Teacher implements Serializable {
 
 private static final long serialVersionUID=1L;
 
@@ -24,14 +24,14 @@ private static final long serialVersionUID=1L;
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 
-    @ApiModelProperty(value = "学生编号")
-    private String studentNo;
+    @ApiModelProperty(value = "教师编号")
+    private String teacherNo;
+
+    @ApiModelProperty(value = "教师姓名")
+    private String name;
 
     @ApiModelProperty(value = "密码")
     private String password;
-
-    @ApiModelProperty(value = "姓名")
-    private String name;
 
     @ApiModelProperty(value = "性别")
     private Integer sex;
@@ -39,17 +39,17 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "用户类别")
     private Integer userType;
 
-    @ApiModelProperty(value = "年级")
-    private String grade;
+    @ApiModelProperty(value = "职位")
+    private String position;
 
     @ApiModelProperty(value = "院系编号")
     private String deptNo;
 
-    @ApiModelProperty(value = "专业编号")
-    private String majorNo;
+    @ApiModelProperty(value = "电话")
+    private String telephone;
 
-    @ApiModelProperty(value = "班级编号")
-    private String clazzNo;
+    @ApiModelProperty(value = "邮箱")
+    private String emali;
 
 
     public String getId() {
@@ -60,20 +60,12 @@ private static final long serialVersionUID=1L;
         this.id = id;
     }
 
-    public String getStudentNo() {
-        return studentNo;
+    public String getTeacherNo() {
+        return teacherNo;
     }
 
-    public void setStudentNo(String studentNo) {
-        this.studentNo = studentNo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTeacherNo(String teacherNo) {
+        this.teacherNo = teacherNo;
     }
 
     public String getName() {
@@ -82,6 +74,14 @@ private static final long serialVersionUID=1L;
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public Integer getSex() {
@@ -100,12 +100,12 @@ private static final long serialVersionUID=1L;
         this.userType = userType;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getPosition() {
+        return position;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public String getDeptNo() {
@@ -116,35 +116,35 @@ private static final long serialVersionUID=1L;
         this.deptNo = deptNo;
     }
 
-    public String getMajorNo() {
-        return majorNo;
+    public String getTelephone() {
+        return telephone;
     }
 
-    public void setMajorNo(String majorNo) {
-        this.majorNo = majorNo;
+    public void setTelephone(String telephone) {
+        this.telephone = telephone;
     }
 
-    public String getClazzNo() {
-        return clazzNo;
+    public String getEmali() {
+        return emali;
     }
 
-    public void setClazzNo(String clazzNo) {
-        this.clazzNo = clazzNo;
+    public void setEmali(String emali) {
+        this.emali = emali;
     }
 
     @Override
     public String toString() {
-        return "Student{" +
+        return "Teacher{" +
         "id=" + id +
-        ", studentNo=" + studentNo +
-        ", password=" + password +
+        ", teacherNo=" + teacherNo +
         ", name=" + name +
+        ", password=" + password +
         ", sex=" + sex +
         ", userType=" + userType +
-        ", grade=" + grade +
+        ", position=" + position +
         ", deptNo=" + deptNo +
-        ", majorNo=" + majorNo +
-        ", clazzNo=" + clazzNo +
+        ", telephone=" + telephone +
+        ", emali=" + emali +
         "}";
     }
 }

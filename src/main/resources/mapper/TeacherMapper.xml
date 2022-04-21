@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.TeacherMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Teacher">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.base.Teacher">
         <id column="id" property="id" />
         <result column="teacher_no" property="teacherNo" />
         <result column="name" property="name" />

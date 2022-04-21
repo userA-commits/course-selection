@@ -1,6 +1,6 @@
 package com.graduation.demo.vo.base;
 
-import com.graduation.demo.entity.Dept;
+import com.graduation.demo.entity.base.Dept;
 
 public class DeptVo extends Dept {
 

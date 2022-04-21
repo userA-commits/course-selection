@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.NoticeMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Notice">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.system.Notice">
         <id column="id" property="id" />
         <result column="notice_no" property="noticeNo" />
         <result column="notice_title" property="noticeTitle" />

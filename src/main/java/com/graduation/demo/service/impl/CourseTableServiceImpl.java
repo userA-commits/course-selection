@@ -1,7 +1,11 @@
 package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.graduation.demo.entity.*;
+import com.graduation.demo.entity.base.Student;
+import com.graduation.demo.entity.base.Teacher;
+import com.graduation.demo.entity.business.CourseArrange;
+import com.graduation.demo.entity.business.SelectCourse;
+import com.graduation.demo.entity.business.TeachCourse;
 import com.graduation.demo.service.CourseArrangeService;
 import com.graduation.demo.service.CourseTableService;
 import com.graduation.demo.service.SelectCourseService;

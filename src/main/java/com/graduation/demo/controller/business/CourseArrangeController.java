@@ -1,7 +1,7 @@
 package com.graduation.demo.controller.business;
 
 
-import com.graduation.demo.entity.CourseArrange;
+import com.graduation.demo.entity.business.CourseArrange;
 import com.graduation.demo.service.CourseArrangeService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.vo.business.CourseArrangeVo;

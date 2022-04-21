@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.RoleMenuMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.RoleMenu">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.system.RoleMenu">
         <id column="id" property="id" />
         <result column="role_no" property="roleNo" />
         <result column="menu_no" property="menuNo" />

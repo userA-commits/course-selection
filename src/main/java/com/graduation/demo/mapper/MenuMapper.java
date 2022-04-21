@@ -1,6 +1,6 @@
 package com.graduation.demo.mapper;
 
-import com.graduation.demo.entity.Menu;
+import com.graduation.demo.entity.system.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**

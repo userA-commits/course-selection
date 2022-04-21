@@ -2,10 +2,10 @@ package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.graduation.demo.entity.Course;
-import com.graduation.demo.entity.CourseArrange;
-import com.graduation.demo.entity.SelectCourse;
-import com.graduation.demo.entity.TeachCourse;
+import com.graduation.demo.entity.base.Course;
+import com.graduation.demo.entity.business.CourseArrange;
+import com.graduation.demo.entity.business.SelectCourse;
+import com.graduation.demo.entity.business.TeachCourse;
 import com.graduation.demo.mapper.SelectCourseMapper;
 import com.graduation.demo.service.CourseArrangeService;
 import com.graduation.demo.service.CourseService;

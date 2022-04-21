@@ -1,6 +1,5 @@
 package com.graduation.demo;
 
-import com.graduation.demo.entity.*;
 import com.graduation.demo.service.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

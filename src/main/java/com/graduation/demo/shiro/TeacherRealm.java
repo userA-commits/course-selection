@@ -1,8 +1,7 @@
 package com.graduation.demo.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.graduation.demo.entity.Menu;
-import com.graduation.demo.entity.Teacher;
+import com.graduation.demo.entity.base.Teacher;
 import com.graduation.demo.service.RoleService;
 import com.graduation.demo.service.TeacherService;
 import org.apache.commons.lang3.StringUtils;

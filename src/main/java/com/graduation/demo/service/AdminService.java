@@ -1,6 +1,6 @@
 package com.graduation.demo.service;
 
-import com.graduation.demo.entity.Admin;
+import com.graduation.demo.entity.base.Admin;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**

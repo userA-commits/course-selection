@@ -1,6 +1,6 @@
 package com.graduation.demo.service;
 
-import com.graduation.demo.entity.TeachCourse;
+import com.graduation.demo.entity.business.TeachCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.demo.vo.business.TeachCourseVo;
 

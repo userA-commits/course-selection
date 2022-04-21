@@ -1,6 +1,6 @@
 package com.graduation.demo.vo.system;
 
-import com.graduation.demo.entity.Notice;
+import com.graduation.demo.entity.system.Notice;
 
 //公告前端交互类
 public class NoticeVo extends Notice {

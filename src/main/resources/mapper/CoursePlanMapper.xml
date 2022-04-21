@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.CoursePlanMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.CoursePlan">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.business.CoursePlan">
         <id column="id" property="id" />
         <result column="dept_no" property="deptNo" />
         <result column="major_no" property="majorNo" />
@@ -47,7 +47,7 @@
     </select>
 
     <!-- 教学计划条件查询联查结果列 -->
-    <select id="getCoursePlanVoWithCond" parameterType="com.graduation.demo.entity.CoursePlan" resultMap="CoursePlanMap">
+    <select id="getCoursePlanVoWithCond" parameterType="com.graduation.demo.entity.business.CoursePlan" resultMap="CoursePlanMap">
         select cp.id, cp.dept_no, d.name dept_name, cp.major_no, m.name major_name,
         cp.grade, cp.course_no, c.name course_name, c.credit, c.is_required, c.test_type,
         cp.semester, cp.remark

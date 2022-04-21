@@ -1,7 +1,7 @@
 package com.graduation.demo.controller.base;
 
 
-import com.graduation.demo.entity.Admin;
+import com.graduation.demo.entity.base.Admin;
 import com.graduation.demo.service.AdminService;
 import com.graduation.demo.utils.DataResult;
 import org.springframework.beans.factory.annotation.Autowired;

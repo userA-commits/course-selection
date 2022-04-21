@@ -1,6 +1,6 @@
 package com.graduation.demo.mapper;
 
-import com.graduation.demo.entity.TeachCourse;
+import com.graduation.demo.entity.business.TeachCourse;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.graduation.demo.vo.business.TeachCourseVo;
 

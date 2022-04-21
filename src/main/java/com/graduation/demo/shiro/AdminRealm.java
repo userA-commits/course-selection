@@ -1,11 +1,8 @@
 package com.graduation.demo.shiro;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.graduation.demo.entity.Admin;
-import com.graduation.demo.entity.Menu;
-import com.graduation.demo.entity.Role;
+import com.graduation.demo.entity.base.Admin;
 import com.graduation.demo.service.AdminService;
-import com.graduation.demo.service.MenuService;
 import com.graduation.demo.service.RoleService;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationException;

@@ -1,6 +1,6 @@
 package com.graduation.demo.service.impl;
 
-import com.graduation.demo.entity.Clazz;
+import com.graduation.demo.entity.base.Clazz;
 import com.graduation.demo.mapper.ClazzMapper;
 import com.graduation.demo.service.ClazzService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.demo.common.ActiveUser;
 import com.graduation.demo.common.Constant;
-import com.graduation.demo.entity.Notice;
+import com.graduation.demo.entity.system.Notice;
 import com.graduation.demo.service.NoticeService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.utils.WEBUtils;

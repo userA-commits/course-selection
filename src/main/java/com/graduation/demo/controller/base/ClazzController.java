@@ -1,7 +1,7 @@
 package com.graduation.demo.controller.base;
 
 
-import com.graduation.demo.entity.Clazz;
+import com.graduation.demo.entity.base.Clazz;
 import com.graduation.demo.service.ClazzService;
 import com.graduation.demo.utils.DataResult;
 import org.springframework.beans.factory.annotation.Autowired;

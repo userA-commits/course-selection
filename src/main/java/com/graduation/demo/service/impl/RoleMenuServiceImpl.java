@@ -1,6 +1,6 @@
 package com.graduation.demo.service.impl;
 
-import com.graduation.demo.entity.RoleMenu;
+import com.graduation.demo.entity.system.RoleMenu;
 import com.graduation.demo.mapper.RoleMenuMapper;
 import com.graduation.demo.service.RoleMenuService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

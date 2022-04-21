@@ -1,4 +1,4 @@
-package com.graduation.demo.entity;
+package com.graduation.demo.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -15,8 +15,8 @@ import java.io.Serializable;
  * @author 王奥
  * @since 2022-04-12
  */
-@TableName("xk_dept")
-public class Dept implements Serializable {
+@TableName("xk_major")
+public class Major implements Serializable {
 
 private static final long serialVersionUID=1L;
 
@@ -24,10 +24,13 @@ private static final long serialVersionUID=1L;
     @TableId(value = "id", type = IdType.UUID)
     private String id;
 
+    @ApiModelProperty(value = "专业编号")
+    private String majorNo;
+
     @ApiModelProperty(value = "院系编号")
     private String deptNo;
 
-    @ApiModelProperty(value = "院系名称")
+    @ApiModelProperty(value = "专业名称")
     private String name;
 
     @ApiModelProperty(value = "描述")
@@ -40,6 +43,14 @@ private static final long serialVersionUID=1L;
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getMajorNo() {
+        return majorNo;
+    }
+
+    public void setMajorNo(String majorNo) {
+        this.majorNo = majorNo;
     }
 
     public String getDeptNo() {
@@ -68,8 +79,9 @@ private static final long serialVersionUID=1L;
 
     @Override
     public String toString() {
-        return "Dept{" +
+        return "Major{" +
         "id=" + id +
+        ", majorNo=" + majorNo +
         ", deptNo=" + deptNo +
         ", name=" + name +
         ", description=" + description +

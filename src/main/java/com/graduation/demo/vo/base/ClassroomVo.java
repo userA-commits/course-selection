@@ -1,6 +1,6 @@
 package com.graduation.demo.vo.base;
 
-import com.graduation.demo.entity.Classroom;
+import com.graduation.demo.entity.base.Classroom;
 
 public class ClassroomVo extends Classroom {
 

@@ -3,7 +3,7 @@
 <mapper namespace="com.graduation.demo.mapper.ClazzMapper">
 
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.Clazz">
+    <resultMap id="BaseResultMap" type="com.graduation.demo.entity.base.Clazz">
         <id column="id" property="id" />
         <result column="clazz_no" property="clazzNo" />
         <result column="major_no" property="majorNo" />

@@ -1,4 +1,4 @@
-package com.graduation.demo.entity;
+package com.graduation.demo.entity.base;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;

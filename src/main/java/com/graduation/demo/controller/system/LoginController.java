@@ -2,9 +2,9 @@ package com.graduation.demo.controller.system;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.graduation.demo.common.ActiveUser;
-import com.graduation.demo.entity.Admin;
-import com.graduation.demo.entity.Student;
-import com.graduation.demo.entity.Teacher;
+import com.graduation.demo.entity.base.Admin;
+import com.graduation.demo.entity.base.Student;
+import com.graduation.demo.entity.base.Teacher;
 import com.graduation.demo.enums.LoginType;
 import com.graduation.demo.service.AdminService;
 import com.graduation.demo.service.RoleService;

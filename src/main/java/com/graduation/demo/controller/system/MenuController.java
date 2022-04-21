@@ -3,7 +3,7 @@ package com.graduation.demo.controller.system;
 import com.graduation.demo.common.ActiveUser;
 import com.graduation.demo.common.TreeNode;
 import com.graduation.demo.common.TreeNodeBuilder;
-import com.graduation.demo.entity.Menu;
+import com.graduation.demo.entity.system.Menu;
 import com.graduation.demo.service.MenuService;
 import com.graduation.demo.service.RoleService;
 import com.graduation.demo.utils.DataResult;

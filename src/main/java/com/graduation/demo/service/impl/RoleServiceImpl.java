@@ -1,12 +1,10 @@
 package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.graduation.demo.entity.Menu;
-import com.graduation.demo.entity.Role;
-import com.graduation.demo.entity.RoleMenu;
-import com.graduation.demo.mapper.MenuMapper;
+import com.graduation.demo.entity.system.Menu;
+import com.graduation.demo.entity.system.Role;
+import com.graduation.demo.entity.system.RoleMenu;
 import com.graduation.demo.mapper.RoleMapper;
-import com.graduation.demo.mapper.RoleMenuMapper;
 import com.graduation.demo.service.MenuService;
 import com.graduation.demo.service.RoleMenuService;
 import com.graduation.demo.service.RoleService;

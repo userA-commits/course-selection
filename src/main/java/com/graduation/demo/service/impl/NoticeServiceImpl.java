@@ -1,6 +1,6 @@
 package com.graduation.demo.service.impl;
 
-import com.graduation.demo.entity.Notice;
+import com.graduation.demo.entity.system.Notice;
 import com.graduation.demo.mapper.NoticeMapper;
 import com.graduation.demo.service.NoticeService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

@@ -5,13 +5,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.demo.common.Constant;
-import com.graduation.demo.entity.Major;
+import com.graduation.demo.entity.base.Major;
 import com.graduation.demo.service.MajorService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.vo.base.MajorVo;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;

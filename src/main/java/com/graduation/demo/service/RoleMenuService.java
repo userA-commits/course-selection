@@ -1,6 +1,6 @@
 package com.graduation.demo.service;
 
-import com.graduation.demo.entity.RoleMenu;
+import com.graduation.demo.entity.system.RoleMenu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
