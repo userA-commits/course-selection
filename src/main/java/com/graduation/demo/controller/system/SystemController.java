@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/sys")
 public class SystemController {
+
+    /**
+     * 系统管理跳转控制
+     */
     //跳转到登录界面
     @RequestMapping("/toLogin")
     public String toLogin(){
@@ -32,6 +36,25 @@ public class SystemController {
     public String toNotice() {
         return "system/notice/noticeManager";
     }
+
+    /**
+     * 基础信息管理跳转控制
+     */
+    //加载管理员管理界面
+    @RequestMapping("/toAdmin")
+    public String toAdmin() {
+        return "base/adminManager";
+    }
+    //加载教师管理界面
+    @RequestMapping("/toTeacher")
+    public String toTeacher() {
+        return "base/teacherManager";
+    }
+    //加载学生管理界面
+    @RequestMapping("/toStudent")
+    public String toStudent() {
+        return "base/studentManager";
+    }
     //加载学院管理界面
     @RequestMapping("/toDept")
     public String toDept() {
@@ -42,4 +65,25 @@ public class SystemController {
     public String toMajor() {
         return "base/majorManager";
     }
+    //加载教室管理界面
+    @RequestMapping("/toClassroom")
+    public String toClassroom() {
+        return "base/classroomManager";
+    }
+    //加载班级管理界面
+    @RequestMapping("/toClazz")
+    public String toClazz() {
+        return "base/clazzManager";
+    }
+    //加载课程管理界面
+    @RequestMapping("/toCourse")
+    public String toCourse() {
+        return "base/courseManager";
+    }
+
+
+
+    /**
+     * 课务管理跳转控制
+     */
 }
