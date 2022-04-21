@@ -37,4 +37,9 @@ public class SystemController {
     public String toDept() {
         return "base/deptManager";
     }
+    //加载专业管理界面
+    @RequestMapping("/toMajor")
+    public String toMajor() {
+        return "base/majorManager";
+    }
 }
