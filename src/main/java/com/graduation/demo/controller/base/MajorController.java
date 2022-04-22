@@ -45,6 +45,15 @@ public class MajorController {
         return DataResult.success(page.getRecords());
     }
 
+    @RequestMapping("/getByDeptNo")
+    public DataResult getByDeptNo(MajorVo majorVo){
+         List<Major> majors= majorService.list(new QueryWrapper<Major>()
+                .like("dept_no", majorVo.getDeptNo())
+                .orderByAsc("major_no")
+        );
+        return DataResult.success(majors);
+    }
+
     @RequestMapping("/addMajor")
     public DataResult addMajor(MajorVo majorVo){
         try{

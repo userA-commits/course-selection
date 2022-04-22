@@ -49,6 +49,16 @@ public class ClazzController {
         return DataResult.success(page.getRecords());
     }
 
+    @RequestMapping("/getByMajorNo")
+    public DataResult getByMajorNo(ClazzVo clazzVo){
+        //覆盖条件查询功能
+        List<Clazz> clazzes = clazzService.list(new QueryWrapper<Clazz>()
+                .eq("major_no", clazzVo.getMajorNo())
+                .orderByAsc("clazz_no")
+        );
+        return DataResult.success(clazzes);
+    }
+
     @RequestMapping("/addClazz")
     public DataResult addClazz(ClazzVo clazzVo){
         try{

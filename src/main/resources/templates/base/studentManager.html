@@ -199,7 +199,7 @@
         })
         //表格顶部监听事件
         table.on("toolbar(studentTable)",  function(obj){
-            addOperation(null);
+            addOperation({});
             switch(obj.event){
                 case 'add':
                     openAddLayer();
@@ -228,6 +228,8 @@
         var mainIndex;
         //存储弹出层对应后端接口
         var url;
+        //保存打开下拉框的对应行数据
+        var localData;
         //打开用于数据添加的弹出层
         function openAddLayer() {
             mainIndex = layer.open({
@@ -260,7 +262,9 @@
             })
         }
         //为弹出层的下拉选择框填充数据
-        function addOperation(localData) {
+        function addOperation(data) {
+            //保存打开下拉框的对应行数据
+            localData = data;
             //一级下拉框
             $.ajax({
                 url: '/dept/loadAllDept',
@@ -268,6 +272,7 @@
                 type: 'get', //HTTP请求类型
                 timeout: 10000, //超时时间设置为10秒；
                 success: function (deptData) {
+                    var inform = '';
                     //每次加载时清空原数据
                     $('#deptNo').children().remove();
                     //重新载入一条提示信息
@@ -275,9 +280,8 @@
                     $.each(deptData.data, function (index, value) {
                         $('#deptNo').append(new Option(value.name, value.deptNo));// 下拉菜单里添加元素
                     });
-
                     // 在修改中，当某一学院目前被选中时，通过学院编号选中对应标签
-                    const value = localData.deptNo;
+                    const value = data.deptNo;
                     if (null !== value && value !== "") {
                         $('#deptNo').find("option[value=" + value + "]").attr("selected", true);
                     }
@@ -285,62 +289,62 @@
                     layui.form.render("select");
                 }
             });
-            //二级下拉框加载
-            form.on('select(deptSearch)', function () {
-                //获取一级的数据
-                var deptNo = $('#deptNo').val();
-                $.ajax({
-                    url: '/major/loadAllMajor?deptNo=' + deptNo,
-                    dataType: 'json', //服务器返回json格式数据
-                    type: 'get', //HTTP请求类型
-                    timeout: 10000, //超时时间设置为10秒；
-                    success: function (majorData) {
-                        //每次加载时清空原数据
-                        $('#majorNo').children().remove();
-                        //重新载入一条提示信息
-                        $('#majorNo').append(new Option('请选择学生专业', ''));
-                        $.each(majorData.data, function (index, value) {
-                            $('#majorNo').append(new Option(value.name, value.majorNo));// 下拉菜单里添加元素
-                        });
-
-                        // 在修改中，当某一专业目前被选中时，通过专业编号选中对应标签
-                        const value = localData.majorNo;
-                        if (null !== value && value !== "") {
-                            $('#majorNo').find("option[value=" + value + "]").attr("selected", true);
-                        }
-                        //刷新选项中的select标签
-                        layui.form.render("select");
-                    }
-                });
-            })
-            //三级下拉框加载
-            form.on('select(majorSearch)', function () {
-                //获取二级的数据
-                var majorNo = $('#majorNo').val();
-                $.ajax({
-                    url: '/clazz/loadAllClazz?majorNo=' + majorNo,
-                    dataType: 'json', //服务器返回json格式数据
-                    type: 'get', //HTTP请求类型
-                    timeout: 10000, //超时时间设置为10秒；
-                    success: function (clazzData) {
-                        //每次加载时清空原数据
-                        $('#clazzNo').children().remove();
-                        //重新载入一条提示信息
-                        $('#clazzNo').append(new Option('请选择学生班级', ''));
-                        $.each(clazzData.data, function (index, value) {
-                            $('#clazzNo').append(new Option(value.name, value.clazzNo));// 下拉菜单里添加元素
-                        });
-                        // 在修改中，当某一班级目前被选中时，通过班级编号选中对应标签
-                        const value = localData.clazzNo;
-                        if (null !== value && value !== "") {
-                            $('#clazzNo').find("option[value=" + value + "]").attr("selected", true);
-                        }
-                        //刷新选项中的select标签
-                        layui.form.render("select");
-                    }
-                });
-            })
         }
+        //二级下拉框加载
+        form.on('select(deptSearch)', function () {
+            //获取一级的数据
+            var deptNo = $('#deptNo').val();
+            $.ajax({
+                url: '/major/getByDeptNo?deptNo=' + deptNo,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (majorData) {
+                    //每次加载时清空原数据
+                    $('#majorNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#majorNo').append(new Option('请选择学生专业', ''));
+                    $.each(majorData.data, function (index, value) {
+                        $('#majorNo').append(new Option(value.name, value.majorNo));// 下拉菜单里添加元素
+                    });
+
+                    // 在修改中，当某一专业目前被选中时，通过专业编号选中对应标签
+                    const value = localData.majorNo;
+                    if (null !== value && value !== "") {
+                        $('#majorNo').find("option[value=" + value + "]").attr("selected", true);
+                    }
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
+        })
+        //三级下拉框加载
+        form.on('select(majorSearch)', function () {
+            //获取二级的数据
+            var majorNo = $('#majorNo').val();
+            $.ajax({
+                url: '/clazz/getByMajorNo?majorNo=' + majorNo,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (clazzData) {
+                    //每次加载时清空原数据
+                    $('#clazzNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#clazzNo').append(new Option('请选择学生班级', ''));
+                    $.each(clazzData.data, function (index, value) {
+                        $('#clazzNo').append(new Option(value.name, value.clazzNo));// 下拉菜单里添加元素
+                    });
+                    // 在修改中，当某一班级目前被选中时，通过班级编号选中对应标签
+                    const value = localData.clazzNo;
+                    if (null !== value && value !== "") {
+                        $('#clazzNo').find("option[value=" + value + "]").attr("selected", true);
+                    }
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
+        })
         //添加和修改的提交
         form.on("submit(doSubmit)", function(data) {
             $.post(url, data.field, function (res) {
