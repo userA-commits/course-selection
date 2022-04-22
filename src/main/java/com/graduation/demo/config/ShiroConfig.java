@@ -79,7 +79,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
         Map<String, String> map = new HashMap<>();
         //登出
-        map.put("/sys/logout", "logout");
+        map.put("/login/logout", "logout");
         //对所有用户认证
         map.put("/**", "authc");
         //对swagger开放权限

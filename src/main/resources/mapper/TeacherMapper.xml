@@ -13,12 +13,12 @@
         <result column="position" property="position" />
         <result column="dept_no" property="deptNo" />
         <result column="telephone" property="telephone" />
-        <result column="emali" property="emali" />
+        <result column="email" property="email" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, teacher_no, name, password, sex, user_type, position, dept_no, telephone, emali
+        id, teacher_no, name, password, sex, user_type, position, dept_no, telephone, email
     </sql>
 
 </mapper>

@@ -49,7 +49,7 @@ private static final long serialVersionUID=1L;
     private String telephone;
 
     @ApiModelProperty(value = "邮箱")
-    private String emali;
+    private String email;
 
 
     public String getId() {
@@ -124,12 +124,12 @@ private static final long serialVersionUID=1L;
         this.telephone = telephone;
     }
 
-    public String getEmali() {
-        return emali;
+    public String getEmail() {
+        return email;
     }
 
-    public void setEmali(String emali) {
-        this.emali = emali;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Override
@@ -144,7 +144,7 @@ private static final long serialVersionUID=1L;
         ", position=" + position +
         ", deptNo=" + deptNo +
         ", telephone=" + telephone +
-        ", emali=" + emali +
+        ", email=" + email +
         "}";
     }
 }

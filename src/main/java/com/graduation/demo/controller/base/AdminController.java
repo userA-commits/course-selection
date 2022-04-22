@@ -1,15 +1,23 @@
 package com.graduation.demo.controller.base;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.demo.common.Constant;
 import com.graduation.demo.entity.base.Admin;
 import com.graduation.demo.service.AdminService;
 import com.graduation.demo.utils.DataResult;
+import com.graduation.demo.vo.base.AdminVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,33 +32,65 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
+    @RequestMapping("/loadAllAdmin")
+    public DataResult loadAllAdmin(AdminVo adminVo){
+        //覆盖分页功能
+        IPage<Admin> page = new Page<>(adminVo.getPage(), adminVo.getLimit());
+        //覆盖条件查询功能
+        adminService.page(page, new QueryWrapper<Admin>()
+                .like(StringUtils.isNotBlank(adminVo.getAdminNo()), "admin_no", adminVo.getAdminNo())
+                .like(StringUtils.isNotBlank(adminVo.getPassword()), "password", adminVo.getPassword())
+                .like(StringUtils.isNotBlank(adminVo.getEmail()), "admin_no", adminVo.getEmail())
+                .orderByAsc("admin_no")
+        );
+        return DataResult.success(page.getRecords());
     }
 
-    @PostMapping("/query")
-    public DataResult query(){
-        List<Admin> admins = adminService.list();
-        DataResult<List<Admin>> result = new DataResult<>(admins);
-        return result;
+    @RequestMapping("/addAdmin")
+    public DataResult addAdmin(AdminVo adminVo){
+        try{
+            adminVo.setUserType(1);
+            this.adminService.save(adminVo);
+            return Constant.ADD_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.ADD_ERROR;
+        }
     }
 
-    @PostMapping("/add")
-    public DataResult add(Admin admin){
-        adminService.save(admin);
-        return DataResult.success();
+    @RequestMapping("/updateAdmin")
+    public DataResult updateAdmin(AdminVo adminVo){
+        try{
+            this.adminService.updateById(adminVo);
+            return Constant.UPDATE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.UPDATE_ERROR;
+        }
     }
 
-    @PostMapping("/edit")
-    public DataResult edit(Admin admin){
-        adminService.updateById(admin);
-        return DataResult.success();
+    @RequestMapping("/deleteAdmin")
+    public DataResult deleteAdmin(String id){
+        try{
+            adminService.removeById(id);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-    @PostMapping("/remove")
-    public DataResult remove(List<String> ids){
-        adminService.removeByIds(ids);
-        return DataResult.success();
+    @RequestMapping("/batchDeleteAdmin")
+    public DataResult batchDeleteAdminList(AdminVo adminVo){
+        try{
+            List<String> ids = new ArrayList<>(Arrays.asList(adminVo.getIds()));
+            adminService.removeByIds(ids);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
+
+
 }
