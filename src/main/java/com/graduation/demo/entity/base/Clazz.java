@@ -30,18 +30,20 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "专业编号")
     private String majorNo;
 
+    @ApiModelProperty(value = "年级")
+    private String grade;
+
     @ApiModelProperty(value = "班级名称")
     private String name;
 
     @ApiModelProperty(value = "班级人数")
     private int studentNum;
 
-    @ApiModelProperty(value = "班级类别")
-    private String type;
+    @ApiModelProperty(value = "班级类别，0为普通，1为特殊")
+    private String clazzType;
 
     @ApiModelProperty(value = "描述")
     private String description;
-
 
     public String getId() {
         return id;
@@ -67,6 +69,14 @@ private static final long serialVersionUID=1L;
         this.majorNo = majorNo;
     }
 
+    public String getGrade() {
+        return grade;
+    }
+
+    public void setGrade(String grade) {
+        this.grade = grade;
+    }
+
     public String getName() {
         return name;
     }
@@ -83,12 +93,12 @@ private static final long serialVersionUID=1L;
         this.studentNum = studentNum;
     }
 
-    public String getType() {
-        return type;
+    public String getClazzType() {
+        return clazzType;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setClazzType(String clazzType) {
+        this.clazzType = clazzType;
     }
 
     public String getDescription() {
@@ -105,9 +115,10 @@ private static final long serialVersionUID=1L;
                 "id='" + id + '\'' +
                 ", clazzNo='" + clazzNo + '\'' +
                 ", majorNo='" + majorNo + '\'' +
+                ", grade='" + grade + '\'' +
                 ", name='" + name + '\'' +
                 ", studentNum=" + studentNum +
-                ", type='" + type + '\'' +
+                ", clazzType='" + clazzType + '\'' +
                 ", description='" + description + '\'' +
                 '}';
     }

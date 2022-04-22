@@ -7,15 +7,16 @@
         <id column="id" property="id" />
         <result column="clazz_no" property="clazzNo" />
         <result column="major_no" property="majorNo" />
+        <result column="grade" property="grade" />
         <result column="name" property="name" />
         <result column="student_num" property="studentNum" />
-        <result column="type" property="type" />
+        <result column="clazz_type" property="clazzType" />
         <result column="description" property="description" />
     </resultMap>
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, clazz_no, major_no, name, student_num, type, description
+        id, clazz_no, major_no, grade, name, student_num, clazzType, description
     </sql>
 
 </mapper>

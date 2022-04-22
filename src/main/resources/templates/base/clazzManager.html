@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>教室管理页面</title>
+    <title>班级管理页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -20,32 +20,38 @@
     <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">教室编号</label>
+                <label class="layui-form-label">班级编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="classroomNo" class="layui-input">
+                    <input type="text" name="clazzNo" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">教室名称</label>
+                <label class="layui-form-label">专业编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="name" class="layui-input">
+                    <input type="text" name="clazzNo" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">年级</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="grade" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">班级名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="clazzName" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline input-item">
-                <label class="layui-form-label">教室类别</label>
+                <label class="layui-form-label">班级类型</label>
                 <div class="layui-select">
                     <!-- 用于填充数据的下拉列表 -->
                     <select name="classroomType">
-                        <option value="" selected>请选择教室类型</option>
+                        <option value="" selected>请选择班级类型</option>
                         <option value="0">普通</option>
                         <option value="1">特殊</option>
                     </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">所在教学楼</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="build" class="layui-input">
                 </div>
             </div>
         </div>
@@ -60,44 +66,66 @@
 
 <!-- 数据表格 -->
 <div>
-    <table class="layui-hide" id="classroomTable" lay-filter="classroomTable"></table>
+    <table class="layui-hide" id="clazzTable" lay-filter="clazzTable"></table>
     <!-- 表格顶部按钮 -->
-    <div id="classroomToolBar" style="display: none;">
-        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加教室</button>
+    <div id="clazzToolBar" style="display: none;">
+        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加班级</button>
         <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>批量删除</button>
     </div>
     <!-- 表格行内按钮 -->
-    <div id="classroomRowBar" style="display: none;">
+    <div id="clazzRowBar" style="display: none;">
+        <button type="button" lay-event="show" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-about"></span>查看...</button>
         <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-edit"></span>修改</button>
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
     </div>
 </div>
 
+<!--todo:-->
+<!-- 在完成学生界面后添加查看学生弹出层 -->
+<div style="display: none; padding: 5px" id="showClazzDiv">
+    <h2>UNDER INSTRUCTION</h2>
+
+    <h2 id="show_title" align="center" style="font-weight: bold"></h2>
+    <div style="text-align: right;">
+        发布人：<span id="show_createBy"></span>
+    </div>
+    <hr>
+    <div id="show_content"></div>
+
+</div>
+
 <!-- 添加和修改的弹出层 -->
 <div style="display: none; padding: 5px" id="addOrUpdateDiv">
     <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
+        <input type="hidden" name="id">
         <div class="layui-form-item input-item">
-            <input type="hidden" name="id">
-            <label for="classroomNo">教室编号</label>
-            <input type="text" placeholder="请输入教室编号" autocomplete="off" id="classroomNo" name="classroomNo" class="layui-input" lay-verify="required">
+            <label for="clazzNo">班级编号</label>
+            <input type="text" placeholder="请输入班级编号" autocomplete="off" id="clazzNo" name="clazzNo" class="layui-input" lay-verify="required">
         </div>
         <div class="layui-form-item input-item">
-            <label for="name">教室名称</label>
-            <input type="text" placeholder="请输入教室名称" autocomplete="off" id="name" name="name" class="layui-input" lay-verify="required">
-        </div>
-        <div class="layui-inline input-item">
-            <label for="classroomType">教室类别</label>
+            <label for="majorNo">所在专业</label>
             <div class="layui-select">
-                <select id="classroomType" name="classroomType" class="layui-select" lay-verify="required" >
-                    <option value="" selected>请选择教室类型</option>
-                    <option value="0">普通</option>
-                    <option value="1">特殊</option>
+                <!-- 用于填充数据的下拉列表 -->
+                <select id="majorNo" name="majorNo" class="layui-select" lay-verify="required" >
+                    <option value="">请选择所在专业</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="build">所在教学楼</label>
-            <input type="text" placeholder="请输入所在教学楼" autocomplete="off" id="build" name="build" class="layui-input" lay-verify="required">
+            <label for="name">班级名</label>
+            <input type="text" placeholder="请输入班级名" autocomplete="off" id="name" name="name" class="layui-input" lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item">
+            <div class="layui-inline input-item">
+                <label for="clazzType">班级类别</label>
+                <div class="layui-select">
+                    <select id="clazzType" name="clazzType" class="layui-select" lay-verify="required" >
+                        <option value="" selected>请选择班级类别</option>
+                        <option value="0">普通</option>
+                        <option value="1">特殊</option>
+                    </select>
+                </div>
+            </div>
         </div>
         <div class="layui-form-item input-item">
             <label for="description">描述</label>
@@ -122,24 +150,26 @@
 
         //加载表格数据
         var tableIns = table.render({
-            elem: '#classroomTable'
+            elem: '#clazzTable'
             ,height: 'full'
-            ,url:'/classroom/loadAllClassroom'
-            ,toolbar: '#classroomToolBar' //开启头部工具栏，并为其绑定左侧模板
-            ,title: '教室列表'
+            ,url:'/clazz/loadAllClazz'
+            ,toolbar: '#clazzToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '系统班级列表'
             ,page: true
             ,cols: [ [
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID', align:'center'}
-                ,{field:'classroomNo', title:'教室编号', align:'center'}
-                ,{field:'name', title:'教室名称', align:'center'}
-                ,{field:'classroomType', title:'教室类型', align:'center', templet:function (data) {
-                        if(data.classroomType == 0) return '普通';
+                ,{field:'clazzNo', title:'班级编号', align:'center'}
+                ,{field:'majorNo', title:'专业编号', align:'center'}
+                ,{field:'grade', title:'年级', align:'center'}
+                ,{field:'name', title:'班级名称', align:'center'}
+                ,{field:'studentNum', title:'班级人数', align:'center'}
+                ,{field:'clazzType', title:'班级类别', align:'center', templet:function (data) {
+                        if(data.clazzType == 0) return '普通';
                         else return '特殊';
                     }}
-                ,{field:'build', title:'所在教学楼', align:'center'}
                 ,{field:'description', title:'描述', align:'center'}
-                ,{fixed: 'right', title:'操作', toolbar: '#classroomRowBar', align:'center', width:'20%'}
+                ,{fixed: 'right', title:'操作', toolbar: '#clazzRowBar', align:'center', width:'20%'}
             ] ]
         })
         //工具栏表单模糊查询
@@ -153,9 +183,11 @@
             return false;
         })
         //表格顶部监听事件
-        table.on("toolbar(classroomTable)",  function(obj){
+        table.on("toolbar(clazzTable)",  function(obj){
             switch(obj.event){
                 case 'add':
+                    //为下拉框添加数据
+                    addOperation(null);
                     openAddLayer();
                     break;
                 case 'batchDelete':
@@ -164,15 +196,20 @@
             }
         })
         //表格行内监听事件
-        table.on("tool(classroomTable)",  function(obj){
+        table.on("tool(clazzTable)",  function(obj){
             //获取当前行数据并传入
             var data = obj.data;
             switch(obj.event){
+                case 'show':
+                    openShowLayer(data);
+                    break;
                 case 'update':
+                    //为下拉框添加数据
+                    addOperation(data);
                     openUpdateLayer(data);
                     break;
                 case 'delete':
-                    deleteClassroom(data);
+                    deleteClazz(data);
                     break;
             }
         })
@@ -180,36 +217,80 @@
         var mainIndex;
         //存储弹出层对应后端接口
         var url;
+        //打开用于班级内容展示的弹出层
+        function openShowLayer(data) {
+            mainIndex = layer.open({
+                type:1,
+                content:$("#showClazzDiv"),
+                area:['800px', '600px'],
+                title:"查看班级",
+                success:function () {
+                    $("#show_title").html(data.clazzName);
+                    $("#show_createBy").html(data.clazzNo);
+                    $("#show_content").html(data.description);
+                }
+            })
+        }
         //打开用于数据添加的弹出层
         function openAddLayer() {
             mainIndex = layer.open({
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px', '600px'],
-                title:"新增教室信息",
+                title:"新增班级",
                 success:function () {
                     //重置表单
                     $("#dataFrm")[0].reset();
-                    url = '/classroom/addClassroom';
+                    url = '/clazz/addClazz';
                 }
             })
         }
         //打开用于数据修改的弹出层
         function openUpdateLayer(data) {
+            if(data.studentNum != 0){
+                layer.msg('当前班级存在学生，不能修改');
+                return false;
+            }
             mainIndex = layer.open({
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px', '600px'],
-                title:"修改教室信息",
+                title:"修改班级",
                 success:function () {
                     //重置表单
                     $("#dataFrm")[0].reset();
                     //将原表数据填入表单
                     form.val("dataFrm", data);
 
-                    url = '/classroom/updateClassroom';
+                    url = '/clazz/updateClazz';
                 }
             })
+        }
+        //为弹出层数据下拉选择框填充数据
+        function addOperation(localData) {
+            $.ajax({
+                url: '/major/loadAllMajor',
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (data) {
+                    //每次加载时清空原数据
+                    $('#majorNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#majorNo').append(new Option('请选择班级所属专业', ''));
+                    $.each(data.data, function (index, value) {
+                        $('#majorNo').append(new Option(value.name, value.majorNo));// 下拉菜单里添加元素
+                    });
+
+                    // 在修改中，当某一专业目前被选中时，通过专业编号选中对应标签
+                    const value = localData.deptNo;
+                    if (null !== value && value !== "") {
+                        $('#majorNo').find("option[value=" + value + "]").attr("selected", true);
+                    }
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
         }
         //添加和修改的提交
         form.on("submit(doSubmit)", function(data) {
@@ -226,7 +307,7 @@
         //批量删除方法
         function batchDelete() {
             //得到选中行
-            var checkStatus = table.checkStatus('classroomTable');
+            var checkStatus = table.checkStatus('clazzTable');
             //获得选中行数量
             var dataLength = checkStatus.data.length;
             if(dataLength > 0){
@@ -242,8 +323,12 @@
                         }else{
                             ids += "&ids=" + item.id;
                         }
+                        if(data.studentNum != 0){
+                            layer.msg('有班级存在学生，不能删除');
+                            return false;
+                        }
                     });
-                    $.post("/classroom/batchDeleteClassroom", ids, function (res) {
+                    $.post("/clazz/batchDeleteClazz", ids, function (res) {
                         if(res.code == 0){
                             tableIns.reload();
                         }
@@ -256,11 +341,15 @@
             }
         }
         //单条删除方法
-        function deleteClassroom(data) {
+        function deleteClazz(data) {
+            if(data.studentNum != 0){
+                layer.msg('当前班级存在学生，不能修改');
+                return false;
+            }
             //询问是否删除
             layer.confirm('确定要删除这条数据吗?', {icon: 3, title:'提示'}, function(index){
                 //返回单个id
-                $.post("/classroom/deleteClassroom", {id : data.id}, function (res) {
+                $.post("/clazz/deleteClazz", {id : data.id}, function (res) {
                     if(res.code == 0){
                         tableIns.reload();
                     }
