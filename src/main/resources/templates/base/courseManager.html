@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>教室管理页面</title>
+    <title>课程管理页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -20,31 +20,41 @@
     <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">教室编号</label>
+                <label class="layui-form-label">学院编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="classroomNo" class="layui-input">
+                    <input type="text" name="deptNo" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">教室名称</label>
+                <label class="layui-form-label">课程编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="courseNo" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">课程名称</label>
                 <div class="layui-input-inline">
                     <input type="text" name="name" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline input-item">
-                <label class="layui-form-label">教室类别</label>
+                <label class="layui-form-label">需要教室类别</label>
                 <div class="layui-select">
-                    <select name="classroomType">
+                    <select name="classroomType" class="layui-select" lay-verify="required" >
                         <option value="" selected>请选择教室类型</option>
                         <option value="0">普通</option>
                         <option value="1">特殊</option>
                     </select>
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">所在教学楼</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="build" class="layui-input">
+            <div class="layui-inline input-item">
+                <label class="layui-form-label">需要教室类别</label>
+                <div class="layui-select">
+                    <select name="testType" class="layui-select" lay-verify="required" >
+                        <option value="" selected>请选择考试方式</option>
+                        <option value="0">考察</option>
+                        <option value="1">考试</option>
+                    </select>
                 </div>
             </div>
         </div>
@@ -59,14 +69,14 @@
 
 <!-- 数据表格 -->
 <div>
-    <table class="layui-hide" id="classroomTable" lay-filter="classroomTable"></table>
+    <table class="layui-hide" id="courseTable" lay-filter="courseTable"></table>
     <!-- 表格顶部按钮 -->
-    <div id="classroomToolBar" style="display: none;">
-        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加教室</button>
+    <div id="courseToolBar" style="display: none;">
+        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加课程</button>
         <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>批量删除</button>
     </div>
     <!-- 表格行内按钮 -->
-    <div id="classroomRowBar" style="display: none;">
+    <div id="courseRowBar" style="display: none;">
         <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-edit"></span>修改</button>
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
     </div>
@@ -75,38 +85,57 @@
 <!-- 添加和修改的弹出层 -->
 <div style="display: none; padding: 5px" id="addOrUpdateDiv">
     <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
+        <input type="hidden" name="id">
         <div class="layui-form-item input-item">
-            <input type="hidden" name="id">
-            <label for="classroomNo">教室编号</label>
-            <input type="text" placeholder="请输入教室编号" autocomplete="off" id="classroomNo" name="classroomNo" class="layui-input" lay-verify="required">
+            <label for="deptNo">所在学院</label>
+            <div class="layui-select">
+                <!-- 用于填充数据的下拉列表 -->
+                <select id="deptNo" name="deptNo" class="layui-select" lay-verify="required" >
+                    <option value="">请选择课程所属学院</option>
+                </select>
+            </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="name">教室名称</label>
-            <input type="text" placeholder="请输入教室名称" autocomplete="off" id="name" name="name" class="layui-input" lay-verify="required">
+            <label for="courseNo">课程编号</label>
+            <input type="text" placeholder="请输入课程编号" autocomplete="off" id="courseNo" name="courseNo" class="layui-input" lay-verify="required">
         </div>
-        <div class="layui-inline input-item">
-            <label for="classroomType">教室类别</label>
+        <div class="layui-form-item input-item">
+            <label for="name">课程名称</label>
+            <input type="text" placeholder="请输入课程名称" autocomplete="off" id="name" name="name" class="layui-input" lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="credit">学分</label>
+            <input type="number" placeholder="请输入学分" autocomplete="off" id="credit" name="credit" class="layui-input" lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="classroomType">需要教室类型</label>
             <div class="layui-select">
                 <select id="classroomType" name="classroomType" class="layui-select" lay-verify="required" >
-                    <option value="" selected>请选择教室类型</option>
-                    <option value="0">普通</option>
-                    <option value="1">特殊</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-inline input-item">
-            <label for="classroomType">教室类别</label>
-            <div class="layui-select">
-                <select id="testType" name="classroomType" class="layui-select" lay-verify="required" >
-                    <option value="" selected>请选择教室类型</option>
+                    <option value="" selected>请选择课程需要教室类型</option>
                     <option value="0">普通</option>
                     <option value="1">特殊</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="build">所在教学楼</label>
-            <input type="text" placeholder="请输入所在教学楼" autocomplete="off" id="build" name="build" class="layui-input" lay-verify="required">
+            <label for="isRequired">是否必修</label>
+            <div class="layui-select">
+                <select id="isRequired" name="isRequired" class="layui-select" lay-verify="required" >
+                    <option value="" selected>请选择课程类型</option>
+                    <option value="0">选修</option>
+                    <option value="1">必修</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="testType">考察方式</label>
+            <div class="layui-select" selected>
+                <select id="testType" name="testType" class="layui-select" lay-verify="required" >
+                    <option value="">请选择课程考察方式</option>
+                    <option value="0">考察</option>
+                    <option value="1">考试</option>
+                </select>
+            </div>
         </div>
         <div class="layui-form-item input-item">
             <label for="description">描述</label>
@@ -131,24 +160,32 @@
 
         //加载表格数据
         var tableIns = table.render({
-            elem: '#classroomTable'
+            elem: '#courseTable'
             ,height: 'full'
-            ,url:'/classroom/loadAllClassroom'
-            ,toolbar: '#classroomToolBar' //开启头部工具栏，并为其绑定左侧模板
-            ,title: '教室列表'
+            ,url:'/course/loadAllCourse'
+            ,toolbar: '#courseToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '课程列表'
             ,page: true
             ,cols: [ [
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID', align:'center'}
-                ,{field:'classroomNo', title:'教室编号', align:'center'}
-                ,{field:'name', title:'教室名称', align:'center'}
+                ,{field:'deptNo', title:'学院编号', align:'center'}
+                ,{field:'courseNo', title:'课程编号', align:'center'}
+                ,{field:'name', title:'课程名称', align:'center'}
                 ,{field:'classroomType', title:'教室类型', align:'center', templet:function (data) {
                         if(data.classroomType == 0) return '普通';
                         else return '特殊';
                     }}
-                ,{field:'build', title:'所在教学楼', align:'center'}
+                ,{field:'isRequired', title:'是否必修', align:'center', templet:function (data) {
+                        if(data.isRequired == 0) return '选修';
+                        else return '必修';
+                    }}
+                ,{field:'testType', title:'考察方式', align:'center', templet:function (data) {
+                        if(data.testType == 0) return '考察';
+                        else return '考试';
+                    }}
                 ,{field:'description', title:'描述', align:'center'}
-                ,{fixed: 'right', title:'操作', toolbar: '#classroomRowBar', align:'center', width:'20%'}
+                ,{fixed: 'right', title:'操作', toolbar: '#courseRowBar', align:'center', width:'20%'}
             ] ]
         })
         //工具栏表单模糊查询
@@ -162,7 +199,8 @@
             return false;
         })
         //表格顶部监听事件
-        table.on("toolbar(classroomTable)",  function(obj){
+        table.on("toolbar(courseTable)",  function(obj){
+            addOperation(null);
             switch(obj.event){
                 case 'add':
                     openAddLayer();
@@ -173,15 +211,17 @@
             }
         })
         //表格行内监听事件
-        table.on("tool(classroomTable)",  function(obj){
+        table.on("tool(courseTable)",  function(obj){
             //获取当前行数据并传入
             var data = obj.data;
+            //为表单填入选择框选项
+            addOperation(data);
             switch(obj.event){
                 case 'update':
                     openUpdateLayer(data);
                     break;
                 case 'delete':
-                    deleteClassroom(data);
+                    deleteCourse(data);
                     break;
             }
         })
@@ -195,11 +235,11 @@
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px', '600px'],
-                title:"新增教室信息",
+                title:"新增课程信息",
                 success:function () {
                     //重置表单
                     $("#dataFrm")[0].reset();
-                    url = '/classroom/addClassroom';
+                    url = '/course/addCourse';
                 }
             })
         }
@@ -209,16 +249,42 @@
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px', '600px'],
-                title:"修改教室信息",
+                title:"修改课程信息",
                 success:function () {
                     //重置表单
                     $("#dataFrm")[0].reset();
                     //将原表数据填入表单
                     form.val("dataFrm", data);
 
-                    url = '/classroom/updateClassroom';
+                    url = '/course/updateCourse';
                 }
             })
+        }
+        //为弹出层数据下拉选择框填充数据
+        function addOperation(localData) {
+            $.ajax({
+                url: '/dept/loadAllDept',
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (data) {
+                    //每次加载时清空原数据
+                    $('#deptNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#deptNo').append(new Option('请选择课程所在学院', ''));
+                    $.each(data.data, function (index, value) {
+                        $('#deptNo').append(new Option(value.name, value.deptNo));// 下拉菜单里添加元素
+                    });
+
+                    // 在修改中，当某一学院目前被选中时，通过学院编号选中对应标签
+                    const value = localData.deptNo;
+                    if (null !== value && value !== "") {
+                        $('#deptNo').find("option[value=" + value + "]").attr("selected", true);
+                    }
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
         }
         //添加和修改的提交
         form.on("submit(doSubmit)", function(data) {
@@ -235,7 +301,7 @@
         //批量删除方法
         function batchDelete() {
             //得到选中行
-            var checkStatus = table.checkStatus('classroomTable');
+            var checkStatus = table.checkStatus('courseTable');
             //获得选中行数量
             var dataLength = checkStatus.data.length;
             if(dataLength > 0){
@@ -252,7 +318,7 @@
                             ids += "&ids=" + item.id;
                         }
                     });
-                    $.post("/classroom/batchDeleteClassroom", ids, function (res) {
+                    $.post("/course/batchDeleteCourse", ids, function (res) {
                         if(res.code == 0){
                             tableIns.reload();
                         }
@@ -265,11 +331,11 @@
             }
         }
         //单条删除方法
-        function deleteClassroom(data) {
+        function deleteCourse(data) {
             //询问是否删除
             layer.confirm('确定要删除这条数据吗?', {icon: 3, title:'提示'}, function(index){
                 //返回单个id
-                $.post("/classroom/deleteClassroom", {id : data.id}, function (res) {
+                $.post("/course/deleteCourse", {id : data.id}, function (res) {
                     if(res.code == 0){
                         tableIns.reload();
                     }

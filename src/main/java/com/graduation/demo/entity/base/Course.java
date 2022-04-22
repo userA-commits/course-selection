@@ -42,8 +42,8 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "课程类别，0选修，1必修")
     private Integer isRequired;
 
-    @ApiModelProperty(value = "考核方式")
-    private String testType;
+    @ApiModelProperty(value = "考核方式，0考核，1考试")
+    private Integer testType;
 
     @ApiModelProperty(value = "描述")
     private String description;
@@ -105,11 +105,11 @@ private static final long serialVersionUID=1L;
         this.isRequired = isRequired;
     }
 
-    public String getTestType() {
+    public Integer getTestType() {
         return testType;
     }
 
-    public void setTestType(String testType) {
+    public void setTestType(Integer testType) {
         this.testType = testType;
     }
 
