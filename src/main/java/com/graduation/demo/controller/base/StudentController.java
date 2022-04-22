@@ -1,15 +1,25 @@
 package com.graduation.demo.controller.base;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.demo.common.Constant;
+import com.graduation.demo.entity.base.Clazz;
 import com.graduation.demo.entity.base.Student;
+import com.graduation.demo.service.ClazzService;
 import com.graduation.demo.service.StudentService;
 import com.graduation.demo.utils.DataResult;
+import com.graduation.demo.vo.base.StudentVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,34 +33,82 @@ import java.util.List;
 public class StudentController {
     @Autowired
     StudentService studentService;
+    @Autowired
+    ClazzService clazzService;
 
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
+    @RequestMapping("/loadAllStudent")
+    public DataResult loadAllStudent(StudentVo studentVo){
+        //覆盖分页功能
+        IPage<Student> page = new Page<>(studentVo.getPage(), studentVo.getLimit());
+        //覆盖条件查询功能
+        studentService.page(page, new QueryWrapper<Student>()
+                .like(StringUtils.isNotBlank(studentVo.getDeptNo()), "dept_no", studentVo.getDeptNo())
+                .like(StringUtils.isNotBlank(studentVo.getMajorNo()), "major_no", studentVo.getMajorNo())
+                .like(StringUtils.isNotBlank(studentVo.getClazzNo()), "clazz_no", studentVo.getClazzNo())
+                .like(StringUtils.isNotBlank(studentVo.getStudentNo()), "student_no", studentVo.getStudentNo())
+                .like(StringUtils.isNotBlank(studentVo.getName()), "name", studentVo.getName())
+                .like(StringUtils.isNotBlank(studentVo.getGrade()), "grade", studentVo.getGrade())
+                .eq(studentVo.getSex() != null, "sex", studentVo.getSex())
+                .orderByAsc("student_no")
+        );
+        return DataResult.success(page.getRecords());
     }
 
-    @PostMapping("/query")
-    public DataResult query(){
-        List<Student> students = studentService.list();
-        DataResult<List<Student>> result = new DataResult<>(students);
-        return result;
+    @RequestMapping("/addStudent")
+    public DataResult addStudent(StudentVo studentVo){
+        try{
+            studentVo.setUserType(3);
+            studentVo.setGrade(
+                    clazzService.getOne(new QueryWrapper<Clazz>()
+                                    .select("grade")
+                                    .eq("clazz_no", studentVo.getClazzNo()))
+                    .getGrade()
+            );
+            this.studentService.save(studentVo);
+            return Constant.ADD_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.ADD_ERROR;
+        }
     }
 
-    @PostMapping("/add")
-    public DataResult add(Student student){
-        studentService.save(student);
-        return DataResult.success();
+    @RequestMapping("/updateStudent")
+    public DataResult updateStudent(StudentVo studentVo){
+        try{
+            studentVo.setGrade(
+                    clazzService.getOne(new QueryWrapper<Clazz>()
+                            .select("grade")
+                            .eq("clazz_no", studentVo.getClazzNo()))
+                            .getGrade()
+            );
+            this.studentService.updateById(studentVo);
+            return Constant.UPDATE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.UPDATE_ERROR;
+        }
     }
 
-    @PostMapping("/edit")
-    public DataResult edit(Student student){
-        studentService.updateById(student);
-        return DataResult.success();
+    @RequestMapping("/deleteStudent")
+    public DataResult deleteStudent(String id){
+        try{
+            studentService.removeById(id);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-    @PostMapping("/remove")
-    public DataResult remove(List<String> ids){
-        studentService.removeByIds(ids);
-        return DataResult.success();
+    @RequestMapping("/batchDeleteStudent")
+    public DataResult batchDeleteStudentList(StudentVo studentVo){
+        try{
+            List<String> ids = new ArrayList<>(Arrays.asList(studentVo.getIds()));
+            studentService.removeByIds(ids);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 }
