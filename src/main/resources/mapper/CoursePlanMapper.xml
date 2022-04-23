@@ -48,7 +48,7 @@
         <if test="cpv.courseName != null">and c.name like '%${cpv.courseName}%'</if>
         <if test="cpv.grade != null">and cp.grade like '%${cpv.grade}%'</if>
         <if test="cpv.semester != null">and cp.semester = #{cpv.semester}</if>
-        order by cp.dept_no asc
+        order by cp.semester asc
     </select>
 
 </mapper>

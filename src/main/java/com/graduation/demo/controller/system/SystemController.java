@@ -1,5 +1,7 @@
 package com.graduation.demo.controller.system;
 
+import com.graduation.demo.common.ActiveUser;
+import com.graduation.demo.utils.WEBUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -87,6 +89,13 @@ public class SystemController {
     //加载教学计划管理界面
     @RequestMapping("/toCoursePlan")
     public String toCoursePlan() {
-        return "business/coursePlan/coursePlanManager";
+        //根据用户角色返回不同的界面
+        ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
+        if(user.getRoleType() == 1){
+            //管理员进入管理界面
+            return "business/coursePlan/coursePlanManager";
+        }
+        //学生进入查看界面
+        return "business/coursePlan/coursePlanSearch";
     }
 }

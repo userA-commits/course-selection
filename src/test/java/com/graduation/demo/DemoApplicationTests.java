@@ -3,6 +3,7 @@ package com.graduation.demo;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.demo.entity.business.CoursePlan;
+import com.graduation.demo.entity.system.RoleMenu;
 import com.graduation.demo.mapper.CoursePlanMapper;
 import com.graduation.demo.service.*;
 import com.graduation.demo.vo.business.CoursePlanVo;
@@ -16,14 +17,9 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    CoursePlanMapper coursePlanMapper;
+    RoleMenuService roleMenuService;
     @Test
     void test(){
-        IPage<CoursePlanVo> page = new Page<CoursePlanVo>(1, 10);
-        CoursePlanVo coursePlanVo = new CoursePlanVo();
-        coursePlanVo.setDeptNo("S");
-        coursePlanMapper.loadAllCoursePlan(page, coursePlanVo);
-        System.out.println(page.getRecords().get(0).getCourseName());
     }
 
 }

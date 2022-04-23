@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>教学计划查看页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="/resources/favicon.ico">
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/resources/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<!-- 顶部标题 -->
+<div class="layui-main">
+    <span style="display: none" id="deptNo" th:text="${session.user.getStudent().getDeptNo()}"></span>
+    <span style="display: none" id="majorNo" th:text="${session.user.getStudent().getMajorNo()}"></span>
+    <span style="display: none" id="grade" th:text="${session.user.getStudent().getGrade()}"></span>
+    <h2 style="text-align: center; font-weight: bold;">
+        培养计划
+    </h2>
+</div>
+<!-- 工具栏 -->
+<blockquote class="layui-elem-quote">
+    <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">学院</label>
+                <div class="layui-input-inline">
+                    <select id="deptTitle" name="deptTitle">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">专业</label>
+                <div class="layui-input-inline">
+                    <select id="majorTitle" name="majorTitle">
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">年级</label>
+                <div class="layui-input-inline">
+                    <select id="gradeTitle" name="gradeTitle">
+                        <option th:text="${session.user.getStudent().getGrade()}" selected></option>
+                    </select>
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">学期</label>
+                <div class="layui-input-inline">
+                    <select id="semester" name="semester">
+                        <option value="">选择学期</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSearch"><span class="layui-icon layui-icon-search"></span>查询</button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh"></span>重置</button>
+            </div>
+        </div>
+    </form>
+</blockquote>
+
+<!-- 数据表格 -->
+<div>
+    <table class="layui-hide" id="coursePlanTable" lay-filter="coursePlanTable"></table>
+</div>
+
+
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'layer'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+        var layer = layui.layer;
+
+        //加载表格数据
+        var tableIns = table.render({
+            elem: '#coursePlanTable'
+            ,height: 'full'
+            ,url:'/coursePlan/loadAllCoursePlan?deptNo=' + $("#deptNo").text()
+                + '&majorNo=' + $("#majorNo").text() + '&grade=' + $("#grade").text()
+            ,toolbar: '#coursePlanToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '教学计划列表'
+            ,page: true
+            ,cols: [ [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'deptName', title:'院系名称', align:'center'}
+                ,{field:'majorName', title:'专业名称', align:'center'}
+                ,{field:'grade', title:'年级', align:'center'}
+                ,{field:'courseName', title:'课程名称', align:'center'}
+                ,{field:'credit', title:'学分', align:'center'}
+                ,{field:'semester', title:'推荐修课学期', align:'center'}
+                ,{field:'isRequired', title:'是否必修', align:'center', templet:function (data) {
+                        if(data.isRequired == 0) return '选修';
+                        else return '必修';
+                    }}
+                ,{field:'testType', title:'考察方式', align:'center', templet:function (data) {
+                        if(data.testType == 0) return '考察';
+                        else return '考试';
+                    }}
+                ,{field:'remark', title:'备注', align:'center'}
+            ] ]
+        })
+        //获得学院名并放入标题
+        $.ajax({
+            url: '/dept/loadAllDept?deptNo=' + $("#deptNo").text(),
+            dataType: 'json', //服务器返回json格式数据
+            type: 'get', //HTTP请求类型
+            timeout: 10000, //超时时间设置为10秒；
+            success: function (deptData) {
+                $.each(deptData.data, function (index, value) {
+                    $('#deptTitle').append(new Option(value.name, value.deptNo)).attr("selected", true);
+                });
+                form.render('select');
+            }
+        })
+        //获得专业名并放入标题
+        $.ajax({
+            url: '/major/loadAllMajor?majorNo=' + $("#majorNo").text(),
+            dataType: 'json', //服务器返回json格式数据
+            type: 'get', //HTTP请求类型
+            timeout: 10000, //超时时间设置为10秒；
+            success: function (deptData) {
+                $.each(deptData.data, function (index, value) {
+                    $('#majorTitle').append(new Option(value.name, value.majorNo)).attr("selected", true);
+                });
+                form.render('select');
+            }
+        })
+        //工具栏表单模糊查询
+        form.on("submit(doSearch)", function (data) {
+            tableIns.reload({
+                where: data.field,
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
+    })
+</script>
+</body>
+</html>
