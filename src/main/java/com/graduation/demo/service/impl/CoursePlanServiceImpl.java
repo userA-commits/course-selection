@@ -1,5 +1,6 @@
 package com.graduation.demo.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CoursePlan;
 import com.graduation.demo.mapper.CoursePlanMapper;
 import com.graduation.demo.service.CoursePlanService;
@@ -21,12 +22,7 @@ import java.util.List;
 public class CoursePlanServiceImpl extends ServiceImpl<CoursePlanMapper, CoursePlan> implements CoursePlanService {
 
     @Override
-    public List<CoursePlanVo> getCoursePlanVo() {
-        return this.getBaseMapper().getCoursePlanVo();
-    }
-
-    @Override
-    public List<CoursePlanVo> getCoursePlanVoWithCond(CoursePlan coursePlan) {
-        return this.getBaseMapper().getCoursePlanVoWithCond(coursePlan);
+    public IPage<CoursePlanVo> loadAllCoursePlan(IPage<CoursePlanVo> page, CoursePlanVo coursePlanVo) {
+        return this.getBaseMapper().loadAllCoursePlan(page, coursePlanVo);
     }
 }

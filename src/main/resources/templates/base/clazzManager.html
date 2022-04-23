@@ -205,6 +205,8 @@
         var url;
         //打开用于数据添加的弹出层
         function openAddLayer() {
+            //每次打开新增弹出层时，清空隐藏栏中的id
+            $("input[name='id']").val("");
             mainIndex = layer.open({
                 type:1,
                 content:$("#addOrUpdateDiv"),

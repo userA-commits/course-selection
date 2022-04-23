@@ -2,6 +2,8 @@ package com.graduation.demo.vo.business;
 
 import io.swagger.annotations.ApiModelProperty;
 
+import java.util.Arrays;
+
 /**
  * 课表联合实体
  *
@@ -54,6 +56,36 @@ public class CourseTableVo {
 
     @ApiModelProperty(value = "使用时间段", notes = "form course arrange vo")
     private Integer period;
+
+    private Integer page = 1;
+    private Integer limit = 10;
+
+    private String[] ids;
+
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public String[] getIds() {
+        return ids;
+    }
+
+    public void setIds(String[] ids) {
+        this.ids = ids;
+    }
 
     public String getTeachCourseNo() {
         return teachCourseNo;
@@ -148,6 +180,9 @@ public class CourseTableVo {
                 ", classroomName='" + classroomName + '\'' +
                 ", week=" + week +
                 ", period=" + period +
+                ", page=" + page +
+                ", limit=" + limit +
+                ", ids=" + Arrays.toString(ids) +
                 '}';
     }
 }

@@ -81,9 +81,12 @@ public class SystemController {
         return "base/courseManager";
     }
 
-
-
     /**
      * 课务管理跳转控制
      */
+    //加载教学计划管理界面
+    @RequestMapping("/toCoursePlan")
+    public String toCoursePlan() {
+        return "business/coursePlan/coursePlanManager";
+    }
 }

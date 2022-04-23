@@ -1,5 +1,6 @@
 package com.graduation.demo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CoursePlan;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.demo.vo.business.CoursePlanVo;
@@ -16,7 +17,5 @@ import java.util.List;
  */
 public interface CoursePlanService extends IService<CoursePlan> {
 
-    List<CoursePlanVo> getCoursePlanVo();
-
-    List<CoursePlanVo> getCoursePlanVoWithCond(CoursePlan coursePlan);
+    IPage<CoursePlanVo> loadAllCoursePlan(IPage<CoursePlanVo> page, CoursePlanVo coursePlanVo);
 }

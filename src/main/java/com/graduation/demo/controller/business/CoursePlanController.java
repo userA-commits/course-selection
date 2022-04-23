@@ -1,16 +1,23 @@
 package com.graduation.demo.controller.business;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.demo.common.Constant;
 import com.graduation.demo.entity.business.CoursePlan;
 import com.graduation.demo.service.CoursePlanService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.vo.business.CoursePlanVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,55 +27,67 @@ import java.util.List;
  * @since 2022-04-11
  */
 @RestController
-@RequestMapping("/course-plan")
+@RequestMapping("/coursePlan")
 public class CoursePlanController {
     @Autowired
     CoursePlanService coursePlanService;
 
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
+    @RequestMapping("/loadAllCoursePlan")
+    public DataResult loadAllCoursePlan(CoursePlanVo coursePlanVo){
+        //覆盖分页功能
+        IPage<CoursePlanVo> page = new Page<>(coursePlanVo.getPage(), coursePlanVo.getLimit());
+        //覆盖条件查询功能
+        coursePlanService.loadAllCoursePlan(page, coursePlanVo);
+
+        return DataResult.success(page.getRecords());
     }
 
-    //用于获取对应年级专业的所有教学计划信息
-    @PostMapping("/getCoursePlanVosByCond")
-    public DataResult getCoursePlanVosByCond(CoursePlan coursePlan){
-        List<CoursePlanVo> coursePlanVos = coursePlanService.getCoursePlanVoWithCond(coursePlan);
-        DataResult<List<CoursePlanVo>> result = new DataResult<>(coursePlanVos);
-        return result;
+    @RequestMapping("/addCoursePlan")
+    public DataResult addCoursePlan(CoursePlanVo coursePlanVo){
+        try{
+            this.coursePlanService.save(coursePlanVo);
+            return Constant.ADD_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.ADD_ERROR;
+        }
     }
 
-    @PostMapping("/getCoursePlanVos")
-    public DataResult getCoursePlanVos(){
-        List<CoursePlanVo> coursePlanVos = coursePlanService.getCoursePlanVo();
-        DataResult<List<CoursePlanVo>> result = new DataResult<>(coursePlanVos);
-        return result;
+    @RequestMapping("/updateCoursePlan")
+    public DataResult updateCoursePlan(CoursePlanVo coursePlanVo){
+        try{
+            this.coursePlanService.updateById(coursePlanVo);
+            return Constant.UPDATE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.UPDATE_ERROR;
+        }
     }
 
-    @PostMapping("/query")
-    public DataResult query(){
-        List<CoursePlan> coursePlans = coursePlanService.list();
-        DataResult<List<CoursePlan>> result = new DataResult<>(coursePlans);
-        return result;
+    @RequestMapping("/deleteCoursePlan")
+    public DataResult deleteCoursePlan(String id){
+        try{
+            coursePlanService.removeById(id);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-    @PostMapping("/add")
-    public DataResult add(CoursePlan coursePlan){
-        coursePlanService.save(coursePlan);
-        return DataResult.success();
+    @RequestMapping("/batchDeleteCoursePlan")
+    public DataResult batchDeleteCoursePlanList(CoursePlanVo coursePlanVo){
+        try{
+            List<String> ids = new ArrayList<>(Arrays.asList(coursePlanVo.getIds()));
+            coursePlanService.removeByIds(ids);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-    @PostMapping("/edit")
-    public DataResult edit(CoursePlan coursePlan){
-        coursePlanService.updateById(coursePlan);
-        return DataResult.success();
-    }
 
-    @PostMapping("/remove")
-    public DataResult remove(List<String> ids){
-        coursePlanService.removeByIds(ids);
-        return DataResult.success();
-    }
 }
 
 

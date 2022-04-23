@@ -2,9 +2,11 @@ package com.graduation.demo.vo.business;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.graduation.demo.entity.business.CoursePlan;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * 教学计划联合实体
@@ -12,30 +14,14 @@ import java.io.Serializable;
  * @author 王奥
  * @since 2022-04-12
  */
-public class CoursePlanVo implements Serializable {
+public class CoursePlanVo extends CoursePlan implements Serializable {
     private static final long serialVersionUID=1L;
-
-    @ApiModelProperty(value = "教学计划主键id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private String id;
-
-    @ApiModelProperty(value = "院系编号", notes = "form course plan")
-    private String deptNo;
 
     @ApiModelProperty(value = "院系名称", notes = "form dept")
     private String deptName;
 
-    @ApiModelProperty(value = "专业编号", notes = "form course plan")
-    private String majorNo;
-
     @ApiModelProperty(value = "专业名称", notes = "form major")
     private String majorName;
-
-    @ApiModelProperty(value = "年级", notes = "form course plan")
-    private String grade;
-
-    @ApiModelProperty(value = "课程编号", notes = "form course plan")
-    private String courseNo;
 
     @ApiModelProperty(value = "课程名称", notes = "form course")
     private String courseName;
@@ -52,15 +38,34 @@ public class CoursePlanVo implements Serializable {
     @ApiModelProperty(value = "建议修读学期", notes = "form course")
     private Integer semester;
 
-    @ApiModelProperty(value = "备注", notes = "form course plan")
-    private String remark;
+    private Integer page = 1;
+    private Integer limit = 10;
 
-    public String getDeptNo() {
-        return deptNo;
+    private String[] ids;
+
+
+    public Integer getPage() {
+        return page;
     }
 
-    public void setDeptNo(String deptNo) {
-        this.deptNo = deptNo;
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
+
+    public String[] getIds() {
+        return ids;
+    }
+
+    public void setIds(String[] ids) {
+        this.ids = ids;
     }
 
     public String getDeptName() {
@@ -71,36 +76,12 @@ public class CoursePlanVo implements Serializable {
         this.deptName = deptName;
     }
 
-    public String getMajorNo() {
-        return majorNo;
-    }
-
-    public void setMajorNo(String majorNo) {
-        this.majorNo = majorNo;
-    }
-
     public String getMajorName() {
         return majorName;
     }
 
     public void setMajorName(String majorName) {
         this.majorName = majorName;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getCourseNo() {
-        return courseNo;
-    }
-
-    public void setCourseNo(String courseNo) {
-        this.courseNo = courseNo;
     }
 
     public String getCourseName() {
@@ -143,29 +124,4 @@ public class CoursePlanVo implements Serializable {
         this.semester = semester;
     }
 
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "MajorWithCourse{" +
-                "deptNo='" + deptNo + '\'' +
-                ", deptName='" + deptName + '\'' +
-                ", majorNo='" + majorNo + '\'' +
-                ", majorName='" + majorName + '\'' +
-                ", grade='" + grade + '\'' +
-                ", courseNo='" + courseNo + '\'' +
-                ", courseName='" + courseName + '\'' +
-                ", credit=" + credit +
-                ", isRequired=" + isRequired +
-                ", testType='" + testType + '\'' +
-                ", semester=" + semester +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }

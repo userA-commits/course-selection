@@ -1,8 +1,10 @@
 package com.graduation.demo.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CoursePlan;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.graduation.demo.vo.business.CoursePlanVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,7 +18,5 @@ import java.util.List;
  */
 public interface CoursePlanMapper extends BaseMapper<CoursePlan> {
 
-    List<CoursePlanVo> getCoursePlanVo();
-
-    List<CoursePlanVo> getCoursePlanVoWithCond(CoursePlan coursePlan);
+    IPage<CoursePlanVo> loadAllCoursePlan(IPage<CoursePlanVo> page, @Param("cpv") CoursePlanVo coursePlanVo);
 }

@@ -2,23 +2,15 @@ package com.graduation.demo.vo.business;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.graduation.demo.entity.business.SelectCourse;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
-public class SelectCourseVo implements Serializable {
+public class SelectCourseVo extends SelectCourse implements Serializable {
 
     private static final long serialVersionUID=1L;
-
-    @ApiModelProperty(value = "主键id")
-    @TableId(value = "id", type = IdType.AUTO)
-    private String id;
-
-    @ApiModelProperty(value = "授课编号", notes = "form select course")
-    private String teachCourseNo;
-
-    @ApiModelProperty(value = "学生编号", notes = "form select course")
-    private String studentNo;
 
     @ApiModelProperty(value = "学生姓名", notes = "form student")
     private String studentName;
@@ -32,45 +24,36 @@ public class SelectCourseVo implements Serializable {
     @ApiModelProperty(value = "学分", notes = "form course")
     private Float credit;
 
-    @ApiModelProperty(value = "修读学期", notes = "form select course")
-    private Integer semester;
+    private Integer page = 1;
+    private Integer limit = 10;
 
-    @ApiModelProperty(value = "平时成绩", notes = "form select course")
-    private Integer normalScore;
-
-    @ApiModelProperty(value = "考试成绩", notes = "form select course")
-    private Integer examScore;
-
-    @ApiModelProperty(value = "总成绩", notes = "form select course")
-    private Integer totalScore;
-
-    @ApiModelProperty(value = "备注", notes = "form select course")
-    private String remark;
+    private String[] ids;
 
 
-    public String getId() {
-        return id;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setPage(Integer page) {
+        this.page = page;
     }
 
-    public String getTeachCourseNo() {
-        return teachCourseNo;
+    public Integer getLimit() {
+        return limit;
     }
 
-    public void setTeachCourseNo(String teachCourseNo) {
-        this.teachCourseNo = teachCourseNo;
+    public void setLimit(Integer limit) {
+        this.limit = limit;
     }
 
-    public String getStudentNo() {
-        return studentNo;
+    public String[] getIds() {
+        return ids;
     }
 
-    public void setStudentNo(String studentNo) {
-        this.studentNo = studentNo;
+    public void setIds(String[] ids) {
+        this.ids = ids;
     }
+
 
     public String getStudentName() {
         return studentName;
@@ -104,61 +87,5 @@ public class SelectCourseVo implements Serializable {
         this.credit = credit;
     }
 
-    public Integer getSemester() {
-        return semester;
-    }
 
-    public void setSemester(Integer semester) {
-        this.semester = semester;
-    }
-
-    public Integer getNormalScore() {
-        return normalScore;
-    }
-
-    public void setNormalScore(Integer normalScore) {
-        this.normalScore = normalScore;
-    }
-
-    public Integer getExamScore() {
-        return examScore;
-    }
-
-    public void setExamScore(Integer examScore) {
-        this.examScore = examScore;
-    }
-
-    public Integer getTotalScore() {
-        return totalScore;
-    }
-
-    public void setTotalScore(Integer totalScore) {
-        this.totalScore = totalScore;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
-    }
-
-    @Override
-    public String toString() {
-        return "SelectCourseVo{" +
-                "id='" + id + '\'' +
-                ", teachCourseNo='" + teachCourseNo + '\'' +
-                ", studentNo='" + studentNo + '\'' +
-                ", studentName='" + studentName + '\'' +
-                ", courseNo='" + courseNo + '\'' +
-                ", courseName='" + courseName + '\'' +
-                ", credit=" + credit +
-                ", semester=" + semester +
-                ", normalScore=" + normalScore +
-                ", examScore=" + examScore +
-                ", totalScore=" + totalScore +
-                ", remark='" + remark + '\'' +
-                '}';
-    }
 }
