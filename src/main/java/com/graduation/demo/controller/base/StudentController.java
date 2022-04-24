@@ -47,7 +47,7 @@ public class StudentController {
                 .like(StringUtils.isNotBlank(studentVo.getClazzNo()), "clazz_no", studentVo.getClazzNo())
                 .like(StringUtils.isNotBlank(studentVo.getStudentNo()), "student_no", studentVo.getStudentNo())
                 .like(StringUtils.isNotBlank(studentVo.getName()), "name", studentVo.getName())
-                .like(StringUtils.isNotBlank(studentVo.getGrade()), "grade", studentVo.getGrade())
+                .like(null !=studentVo.getGrade(), "grade", studentVo.getGrade())
                 .eq(studentVo.getSex() != null, "sex", studentVo.getSex())
                 .orderByAsc("student_no")
         );

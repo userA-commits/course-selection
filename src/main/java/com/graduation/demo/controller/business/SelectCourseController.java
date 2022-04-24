@@ -20,7 +20,7 @@ import java.util.List;
  * @since 2022-04-11
  */
 @RestController
-@RequestMapping("/select-course")
+@RequestMapping("/selectCourse")
 public class SelectCourseController {
     @Autowired
     SelectCourseService selectCourseService;

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>学生管理页面</title>
+    <title>授课管理页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -20,15 +20,21 @@
     <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">学院编号</label>
+                <label class="layui-form-label">授课编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="deptNo" class="layui-input">
+                    <input type="text" name="teachCourseNo" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">专业编号</label>
+                <label class="layui-form-label">教师编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="majorNo" class="layui-input">
+                    <input type="text" name="teacherNo" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">课程编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="courseNo" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
@@ -38,32 +44,13 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">学生编号</label>
+                <label class="layui-form-label">授课状态</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="studentNo" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">学生名称</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="name" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">学生性别</label>
-                <div class="layui-select">
-                    <!-- 用于填充数据的下拉列表 -->
-                    <select name="sex" class="layui-select" >
-                        <option value="" selected>请选择性别</option>
-                        <option value="0">女</option>
-                        <option value="1">男</option>
+                    <select name="state" class="layui-select">
+                        <option value="">选择授课状态</option>
+                        <option value="0">正在授课</option>
+                        <option value="1">已经结课</option>
                     </select>
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">年级</label>
-                <div class="layui-input-inline">
-                    <input type="number" name="grade" class="layui-input">
                 </div>
             </div>
         </div>
@@ -78,72 +65,68 @@
 
 <!-- 数据表格 -->
 <div>
-    <table class="layui-hide" id="studentTable" lay-filter="studentTable"></table>
+    <table class="layui-hide" id="teachCourseTable" lay-filter="teachCourseTable"></table>
     <!-- 表格顶部按钮 -->
-    <div id="studentToolBar" style="display: none;">
-        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加学生</button>
+    <div id="teachCourseToolBar" style="display: none;">
+        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加授课</button>
         <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>批量删除</button>
     </div>
     <!-- 表格行内按钮 -->
-    <div id="studentRowBar" style="display: none;">
-        <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-edit"></span>修改</button>
+    <div id="teachCourseRowBar" style="display: none;">
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
     </div>
 </div>
 
-<!-- 添加和修改的弹出层 -->
+<!-- 添加的弹出层 -->
 <div style="display: none; padding: 5px" id="addOrUpdateDiv">
     <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
         <input type="hidden" name="id">
-        <input type="hidden" name="grade">
+        <input type="hidden" name="teachCourseNo">
         <div class="layui-form-item input-item">
-            <label for="deptNo">所在学院</label>
+            <label for="teacherNo">请选择授课教师</label>
             <div class="layui-select">
                 <!-- 用于填充数据的下拉列表 -->
-                <select id="deptNo" name="deptNo" class="layui-select" lay-filter="deptSearch" lay-verify="required" >
-                    <option value="">请选择学生学院</option>
+                <select id="teacherNo" name="teacherNo" class="layui-select" lay-filter="teacherSearch" lay-verify="required" >
+                    <option value="">请选择授课教师</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="majorNo">所在专业</label>
+            <label for="courseNo">请选择授课课程</label>
             <div class="layui-select">
                 <!-- 用于填充数据的下拉列表 -->
-                <select id="majorNo" name="majorNo" class="layui-select" lay-filter="majorSearch" lay-verify="required" >
-                    <option value="">请选择学生专业</option>
+                <select id="courseNo" name="courseNo" class="layui-select" lay-search="" lay-filter="courseSearch" lay-verify="required" >
+                    <option value="">请选择授课课程</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="clazzNo">所在班级</label>
+            <label for="clazzNo">请选择授课班级</label>
             <div class="layui-select">
                 <!-- 用于填充数据的下拉列表 -->
-                <select id="clazzNo" name="clazzNo" class="layui-select" lay-filter="clazzSearch" lay-verify="required" >
-                    <option value="">请选择学生班级</option>
+                <select id="clazzNo" name="clazzNo" class="layui-select" lay-search="" lay-filter="courseSearch" lay-verify="required" >
+                    <option value="">请选择授课班级</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="studentNo">学生编号</label>
-            <input type="text" placeholder="请输入学生编号" autocomplete="off" id="studentNo" name="studentNo" class="layui-input" lay-verify="required">
-        </div>
-        <div class="layui-form-item input-item">
-            <label for="name">学生名称</label>
-            <input type="text" placeholder="请输入学生名称" autocomplete="off" id="name" name="name" class="layui-input" lay-verify="required">
-        </div>
-        <div class="layui-form-item input-item">
-            <label for="sex">学生性别</label>
+            <label for="state">请选择授课状态</label>
             <div class="layui-select">
-                <select id="sex" name="sex" class="layui-select" lay-verify="required" >
-                    <option value="">请选择学生性别</option>
-                    <option value= 0>女</option>
-                    <option value= 1>男</option>
+                <!-- 用于填充数据的下拉列表 -->
+                <select id="state" name="state" class="layui-select" lay-search="" lay-filter="courseSearch" lay-verify="required" >
+                    <option value="" selected>请选择授课状态</option>
+                    <option value="0">正在授课</option>
+                    <option value="1">已经结束</option>
                 </select>
             </div>
         </div>
         <div class="layui-form-item input-item">
-            <label for="password">密码</label>
-            <input type="text" placeholder="请输入密码" lay-verify="required"  id="password" name="password" class="layui-input">
+            <label for="upperNum">授课上限人数</label>
+            <input type="number" placeholder="请输入授课上限人数" autocomplete="off" id="upperNum" name="upperNum" class="layui-input" lay-verify="required">
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="remark">备注</label>
+            <input type="text" placeholder="请输入备注" autocomplete="off" id="remark" name="remark" class="layui-input">
         </div>
         <div class="layui-form-item">
             <div class="layui-input-block" style="text-align: center;">
@@ -164,27 +147,34 @@
 
         //加载表格数据
         var tableIns = table.render({
-            elem: '#studentTable'
+            elem: '#teachCourseTable'
             ,height: 'full'
-            ,url:'/student/loadAllStudent'
-            ,toolbar: '#studentToolBar' //开启头部工具栏，并为其绑定左侧模板
-            ,title: '学生列表'
+            ,url:'/teachCourse/loadAllTeachCourse'
+            ,toolbar: '#teachCourseToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '授课列表'
             ,page: true
             ,cols: [ [
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID', align:'center'}
-                ,{field:'deptNo', title:'学院编号', align:'center'}
-                ,{field:'majorNo', title:'专业编号', align:'center'}
+                ,{field:'teachCourseNo', title:'授课编号', align:'center'}
+                ,{field:'teacherNo', title:'教师编号', align:'center'}
+                ,{field:'teacherName', title:'教师名字', align:'center'}
+                ,{field:'courseNo', title:'课程编号', align:'center'}
+                ,{field:'courseName', title:'课程名称', align:'center'}
                 ,{field:'clazzNo', title:'班级编号', align:'center'}
-                ,{field:'studentNo', title:'学生编号', align:'center'}
-                ,{field:'name', title:'学生名称', align:'center'}
-                ,{field:'password', title:'密码', align:'center'}
-                ,{field:'sex', title:'学生性别', align:'center', templet:function (data) {
-                        if(data.sex == 0) return '女';
-                        else return '男';
+                ,{field:'clazzName', title:'班级名称', align:'center'}
+                ,{field:'state', title:'授课状态', align:'center', templet:function (data) {
+                        if(data.state == 0) return '正在授课';
+                        else return '已经结课'
                     }}
-                ,{field:'grade', title:'年级', align:'center'}
-                ,{fixed: 'right', title:'操作', toolbar: '#studentRowBar', align:'center', width:'20%'}
+                ,{field:'studentNum', title:'授课学生人数', align:'center'}
+                ,{field:'upperNum', title:'授课上限人数', align:'center'}
+                ,{field:'testType', title:'考察方式', align:'center', templet:function (data) {
+                        if(data.testType == 0) return '考察';
+                        else return '考试';
+                    }}
+                ,{field:'remark', title:'备注', align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#teachCourseRowBar', align:'center'}
             ] ]
         })
         //工具栏表单模糊查询
@@ -198,7 +188,7 @@
             return false;
         })
         //表格顶部监听事件
-        table.on("toolbar(studentTable)",  function(obj){
+        table.on("toolbar(teachCourseTable)",  function(obj){
             addOperation({});
             switch(obj.event){
                 case 'add':
@@ -210,17 +200,14 @@
             }
         })
         //表格行内监听事件
-        table.on("tool(studentTable)",  function(obj){
+        table.on("tool(teachCourseTable)",  function(obj){
             //获取当前行数据并传入
             var data = obj.data;
             //为表单填入选择框选项
             addOperation(data);
             switch(obj.event){
-                case 'update':
-                    openUpdateLayer(data);
-                    break;
                 case 'delete':
-                    deleteStudent(data);
+                    deleteTeachCourse(data);
                     break;
             }
         })
@@ -228,8 +215,6 @@
         var mainIndex;
         //存储弹出层对应后端接口
         var url;
-        //保存打开下拉框的对应行数据
-        var localData;
         //打开用于数据添加的弹出层
         function openAddLayer() {
             //每次打开新增弹出层时，清空隐藏栏中的id
@@ -238,115 +223,72 @@
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px', '600px'],
-                title:"新增学生信息",
+                title:"新增授课信息",
                 success:function () {
                     //重置表单
                     $("#dataFrm")[0].reset();
-                    url = '/student/addStudent';
-                }
-            })
-        }
-        //打开用于数据修改的弹出层
-        function openUpdateLayer(data) {
-            mainIndex = layer.open({
-                type:1,
-                content:$("#addOrUpdateDiv"),
-                area:['800px', '600px'],
-                title:"修改学生信息",
-                success:function () {
-                    //重置表单
-                    $("#dataFrm")[0].reset();
-                    //将原表数据填入表单
-                    form.val("dataFrm", data);
-
-                    url = '/student/updateStudent';
+                    url = '/teachCourse/addTeachCourse';
                 }
             })
         }
         //为弹出层的下拉选择框填充数据
         function addOperation(data) {
-            //保存打开下拉框的对应行数据
-            localData = data;
-            //一级下拉框
+            //教师下拉框
             $.ajax({
-                url: '/dept/loadAllDept',
+                url: '/teacher/loadAllTeacher',
                 dataType: 'json', //服务器返回json格式数据
                 type: 'get', //HTTP请求类型
                 timeout: 10000, //超时时间设置为10秒；
-                success: function (deptData) {
+                success: function (teacherData) {
                     var inform = '';
                     //每次加载时清空原数据
-                    $('#deptNo').children().remove();
+                    $('#teacherNo').children().remove();
                     //重新载入一条提示信息
-                    $('#deptNo').append(new Option('请选择学生学院', ''));
-                    $.each(deptData.data, function (index, value) {
-                        $('#deptNo').append(new Option(value.name, value.deptNo));// 下拉菜单里添加元素
+                    $('#teacherNo').append(new Option('请选择授课教师', ''));
+                    $.each(teacherData.data, function (index, value) {
+                        $('#teacherNo').append(new Option(value.name, value.teacherNo));// 下拉菜单里添加元素
                     });
-                    // 在修改中，当某一学院目前被选中时，通过学院编号选中对应标签
-                    const value = data.deptNo;
-                    if (null !== value && value !== "") {
-                        $('#deptNo').find("option[value=" + value + "]").attr("selected", true);
-                    }
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
+            //课程下拉框
+            $.ajax({
+                url: '/course/loadAllCourse',
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (courseData) {
+                    //每次加载时清空原数据
+                    $('#courseNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#courseNo').append(new Option('直接选择或搜索选择授课课程', ''));
+                    $.each(courseData.data, function (index, value) {
+                        $('#courseNo').append(new Option(value.name, value.courseNo));// 下拉菜单里添加元素
+                    });
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
+            //班级下拉框
+            $.ajax({
+                url: '/clazz/loadAllClazz',
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (courseData) {
+                    //每次加载时清空原数据
+                    $('#clazzNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#clazzNo').append(new Option('直接选择或搜索选择授课班级', ''));
+                    $.each(courseData.data, function (index, value) {
+                        $('#clazzNo').append(new Option(value.name, value.clazzNo));// 下拉菜单里添加元素
+                    });
                     //刷新选项中的select标签
                     layui.form.render("select");
                 }
             });
         }
-        //二级下拉框加载
-        form.on('select(deptSearch)', function () {
-            //获取一级的数据
-            var deptNo = $('#deptNo').val();
-            $.ajax({
-                url: '/major/getByDeptNo?deptNo=' + deptNo,
-                dataType: 'json', //服务器返回json格式数据
-                type: 'get', //HTTP请求类型
-                timeout: 10000, //超时时间设置为10秒；
-                success: function (majorData) {
-                    //每次加载时清空原数据
-                    $('#majorNo').children().remove();
-                    //重新载入一条提示信息
-                    $('#majorNo').append(new Option('请选择学生专业', ''));
-                    $.each(majorData.data, function (index, value) {
-                        $('#majorNo').append(new Option(value.name, value.majorNo));// 下拉菜单里添加元素
-                    });
-
-                    // 在修改中，当某一专业目前被选中时，通过专业编号选中对应标签
-                    const value = localData.majorNo;
-                    if (null !== value && value !== "") {
-                        $('#majorNo').find("option[value=" + value + "]").attr("selected", true);
-                    }
-                    //刷新选项中的select标签
-                    layui.form.render("select");
-                }
-            });
-        })
-        //三级下拉框加载
-        form.on('select(majorSearch)', function () {
-            //获取二级的数据
-            var majorNo = $('#majorNo').val();
-            $.ajax({
-                url: '/clazz/getByMajorNo?majorNo=' + majorNo,
-                dataType: 'json', //服务器返回json格式数据
-                type: 'get', //HTTP请求类型
-                timeout: 10000, //超时时间设置为10秒；
-                success: function (clazzData) {
-                    //每次加载时清空原数据
-                    $('#clazzNo').children().remove();
-                    //重新载入一条提示信息
-                    $('#clazzNo').append(new Option('请选择学生班级', ''));
-                    $.each(clazzData.data, function (index, value) {
-                        $('#clazzNo').append(new Option(value.name, value.clazzNo));// 下拉菜单里添加元素
-                    });
-                    // 在修改中，当某一班级目前被选中时，通过班级编号选中对应标签
-                    const value = localData.clazzNo;
-                    if (null !== value && value !== "") {
-                        $('#clazzNo').find("option[value=" + value + "]").attr("selected", true);
-                    }
-                    //刷新选项中的select标签
-                    layui.form.render("select");
-                }
-            });
-        })
         //添加和修改的提交
         form.on("submit(doSubmit)", function(data) {
             $.post(url, data.field, function (res) {
@@ -362,7 +304,7 @@
         //批量删除方法
         function batchDelete() {
             //得到选中行
-            var checkStatus = table.checkStatus('studentTable');
+            var checkStatus = table.checkStatus('teachCourseTable');
             //获得选中行数量
             var dataLength = checkStatus.data.length;
             if(dataLength > 0){
@@ -379,7 +321,7 @@
                             ids += "&ids=" + item.id;
                         }
                     });
-                    $.post("/student/batchDeleteStudent", ids, function (res) {
+                    $.post("/teachCourse/batchDeleteTeachCourse", ids, function (res) {
                         if(res.code == 0){
                             tableIns.reload();
                         }
@@ -392,11 +334,11 @@
             }
         }
         //单条删除方法
-        function deleteStudent(data) {
+        function deleteTeachCourse(data) {
             //询问是否删除
             layer.confirm('确定要删除这条数据吗?', {icon: 3, title:'提示'}, function(index){
                 //返回单个id
-                $.post("/student/deleteStudent", {id : data.id}, function (res) {
+                $.post("/teachCourse/deleteTeachCourse", {id : data.id}, function (res) {
                     if(res.code == 0){
                         tableIns.reload();
                     }
@@ -404,7 +346,6 @@
                 })
                 layer.close(index);
             });
-
         }
     })
 </script>

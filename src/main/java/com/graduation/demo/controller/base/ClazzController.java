@@ -41,7 +41,7 @@ public class ClazzController {
         clazzService.page(page, new QueryWrapper<Clazz>()
                 .like(StringUtils.isNotBlank(clazzVo.getClazzNo()), "clazz_no", clazzVo.getClazzNo())
                 .like(StringUtils.isNotBlank(clazzVo.getMajorNo()), "major_no", clazzVo.getMajorNo())
-                .like(StringUtils.isNotBlank(clazzVo.getGrade()), "grade", clazzVo.getGrade())
+                .like(null != clazzVo.getGrade(), "grade", clazzVo.getGrade())
                 .like(StringUtils.isNotBlank(clazzVo.getName()), "name", clazzVo.getName())
                 .eq(null != clazzVo.getClazzType(), "clazz_type", clazzVo.getClazzType())
                 .orderByAsc("clazz_no")
@@ -62,6 +62,7 @@ public class ClazzController {
     @RequestMapping("/addClazz")
     public DataResult addClazz(ClazzVo clazzVo){
         try{
+            clazzVo.setStudentNum(0);
             this.clazzService.save(clazzVo);
             return Constant.ADD_SUCCESS;
         }catch (Exception e){

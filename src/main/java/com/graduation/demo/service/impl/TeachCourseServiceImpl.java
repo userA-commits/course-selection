@@ -2,6 +2,7 @@ package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.base.Course;
 import com.graduation.demo.entity.base.Student;
 import com.graduation.demo.entity.base.Teacher;
@@ -10,6 +11,7 @@ import com.graduation.demo.entity.business.TeachCourse;
 import com.graduation.demo.mapper.TeachCourseMapper;
 import com.graduation.demo.service.*;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.graduation.demo.utils.SemesterUtils;
 import com.graduation.demo.vo.business.TeachCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -38,50 +40,45 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
     SelectCourseService selectCourseService;
 
     @Override
-    public List<TeachCourseVo> getTeachCourseVo() {
-        return this.getBaseMapper().getTeachCourseVo();
+    public IPage<TeachCourseVo> loadAllTeachCourse(IPage<TeachCourseVo> page, TeachCourseVo teachCourseVo) {
+        return this.getBaseMapper().loadAllTeachCourse(page, teachCourseVo);
     }
 
     @Override
-    public List<TeachCourseVo> getTeachCourseVoWithCond(TeachCourse teachCourse) {
-        return this.getBaseMapper().getTeachCourseVoWithCond(teachCourse);
-    }
-
-    @Override
-    public boolean isSameDept(TeachCourse teachCourse) {
+    public boolean isSameDept(TeachCourseVo teachCourseVo) {
         //获取教师学院编号
         QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
         teacherQueryWrapper
                 .select("dept_no")
-                .eq("teacher_no", teachCourse.getTeacherNo());
+                .eq("teacher_no", teachCourseVo.getTeacherNo());
         Teacher teacher = teacherService.getOne(teacherQueryWrapper);
         //获取课程学院编号
         QueryWrapper<Course> courseQueryWrapper = new QueryWrapper<>();
         courseQueryWrapper
                 .select("dept_no")
-                .eq("course_no", teachCourse.getCourseNo());
+                .eq("course_no", teachCourseVo.getCourseNo());
         Course course = courseService.getOne(courseQueryWrapper);
         //判断是否相同
         return teacher.getDeptNo().equals(course.getDeptNo());
     }
 
     @Override
-    public boolean saveRequired(TeachCourse teachCourse) {
+    public boolean saveRequired(TeachCourseVo teachCourseVo) {
         //存储授课信息
-        this.save(teachCourse);
+        this.save(teachCourseVo);
         //获取授课班级学生列表
         List<Student> students = studentService.list(new QueryWrapper<Student>()
-                .select("student_no")
-                .eq("clazz_no", teachCourse.getClazzNo())
+                .select("student_no", "grade")
+                .eq("clazz_no", teachCourseVo.getClazzNo())
         );
         //存储学生选课信息
         SelectCourse selectCourse;
         for(Student student : students){
             selectCourse = new SelectCourse();
             selectCourse.setStudentNo(student.getStudentNo());
-            selectCourse.setTeachCourseNo(teachCourse.getTeachCourseNo());
-            //TODO:考虑一个可靠的学期生成方式
-            selectCourse.setSemester(1);
+            selectCourse.setTeachCourseNo(teachCourseVo.getTeachCourseNo());
+            //生成学期
+            selectCourse.setSemester(SemesterUtils.getSemester(student.getGrade()));
             selectCourseService.save(selectCourse);
         }
         return true;
@@ -99,6 +96,19 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
         }
         //删除授课信息
         this.removeByIds(ids);
+        return false;
+    }
+
+    @Override
+    public boolean removeRequired(String id) {
+        //通过ids获得授课信息列表
+        TeachCourse teachCourse = (TeachCourse) this.getById(id);
+        //通过授课信息列表中的授课编号删除对应的选课信息
+        selectCourseService.remove(new UpdateWrapper<SelectCourse>()
+                .eq("teach_course_no", teachCourse.getTeachCourseNo())
+        );
+        //删除授课信息
+        this.removeById(id);
         return false;
     }
 }

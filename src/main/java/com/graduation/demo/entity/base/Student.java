@@ -40,7 +40,7 @@ private static final long serialVersionUID=1L;
     private Integer userType;
 
     @ApiModelProperty(value = "年级")
-    private String grade;
+    private Integer grade;
 
     @ApiModelProperty(value = "院系编号")
     private String deptNo;
@@ -100,11 +100,11 @@ private static final long serialVersionUID=1L;
         this.userType = userType;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 

@@ -19,7 +19,7 @@ import java.util.List;
  * @since 2022-04-11
  */
 @RestController
-@RequestMapping("/course-arrange")
+@RequestMapping("/courseArrange")
 public class CourseArrangeController {
     @Autowired
     CourseArrangeService courseArrangeService;

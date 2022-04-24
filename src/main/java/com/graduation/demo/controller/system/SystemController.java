@@ -98,4 +98,9 @@ public class SystemController {
         //学生进入查看界面
         return "business/coursePlan/coursePlanSearch";
     }
+    //加载授课管理界面
+    @RequestMapping("/toTeachCourse")
+    public String toTeachCourse() {
+        return "business/teachCourse/teachCourseManager";
+    }
 }

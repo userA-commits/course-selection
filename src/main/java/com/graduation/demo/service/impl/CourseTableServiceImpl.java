@@ -32,33 +32,35 @@ public class CourseTableServiceImpl implements CourseTableService {
     CourseArrangeService courseArrangeService;
     @Override
     public List<CourseTableVo>  getCourseTableForStu(Student student) {
-        //根据学生编号获得选课列表
-        List<SelectCourse> selectCourses = selectCourseService.list(new QueryWrapper<SelectCourse>()
-                .select("teach_course_no")
-                .eq("student_no", student.getStudentNo())
-        );
-        //从选课列表获取增广授课列表
-        List<TeachCourseVo> teachCourseVoList = new ArrayList<>();
-        for(SelectCourse selectCourse : selectCourses){
-            //创建授课信息
-            TeachCourse teachCourse = new TeachCourse();
-            //录入授课号
-            teachCourse.setTeachCourseNo(selectCourse.getTeachCourseNo());
-            //获取增广授课列表
-            teachCourseVoList.addAll(teachCourseService.getTeachCourseVoWithCond(teachCourse));
-        }
-        //由授课列表获取课表列表
-        return getCourseTableByTeachCourseList(teachCourseVoList);
+//        //根据学生编号获得选课列表
+//        List<SelectCourse> selectCourses = selectCourseService.list(new QueryWrapper<SelectCourse>()
+//                .select("teach_course_no")
+//                .eq("student_no", student.getStudentNo())
+//        );
+//        //从选课列表获取增广授课列表
+//        List<TeachCourseVo> teachCourseVoList = new ArrayList<>();
+//        for(SelectCourse selectCourse : selectCourses){
+//            //创建授课信息
+//            TeachCourse teachCourse = new TeachCourse();
+//            //录入授课号
+//            teachCourse.setTeachCourseNo(selectCourse.getTeachCourseNo());
+//            //获取增广授课列表
+//            teachCourseVoList.addAll(teachCourseService.getTeachCourseVoWithCond(teachCourse));
+//        }
+//        //由授课列表获取课表列表
+//        return getCourseTableByTeachCourseList(teachCourseVoList);
+        return null;
     }
 
     @Override
     public List<CourseTableVo>  getCourseTableForTea(Teacher teacher) {
-        //根据教师编号获得授课列表
-        TeachCourse teachCourse = new TeachCourse();
-        teachCourse.setTeacherNo(teacher.getTeacherNo());
-        List<TeachCourseVo> teachCourseVoList = teachCourseService.getTeachCourseVoWithCond(teachCourse);
-        //由授课列表获取课表列表
-        return getCourseTableByTeachCourseList(teachCourseVoList);
+//        //根据教师编号获得授课列表
+//        TeachCourse teachCourse = new TeachCourse();
+//        teachCourse.setTeacherNo(teacher.getTeacherNo());
+//        List<TeachCourseVo> teachCourseVoList = teachCourseService.getTeachCourseVoWithCond(teachCourse);
+//        //由授课列表获取课表列表
+//        return getCourseTableByTeachCourseList(teachCourseVoList);
+        return null;
     }
 
     //根据授课列表获取排课信息并填入课表实体

@@ -1,7 +1,15 @@
 package com.graduation.demo.controller.business;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.demo.common.Constant;
+import com.graduation.demo.entity.base.Clazz;
+import com.graduation.demo.entity.base.Course;
 import com.graduation.demo.entity.business.TeachCourse;
+import com.graduation.demo.service.ClazzService;
+import com.graduation.demo.service.CourseService;
 import com.graduation.demo.service.TeachCourseService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.vo.business.TeachCourseVo;
@@ -12,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,57 +31,84 @@ import java.util.List;
  * @since 2022-04-11
  */
 @RestController
-@RequestMapping("/teach-course")
+@RequestMapping("/teachCourse")
 public class TeachCourseController {
     @Autowired
-    @Lazy
     TeachCourseService teachCourseService;
+    @Autowired
+    CourseService courseService;
+    @Autowired
+    ClazzService clazzService;
 
+    @RequestMapping("/loadAllTeachCourse")
+    public DataResult loadAllTeachCourse(TeachCourseVo teachCourseVo){
+        //覆盖分页功能
+        IPage<TeachCourseVo> page = new Page<>(teachCourseVo.getPage(), teachCourseVo.getLimit());
+        //覆盖条件查询功能
+        teachCourseService.loadAllTeachCourse(page, teachCourseVo);
 
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
+        return DataResult.success(page.getRecords());
     }
 
-    //用于获取以教师为分组的授课信息列表
-    @PostMapping("/getTeachCourseVosByCond")
-    public DataResult getTeachCourseVosByCond(TeachCourse teachCourse){
-        List<TeachCourseVo> teachCourseVos = teachCourseService.getTeachCourseVoWithCond(teachCourse);
-        DataResult<List<TeachCourseVo>> result = new DataResult<>(teachCourseVos);
-        return result;
-    }
-
-    @PostMapping("/getTeachCourseVos")
-    public DataResult getTeachCourseVos(){
-        List<TeachCourseVo> teachCourseVos = teachCourseService.getTeachCourseVo();
-        DataResult<List<TeachCourseVo>> result = new DataResult<>(teachCourseVos);
-        return result;
-    }
-
-    @PostMapping("/query")
-    public DataResult query(){
-        List<TeachCourse> teachCourses = teachCourseService.list();
-        DataResult<List<TeachCourse>> result = new DataResult<>(teachCourses);
-        return result;
-    }
-    //如果添加的授课信息中教师与课程不是同学院，提示不合规
-    @PostMapping("/add")
-    public DataResult add(TeachCourse teachCourse){
-        //当教师学院编号与课程学院编号相同时，执行插入，否则提示失败
-        if(teachCourseService.isSameDept(teachCourse)){
-            //存储时，存入对应的学生选课信息
-            teachCourseService.saveRequired(teachCourse);
-            return DataResult.success();
-        }else{
-            return DataResult.getResult(401, "不能让给教师赋予非本院课程");
+    @RequestMapping("/addTeachCourse")
+    public DataResult addTeachCourse(TeachCourseVo teachCourseVo){
+        try{
+            //插入授课需要条件：教师与课程在同学院
+            if(!teachCourseService.isSameDept(teachCourseVo)) throw new Exception("添加失败;只允许为教师安排同学院的课程");
+            //将教师编号、课程编号、班级编号联立设为授课编号
+            teachCourseVo.setTeachCourseNo(teachCourseVo.getTeacherNo()
+                    + "." + teachCourseVo.getCourseNo()
+                    + "." + teachCourseVo.getClazzNo());
+            //获得课程是否必修
+            Course course = courseService.getOne(new QueryWrapper<Course>()
+                    .select("is_required")
+                    .eq("course_no", teachCourseVo.getCourseNo())
+            );
+            //获得班级人数
+            Clazz clazz = clazzService.getOne(new QueryWrapper<Clazz>()
+                    .select("student_num")
+                    .eq("clazz_no", teachCourseVo.getClazzNo())
+            );
+            //如果课程为必修，将选择班级人数设为授课人数和上限人数
+            if(course.getIsRequired() == 1){
+                teachCourseVo.setStudentNum(clazz.getStudentNum());
+                teachCourseVo.setUpperNum(clazz.getStudentNum());
+            }
+            //如果课程为选修，将选择班级人数设为零
+            else{
+                teachCourseVo.setStudentNum(0);
+            }
+            this.teachCourseService.saveRequired(teachCourseVo);
+            return Constant.ADD_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return DataResult.getResult(401, e.getMessage());
         }
     }
 
-    @PostMapping("/remove")
-    public DataResult remove(List<String> ids){
-        teachCourseService.removeRequired(ids);
-        return DataResult.success();
+    @RequestMapping("/deleteTeachCourse")
+    public DataResult deleteTeachCourse(String id){
+        try{
+            teachCourseService.removeRequired(id);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
+
+    @RequestMapping("/batchDeleteTeachCourse")
+    public DataResult batchDeleteTeachCourseList(TeachCourseVo teachCourseVo){
+        try{
+            List<String> ids = new ArrayList<>(Arrays.asList(teachCourseVo.getIds()));
+            teachCourseService.removeRequired(ids);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
+    }
+
 }
 
 

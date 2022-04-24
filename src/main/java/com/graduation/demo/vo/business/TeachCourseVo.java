@@ -23,11 +23,17 @@ public class TeachCourseVo extends TeachCourse implements Serializable {
     @ApiModelProperty(value = "课程名称", notes = "form course")
     private String courseName;
 
+    @ApiModelProperty(value = "是否必修", notes = "form course")
+    private Integer isRequired;
+
     @ApiModelProperty(value = "学分", notes = "form course")
     private Float credit;
 
     @ApiModelProperty(value = "班级名称", notes = "form clazz")
     private String clazzName;
+
+    @ApiModelProperty(value = "班级学生人数", notes = "form clazz")
+    private String clazzStuNum;
 
     @ApiModelProperty(value = "班级类别", notes = "form clazz")
     private String clazzType;
@@ -37,6 +43,21 @@ public class TeachCourseVo extends TeachCourse implements Serializable {
 
     private String[] ids;
 
+    public Integer getIsRequired() {
+        return isRequired;
+    }
+
+    public void setIsRequired(Integer isRequired) {
+        this.isRequired = isRequired;
+    }
+
+    public String getClazzStuNum() {
+        return clazzStuNum;
+    }
+
+    public void setClazzStuNum(String clazzStuNum) {
+        this.clazzStuNum = clazzStuNum;
+    }
 
     public Integer getPage() {
         return page;

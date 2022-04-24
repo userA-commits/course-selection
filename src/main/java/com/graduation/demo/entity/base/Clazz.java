@@ -31,13 +31,13 @@ private static final long serialVersionUID=1L;
     private String majorNo;
 
     @ApiModelProperty(value = "年级")
-    private String grade;
+    private Integer grade;
 
     @ApiModelProperty(value = "班级名称")
     private String name;
 
     @ApiModelProperty(value = "班级人数")
-    private int studentNum;
+    private Integer studentNum;
 
     @ApiModelProperty(value = "班级类别，0为普通，1为特殊")
     private String clazzType;
@@ -69,11 +69,11 @@ private static final long serialVersionUID=1L;
         this.majorNo = majorNo;
     }
 
-    public String getGrade() {
+    public Integer getGrade() {
         return grade;
     }
 
-    public void setGrade(String grade) {
+    public void setGrade(Integer grade) {
         this.grade = grade;
     }
 
@@ -85,11 +85,11 @@ private static final long serialVersionUID=1L;
         this.name = name;
     }
 
-    public int getStudentNum() {
+    public Integer getStudentNum() {
         return studentNum;
     }
 
-    public void setStudentNum(int studentNum) {
+    public void setStudentNum(Integer studentNum) {
         this.studentNum = studentNum;
     }
 

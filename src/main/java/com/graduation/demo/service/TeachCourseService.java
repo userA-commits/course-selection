@@ -1,8 +1,10 @@
 package com.graduation.demo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.TeachCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.demo.vo.business.TeachCourseVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,14 +17,14 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface TeachCourseService extends IService<TeachCourse> {
-    List<TeachCourseVo> getTeachCourseVo();
 
-    List<TeachCourseVo> getTeachCourseVoWithCond(TeachCourse teachCourse);
+    IPage<TeachCourseVo> loadAllTeachCourse(IPage<TeachCourseVo> page, TeachCourseVo teachCourseVo);
     //检查插入的授课信息中，教师是否与课程在同学院
-    boolean isSameDept(TeachCourse teachCourse);
+    boolean isSameDept(TeachCourseVo teachCourseVo);
     //插入必修课授课信息同时插入对应学生选课信息
-    boolean saveRequired(TeachCourse teachCourse);
+    boolean saveRequired(TeachCourseVo teachCourseVo);
     //删除必修课授课信息同时删除对应学生选课信息
     boolean removeRequired(List<String> ids);
+    boolean removeRequired(String id);
 
 }

@@ -22,9 +22,11 @@
         <result column="teacher_name" property="teacherName" />
         <result column="course_no" property="courseNo" />
         <result column="course_name" property="courseName" />
+        <result column="is_required" property="isRequired" />
         <result column="credit" property="credit" />
         <result column="state" property="state" />
         <result column="student_num" property="studentNum" />
+        <result column="clazz_stu_num" property="clazzStuNum" />
         <result column="upper_num" property="upperNum" />
         <result column="clazz_no" property="clazzNo" />
         <result column="clazz_name" property="clazzName" />
@@ -34,32 +36,22 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, teach_course_no, teacher_no, course_no, state, student_num, upper_num, clazz_no, remark
+        id, teach_course_no, teacher_no, course_no, clazz_no, state, student_num, upper_num, remark
     </sql>
 
-    <!-- 授课管理联查结果列 -->
-    <select id="getTeachCourseVo" resultMap="TeachCourseMap">
-        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
-        cr.name course_name, cr.credit, tc.state, tc.student_num, tc.upper_num, tc.clazz_no,
-        cz.name clazz_name, cz.type clazz_type, tc.remark
-        from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
-        where tc.teacher_no = t.teacher_no
-        and tc.course_no = cr.course_no
-        and tc.clazz_no = cz.clazz_no
-    </select>
-
     <!-- 授课管理条件查询联查结果列 -->
-    <select id="getTeachCourseVoWithCond" parameterType="com.graduation.demo.entity.business.TeachCourse" resultMap="TeachCourseMap">
-        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no,
-        cr.name course_name, cr.credit, tc.state, tc.student_num, tc.upper_num, tc.clazz_no,
-        cz.name clazz_name, cz.type clazz_type, tc.remark
+    <select id="loadAllTeachCourse" parameterType="com.graduation.demo.vo.business.TeachCourseVo" resultMap="TeachCourseMap">
+        select tc.id, tc.teach_course_no, tc.teacher_no, t.name teacher_name, tc.course_no, cr.name course_name,
+        cr.is_required, cr.credit, tc.state, tc.student_num, cz.student_num clazz_stu_num, tc.upper_num, tc.clazz_no,
+        cz.name clazz_name, cz.clazz_type clazz_type, tc.remark
         from xk_teach_course tc, xk_teacher t, xk_course cr, xk_clazz cz
         where tc.teacher_no = t.teacher_no
         and tc.course_no = cr.course_no
         and tc.clazz_no = cz.clazz_no
-        <if test="teachCourseNo != null">and tc.teach_course_no = #{teachCourseNo}</if>
-        <if test="teacherNo != null">and tc.teacher_no = #{teacherNo}</if>
-        <if test="courseNo != null">and tc.course_no = #{courseNo}</if>
-        <if test="state != null">and tc.state = #{state}</if>
+        <if test="tcv.teachCourseNo != null">and tc.teach_course_no like '%${tcv.teachCourseNo}%'</if>
+        <if test="tcv.teacherNo != null">and tc.teacher_no like '%${tcv.teacherNo}%'</if>
+        <if test="tcv.courseNo != null">and tc.course_no like '%${tcv.courseNo}%'</if>
+        <if test="tcv.clazzNo != null">and tc.clazz_no like '%${tcv.clazzNo}%'</if>
+        <if test="tcv.state != null">and tc.state = #{tcv.state}</if>
     </select>
 </mapper>
