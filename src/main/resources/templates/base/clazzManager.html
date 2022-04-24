@@ -74,7 +74,6 @@
     </div>
     <!-- 表格行内按钮 -->
     <div id="clazzRowBar" style="display: none;">
-        <button type="button" lay-event="show" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-about"></span>查看...</button>
         <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-edit"></span>修改</button>
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
     </div>
@@ -186,9 +185,6 @@
             //获取当前行数据并传入
             var data = obj.data;
             switch(obj.event){
-                case 'show':
-                    openShowLayer(data);
-                    break;
                 case 'update':
                     //为下拉框添加数据
                     addOperation(data);
