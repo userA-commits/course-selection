@@ -33,7 +33,7 @@ private static final long serialVersionUID=1L;
     @ApiModelProperty(value = "星期，1到7代表周一到周天")
     private Integer week;
 
-    @ApiModelProperty(value = "使用时间段")
+    @ApiModelProperty(value = "使用时间段，由1到5，上午2下午2晚上1")
     private Integer period;
 
     @ApiModelProperty(value = "备注")

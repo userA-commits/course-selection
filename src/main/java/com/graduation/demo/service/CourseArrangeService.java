@@ -1,8 +1,10 @@
 package com.graduation.demo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CourseArrange;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.graduation.demo.vo.business.CourseArrangeVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,12 +17,11 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface CourseArrangeService extends IService<CourseArrange> {
-    List<CourseArrangeVo> getCourseArrangeVo();
 
-    List<CourseArrangeVo> getCourseArrangeVoWithCond(CourseArrange courseArrange);
+    IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, CourseArrangeVo teachCourseVo);
 
-    CourseArrange addWithConflictCheck(CourseArrange courseArrange);
+    boolean addWithConflictCheck(CourseArrange courseArrange) throws Exception;
 
-    CourseArrange haveConflict(CourseArrange courseArrange);
+    boolean haveConflict(CourseArrange courseArrange) throws Exception;
 
 }

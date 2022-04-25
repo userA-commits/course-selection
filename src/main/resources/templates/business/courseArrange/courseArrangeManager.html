@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>授课管理页面</title>
+    <title>排课管理页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -26,30 +26,27 @@
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">教师编号</label>
+                <label class="layui-form-label">教室编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="teacherNo" class="layui-input">
+                    <input type="text" name="classroomNo" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">课程编号</label>
+                <label class="layui-form-label">星期</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="courseNo" class="layui-input">
+                    <input type="number" name="week" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">班级编号</label>
+                <label class="layui-form-label">时间</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="clazzNo" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">授课状态</label>
-                <div class="layui-input-inline">
-                    <select name="state" class="layui-select">
-                        <option value="">选择授课状态</option>
-                        <option value="0">正在授课</option>
-                        <option value="1">已经结课</option>
+                    <select name="period" class="layui-select">
+                        <option value="" selected>课程所在时间段</option>
+                        <option value="1">上午一二节</option>
+                        <option value="2">上午三四节</option>
+                        <option value="3">下午一二节</option>
+                        <option value="4">下午三四节</option>
+                        <option value="5">晚上一二节</option>
                     </select>
                 </div>
             </div>
@@ -65,64 +62,58 @@
 
 <!-- 数据表格 -->
 <div>
-    <table class="layui-hide" id="teachCourseTable" lay-filter="teachCourseTable"></table>
+    <table class="layui-hide" id="courseArrangeTable" lay-filter="courseArrangeTable"></table>
     <!-- 表格顶部按钮 -->
-    <div id="teachCourseToolBar" style="display: none;">
-        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加授课</button>
+    <div id="courseArrangeToolBar" style="display: none;">
+        <button type="button" lay-event="add" class="layui-btn layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>添加排课</button>
         <button type="button" lay-event="batchDelete" class="layui-btn layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>批量删除</button>
     </div>
     <!-- 表格行内按钮 -->
-    <div id="teachCourseRowBar" style="display: none;">
+    <div id="courseArrangeRowBar" style="display: none;">
+        <button type="button" lay-event="update" class="layui-btn layui-btn-sm layui-btn-warm"><span class="layui-icon layui-icon-edit"></span>修改</button>
         <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>删除</button>
     </div>
 </div>
 
-<!-- 添加的弹出层 -->
+<!-- 添加和修改的弹出层 -->
 <div style="display: none; padding: 5px" id="addOrUpdateDiv">
     <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
-        <input type="hidden" name="id">
-        <input type="hidden" name="teachCourseNo">
         <div class="layui-form-item input-item">
-            <label for="teacherNo">请选择授课教师</label>
-            <div class="layui-select">
-                <!-- 用于填充数据的下拉列表 -->
-                <select id="teacherNo" name="teacherNo" class="layui-select" lay-filter="teacherSearch" lay-verify="required" >
-                    <option value="">请选择授课教师</option>
-                </select>
+            <input type="hidden" name="id">
+            <label for="teachCourseNo">授课编号</label>
+            <select id="teachCourseNo" name="teachCourseNo" lay-search="" class="layui-select" lay-verify="required">
+                <option value="" selected>选择授课</option>
+            </select>
             </div>
+        <div class="layui-form-item input-item">
+            <label for="classroomNo">教室编号</label>
+            <select id="classroomNo" name="classroomNo" lay-search="" class="layui-select" lay-verify="required">
+                <option value="" selected>选择教室</option>
+            </select>
+            </div>
+        <div class="layui-form-item input-item">
+            <label for="week">星期</label>
+            <select id="week" name="week" class="layui-select" lay-verify="required">
+                <option value="" selected>选择星期</option>
+                <option value="1" selected>星期一</option>
+                <option value="2" selected>星期二</option>
+                <option value="3" selected>星期三</option>
+                <option value="4" selected>星期四</option>
+                <option value="5" selected>星期五</option>
+                <option value="6" selected>星期六</option>
+                <option value="7" selected>星期天</option>
+            </select>
         </div>
         <div class="layui-form-item input-item">
-            <label for="courseNo">请选择授课课程</label>
-            <div class="layui-select">
-                <!-- 用于填充数据的下拉列表 -->
-                <select id="courseNo" name="courseNo" class="layui-select" lay-search="" lay-filter="courseSearch" lay-verify="required" >
-                    <option value="">请选择授课课程</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item input-item">
-            <label for="clazzNo">请选择授课班级</label>
-            <div class="layui-select">
-                <!-- 用于填充数据的下拉列表 -->
-                <select id="clazzNo" name="clazzNo" class="layui-select" lay-search="" lay-filter="courseSearch" lay-verify="required" >
-                    <option value="">请选择授课班级</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item input-item">
-            <label for="state">请选择授课状态</label>
-            <div class="layui-select">
-                <!-- 用于填充数据的下拉列表 -->
-                <select id="state" name="state" class="layui-select" lay-search="" lay-filter="courseSearch" lay-verify="required" >
-                    <option value="" selected>请选择授课状态</option>
-                    <option value="0">正在授课</option>
-                    <option value="1">已经结束</option>
-                </select>
-            </div>
-        </div>
-        <div class="layui-form-item input-item">
-            <label for="upperNum">授课上限人数</label>
-            <input type="number" placeholder="请输入授课上限人数" autocomplete="off" id="upperNum" name="upperNum" class="layui-input" lay-verify="required">
+            <label for="period">时段</label>
+            <select id="period" name="period" class="layui-select" lay-verify="required">
+                <option value="" selected>课程所在时间段</option>
+                <option value="1">上午一二节</option>
+                <option value="2">上午三四节</option>
+                <option value="3">下午一二节</option>
+                <option value="4">下午三四节</option>
+                <option value="5">晚上一二节</option>
+            </select>
         </div>
         <div class="layui-form-item input-item">
             <label for="remark">备注</label>
@@ -147,34 +138,39 @@
 
         //加载表格数据
         var tableIns = table.render({
-            elem: '#teachCourseTable'
+            elem: '#courseArrangeTable'
             ,height: 'full'
-            ,url:'/teachCourse/loadAllTeachCourse'
-            ,toolbar: '#teachCourseToolBar' //开启头部工具栏，并为其绑定左侧模板
-            ,title: '授课列表'
+            ,url:'/courseArrange/loadAllCourseArrange'
+            ,toolbar: '#courseArrangeToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '系统排课列表'
             ,page: true
             ,cols: [ [
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID', align:'center'}
                 ,{field:'teachCourseNo', title:'授课编号', align:'center'}
-                ,{field:'teacherNo', title:'教师编号', align:'center'}
-                ,{field:'teacherName', title:'教师名字', align:'center'}
-                ,{field:'courseNo', title:'课程编号', align:'center'}
-                ,{field:'courseName', title:'课程名称', align:'center'}
-                ,{field:'clazzNo', title:'班级编号', align:'center'}
-                ,{field:'clazzName', title:'班级名称', align:'center'}
-                ,{field:'state', title:'授课状态', align:'center', templet:function (data) {
-                        if(data.state == 0) return '正在授课';
-                        else return '已经结课'
+                ,{field:'classroomNo', title:'教室编号', align:'center'}
+                ,{field:'week', title:'星期', align:'center', templet:function (data) {
+                        switch (data.week) {
+                            case 1: return "星期一";
+                            case 2: return "星期二";
+                            case 3: return "星期三";
+                            case 4: return "星期四";
+                            case 5: return "星期五";
+                            case 6: return "星期六";
+                            default: return "星期天";
+                        }
                     }}
-                ,{field:'studentNum', title:'授课学生人数', align:'center'}
-                ,{field:'upperNum', title:'授课上限人数', align:'center'}
-                ,{field:'testType', title:'考察方式', align:'center', templet:function (data) {
-                        if(data.testType == 0) return '考察';
-                        else return '考试';
+                ,{field:'period', title:'时段', align:'center', templet:function (data) {
+                        switch (data.period) {
+                            case 1: return "上午一二节";
+                            case 2: return "上午三四节";
+                            case 3: return "下午一二节";
+                            case 4: return "下午三四节";
+                            default: return "晚上一二节";
+                        }
                     }}
                 ,{field:'remark', title:'备注', align:'center'}
-                ,{fixed: 'right', title:'操作', toolbar: '#teachCourseRowBar', align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#courseArrangeRowBar', align:'center', width:'20%'}
             ] ]
         })
         //工具栏表单模糊查询
@@ -188,7 +184,7 @@
             return false;
         })
         //表格顶部监听事件
-        table.on("toolbar(teachCourseTable)",  function(obj){
+        table.on("toolbar(courseArrangeTable)",  function(obj){
             addOperation();
             switch(obj.event){
                 case 'add':
@@ -200,14 +196,16 @@
             }
         })
         //表格行内监听事件
-        table.on("tool(teachCourseTable)",  function(obj){
+        table.on("tool(courseArrangeTable)",  function(obj){
+            addOperation();
             //获取当前行数据并传入
             var data = obj.data;
-            //为表单填入选择框选项
-            addOperation();
             switch(obj.event){
+                case 'update':
+                    openUpdateLayer(data);
+                    break;
                 case 'delete':
-                    deleteTeachCourse(data);
+                    deleteCourseArrange(data);
                     break;
             }
         })
@@ -223,66 +221,66 @@
                 type:1,
                 content:$("#addOrUpdateDiv"),
                 area:['800px', '600px'],
-                title:"新增授课信息",
+                title:"添加排课",
                 success:function () {
                     //重置表单
                     $("#dataFrm")[0].reset();
-                    url = '/teachCourse/addTeachCourse';
+                    url = '/courseArrange/addCourseArrange';
+                }
+            })
+        }
+        //打开用于数据修改的弹出层
+        function openUpdateLayer(data) {
+            mainIndex = layer.open({
+                type:1,
+                content:$("#addOrUpdateDiv"),
+                area:['800px', '600px'],
+                title:"修改排课",
+                success:function () {
+                    //重置表单
+                    $("#dataFrm")[0].reset();
+                    //将原表数据填入表单
+                    form.val("dataFrm", data);
+
+                    url = '/courseArrange/updateCourseArrange';
                 }
             })
         }
         //为弹出层的下拉选择框填充数据
         function addOperation() {
-            //教师下拉框
+            //授课下拉框
             $.ajax({
-                url: '/teacher/loadAllTeacher',
+                url: '/teachCourse/loadAllTeachCourse',
                 dataType: 'json', //服务器返回json格式数据
                 type: 'get', //HTTP请求类型
                 timeout: 10000, //超时时间设置为10秒；
-                success: function (teacherData) {
+                success: function (teachCourseData) {
                     var inform = '';
                     //每次加载时清空原数据
-                    $('#teacherNo').children().remove();
+                    $('#teachCourseNo').children().remove();
                     //重新载入一条提示信息
-                    $('#teacherNo').append(new Option('请选择授课教师', ''));
-                    $.each(teacherData.data, function (index, value) {
-                        $('#teacherNo').append(new Option(value.name, value.teacherNo));// 下拉菜单里添加元素
+                    $('#teachCourseNo').append(new Option('请选择授课信息', ''));
+                    $.each(teachCourseData.data, function (index, value) {
+                        $('#teachCourseNo').append(new Option(value.teachCourseNo, value.teachCourseNo));// 下拉菜单里添加元素
                     });
                     //刷新选项中的select标签
                     layui.form.render("select");
                 }
             });
-            //课程下拉框
+            //教室下拉框
             $.ajax({
-                url: '/course/loadAllCourse',
+                url: '/classroom/loadAllClassroom',
                 dataType: 'json', //服务器返回json格式数据
                 type: 'get', //HTTP请求类型
                 timeout: 10000, //超时时间设置为10秒；
-                success: function (courseData) {
+                success: function (classroomData) {
+                    var inform = '';
                     //每次加载时清空原数据
-                    $('#courseNo').children().remove();
+                    $('#classroomNo').children().remove();
                     //重新载入一条提示信息
-                    $('#courseNo').append(new Option('直接选择或搜索选择授课课程', ''));
-                    $.each(courseData.data, function (index, value) {
-                        $('#courseNo').append(new Option(value.name, value.courseNo));// 下拉菜单里添加元素
-                    });
-                    //刷新选项中的select标签
-                    layui.form.render("select");
-                }
-            });
-            //班级下拉框
-            $.ajax({
-                url: '/clazz/loadAllClazz',
-                dataType: 'json', //服务器返回json格式数据
-                type: 'get', //HTTP请求类型
-                timeout: 10000, //超时时间设置为10秒；
-                success: function (courseData) {
-                    //每次加载时清空原数据
-                    $('#clazzNo').children().remove();
-                    //重新载入一条提示信息
-                    $('#clazzNo').append(new Option('直接选择或搜索选择授课班级', ''));
-                    $.each(courseData.data, function (index, value) {
-                        $('#clazzNo').append(new Option(value.name, value.clazzNo));// 下拉菜单里添加元素
+                    $('#classroomNo').append(new Option('请选择教室', ''));
+                    $.each(classroomData.data, function (index, value) {
+                        $('#classroomNo').append(new Option(value.name, value.classroomNo));// 下拉菜单里添加元素
                     });
                     //刷新选项中的select标签
                     layui.form.render("select");
@@ -304,7 +302,7 @@
         //批量删除方法
         function batchDelete() {
             //得到选中行
-            var checkStatus = table.checkStatus('teachCourseTable');
+            var checkStatus = table.checkStatus('courseArrangeTable');
             //获得选中行数量
             var dataLength = checkStatus.data.length;
             if(dataLength > 0){
@@ -321,7 +319,7 @@
                             ids += "&ids=" + item.id;
                         }
                     });
-                    $.post("/teachCourse/batchDeleteTeachCourse", ids, function (res) {
+                    $.post("/courseArrange/batchDeleteCourseArrange", ids, function (res) {
                         if(res.code == 0){
                             tableIns.reload();
                         }
@@ -334,11 +332,11 @@
             }
         }
         //单条删除方法
-        function deleteTeachCourse(data) {
+        function deleteCourseArrange(data) {
             //询问是否删除
             layer.confirm('确定要删除这条数据吗?', {icon: 3, title:'提示'}, function(index){
                 //返回单个id
-                $.post("/teachCourse/deleteTeachCourse", {id : data.id}, function (res) {
+                $.post("/courseArrange/deleteCourseArrange", {id : data.id}, function (res) {
                     if(res.code == 0){
                         tableIns.reload();
                     }
@@ -346,6 +344,7 @@
                 })
                 layer.close(index);
             });
+
         }
     })
 </script>

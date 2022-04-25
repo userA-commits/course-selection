@@ -68,17 +68,17 @@ public class CourseTableServiceImpl implements CourseTableService {
     public List<CourseTableVo>  getCourseTableByTeachCourseList(List<TeachCourseVo> teachCourseVoList) {
         List<CourseTableVo> result = new ArrayList<>();
 
-        for(TeachCourseVo teachCourseVo : teachCourseVoList){
-            //遍历授课列表，通过授课号查询对应排课
-            CourseArrange courseArrange = new CourseArrange();
-            courseArrange.setTeachCourseNo(teachCourseVo.getTeachCourseNo());
-            List<CourseArrangeVo> courseArrangeVos = courseArrangeService.getCourseArrangeVoWithCond(courseArrange);
-            //将得到的排课信息同授课信息填入课表实体中，并加入结果列表
-            for(CourseArrangeVo courseArrangeVo : courseArrangeVos){
-                CourseTableVo courseTableVo = new CourseTableVo(teachCourseVo, courseArrangeVo);
-                result.add(courseTableVo);
-            }
-        }
+//        for(TeachCourseVo teachCourseVo : teachCourseVoList){
+//            //遍历授课列表，通过授课号查询对应排课
+//            CourseArrange courseArrange = new CourseArrange();
+//            courseArrange.setTeachCourseNo(teachCourseVo.getTeachCourseNo());
+//            List<CourseArrangeVo> courseArrangeVos = courseArrangeService.getCourseArrangeVoWithCond(courseArrange);
+//            //将得到的排课信息同授课信息填入课表实体中，并加入结果列表
+//            for(CourseArrangeVo courseArrangeVo : courseArrangeVos){
+//                CourseTableVo courseTableVo = new CourseTableVo(teachCourseVo, courseArrangeVo);
+//                result.add(courseTableVo);
+//            }
+//        }
         return result;
     }
 }

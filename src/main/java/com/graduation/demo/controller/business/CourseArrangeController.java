@@ -1,16 +1,23 @@
 package com.graduation.demo.controller.business;
 
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.demo.common.Constant;
 import com.graduation.demo.entity.business.CourseArrange;
 import com.graduation.demo.service.CourseArrangeService;
 import com.graduation.demo.utils.DataResult;
 import com.graduation.demo.vo.business.CourseArrangeVo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,50 +28,67 @@ import java.util.List;
 @RestController
 @RequestMapping("/courseArrange")
 public class CourseArrangeController {
+
     @Autowired
     CourseArrangeService courseArrangeService;
 
-
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
+    @RequestMapping("/loadAllCourseArrange")
+    public DataResult loadAllCourseArrange(CourseArrangeVo courseArrangeVo){
+        //覆盖分页功能
+        IPage<CourseArrangeVo> page = new Page<>(courseArrangeVo.getPage(), courseArrangeVo.getLimit());
+        //覆盖条件查询功能
+        courseArrangeService.loadAllCourseArrange(page, courseArrangeVo);
+        return DataResult.success(page.getRecords());
     }
 
-    @PostMapping("/getCourseArrangeVos")
-    public DataResult getCourseArrangeVos(){
-        List<CourseArrangeVo> courseArrangeVos = courseArrangeService.getCourseArrangeVo();
-        DataResult<List<CourseArrangeVo>> result = new DataResult<>(courseArrangeVos);
-        return result;
+    @RequestMapping("/addCourseArrange")
+    public DataResult addCourseArrange(CourseArrangeVo courseArrangeVo){
+        try{
+            this.courseArrangeService.addWithConflictCheck(courseArrangeVo);
+            return Constant.ADD_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return DataResult.getResult(401, e.getMessage());
+        }
     }
 
-    @PostMapping("/getCourseArrangeVosWithCond")
-    public DataResult getCourseArrangeVosWithCond(CourseArrange courseArrange){
-        List<CourseArrangeVo> courseArrangeVos = courseArrangeService.getCourseArrangeVoWithCond(courseArrange);
-        DataResult<List<CourseArrangeVo>> result = new DataResult<>(courseArrangeVos);
-        return result;
+    @RequestMapping("/updateCourseArrange")
+    public DataResult updateCourseArrange(CourseArrangeVo courseArrangeVo){
+        try{
+            if(!courseArrangeService.haveConflict(courseArrangeVo)){
+                this.courseArrangeService.updateById(courseArrangeVo);
+            }
+            return Constant.UPDATE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return DataResult.getResult(401, e.getMessage());
+        }
     }
 
-    @PostMapping("/query")
-    public DataResult query(){
-        List<CourseArrange> courseArranges = courseArrangeService.list();
-        DataResult<List<CourseArrange>> result = new DataResult<>(courseArranges);
-        return result;
-    }
-    //对添加排课进行冲突检测
-    @PostMapping("/add")
-    public DataResult add(CourseArrange courseArrange){
-        CourseArrange conflict = courseArrangeService.addWithConflictCheck(courseArrange);
-        if(conflict == null) return DataResult.success();
-
-        return DataResult.getResult(401, "存在课程冲突，无法添加成功", conflict);
+    @RequestMapping("/deleteCourseArrange")
+    public DataResult deleteCourseArrange(String id){
+        try{
+            courseArrangeService.removeById(id);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-
-    @PostMapping("/remove")
-    public DataResult remove(List<String> ids){
-        courseArrangeService.removeByIds(ids);
-        return DataResult.success();
+    @RequestMapping("/batchDeleteCourseArrange")
+    public DataResult batchDeleteCourseArrangeList(CourseArrangeVo courseArrangeVo){
+        try{
+            List<String> ids = new ArrayList<>(Arrays.asList(courseArrangeVo.getIds()));
+            courseArrangeService.removeByIds(ids);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
+
+
 }
 
 

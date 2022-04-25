@@ -103,4 +103,9 @@ public class SystemController {
     public String toTeachCourse() {
         return "business/teachCourse/teachCourseManager";
     }
+    //加载授课管理界面
+    @RequestMapping("/toCourseArrange")
+    public String toCourseArrange() {
+        return "business/courseArrange/courseArrangeManager";
+    }
 }

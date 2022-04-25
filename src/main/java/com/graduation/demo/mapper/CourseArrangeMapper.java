@@ -1,8 +1,11 @@
 package com.graduation.demo.mapper;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CourseArrange;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.graduation.demo.vo.business.CourseArrangeVo;
+import com.graduation.demo.vo.business.TeachCourseVo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,7 +18,5 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface CourseArrangeMapper extends BaseMapper<CourseArrange> {
-    List<CourseArrangeVo> getCourseArrangeVo();
-
-    List<CourseArrangeVo> getCourseArrangeVoWithCond(CourseArrange courseArrange);
+    IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, @Param("cav")CourseArrangeVo teachCourseVo);
 }

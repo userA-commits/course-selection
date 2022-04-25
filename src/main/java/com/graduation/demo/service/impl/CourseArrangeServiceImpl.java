@@ -1,6 +1,7 @@
 package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CourseArrange;
 import com.graduation.demo.entity.business.TeachCourse;
 import com.graduation.demo.mapper.CourseArrangeMapper;
@@ -32,28 +33,24 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
     TeacherService teacherService;
 
     @Override
-    public List<CourseArrangeVo> getCourseArrangeVo() {
-        return this.getBaseMapper().getCourseArrangeVo();
+    public IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, CourseArrangeVo teachCourseVo) {
+        return this.getBaseMapper().loadAllCourseArrange(page, teachCourseVo);
     }
 
+    //对排课信息进行冲突检测，如发生冲突则报错
     @Override
-    public List<CourseArrangeVo> getCourseArrangeVoWithCond(CourseArrange courseArrange) {
-        return this.getBaseMapper().getCourseArrangeVoWithCond(courseArrange);
-    }
-
-    //对排课信息进行冲突检测，如发生冲突则返回有冲突的对象
-    @Override
-    public CourseArrange addWithConflictCheck(CourseArrange courseArrange) {
-        CourseArrange conflict = this.haveConflict(courseArrange);
-        if(conflict == null){
+    public boolean addWithConflictCheck(CourseArrange courseArrange) throws Exception {
+        boolean conflict = this.haveConflict(courseArrange);
+        if(!conflict){
             this.save(courseArrange);
+            return true;
         }
-        return conflict;
+        return false;
     }
 
     //对排课信息进行冲突检测，如发生冲突则返回有冲突的对象
     @Override
-    public CourseArrange haveConflict(CourseArrange courseArrange){
+    public boolean haveConflict(CourseArrange courseArrange) throws Exception {
         //对教室安排进行检测
         CourseArrange classroomTest = this.getOne(new QueryWrapper<CourseArrange>()
                 .select("*")
@@ -61,7 +58,9 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
                 .eq("week", courseArrange.getWeek())
                 .eq("period", courseArrange.getPeriod())
         );
-        if(classroomTest != null) return classroomTest;
+        if(classroomTest != null){
+            throw new Exception("存在教室占用冲突，教室编号：" + classroomTest.getClassroomNo());
+        }
 
         //对教师安排进行检测
         //通过授课编号，从授课表获得教师编号
@@ -82,7 +81,9 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
                     .eq("week", courseArrange.getWeek())
                     .eq("period", courseArrange.getPeriod())
             );
-            if(teacherTest != null) return teacherTest;
+            if(teacherTest != null) {
+                throw new Exception("存在教师安排冲突，教师编号：" + forTeachCourseNo.getTeacherNo());
+            }
         }
 
         //对班级安排进行检测
@@ -104,9 +105,11 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
                     .eq("week", courseArrange.getWeek())
                     .eq("period", courseArrange.getPeriod())
             );
-            if(clazzTest != null) return clazzTest;
+            if(clazzTest != null){
+                throw new Exception("存在班级安排冲突，班级编号：" + forClazzNo.getClazzNo());
+            }
         }
 
-        return null;
+        return false;
     }
 }

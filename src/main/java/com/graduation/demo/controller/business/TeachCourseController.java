@@ -56,8 +56,8 @@ public class TeachCourseController {
             //插入授课需要条件：教师与课程在同学院
             if(!teachCourseService.isSameDept(teachCourseVo)) throw new Exception("添加失败;只允许为教师安排同学院的课程");
             //将教师编号、课程编号、班级编号联立设为授课编号
-            teachCourseVo.setTeachCourseNo(teachCourseVo.getTeacherNo()
-                    + "." + teachCourseVo.getCourseNo()
+            teachCourseVo.setTeachCourseNo(teachCourseVo.getCourseNo()
+                    + "." + teachCourseVo.getTeacherNo()
                     + "." + teachCourseVo.getClazzNo());
             //获得课程是否必修
             Course course = courseService.getOne(new QueryWrapper<Course>()
