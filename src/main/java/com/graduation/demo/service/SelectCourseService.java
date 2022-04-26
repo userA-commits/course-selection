@@ -1,5 +1,6 @@
 package com.graduation.demo.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.business.CourseArrange;
 import com.graduation.demo.entity.business.SelectCourse;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -16,15 +17,14 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface SelectCourseService extends IService<SelectCourse> {
-    List<SelectCourseVo> getSelectCourseVo();
+    IPage<SelectCourseVo> loadAllSelectCourse(IPage<SelectCourseVo> page, SelectCourseVo selectCourseVo);
 
-    List<SelectCourseVo> getSelectCourseVoWithCond(SelectCourse selectCourse);
-
-    String addWithCheck(SelectCourse selectCourse);
+    String addWithCheck(SelectCourse selectCourse) throws Exception;
 
     boolean removeRequired(List<String> ids);
+    boolean removeRequired(String id);
 
-    boolean isSelectable(SelectCourse selectCourse);
+    boolean isSelectable(SelectCourse selectCourse) throws Exception;
 
-    CourseArrange haveConflict(SelectCourse selectCourse);
+    CourseArrange haveConflict(SelectCourse selectCourse) throws Exception;
 }

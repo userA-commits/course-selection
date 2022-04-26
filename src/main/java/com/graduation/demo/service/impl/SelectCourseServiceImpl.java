@@ -2,6 +2,7 @@ package com.graduation.demo.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.graduation.demo.entity.base.Course;
 import com.graduation.demo.entity.business.CourseArrange;
 import com.graduation.demo.entity.business.SelectCourse;
@@ -39,19 +40,14 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
     CourseService courseService;
 
     @Override
-    public List<SelectCourseVo> getSelectCourseVo() {
-        return this.getBaseMapper().getSelectCourseVo();
+    public IPage<SelectCourseVo> loadAllSelectCourse(IPage<SelectCourseVo> page, SelectCourseVo selectCourseVo) {
+        return this.getBaseMapper().loadAllSelectCourse(page, selectCourseVo);
     }
 
     @Override
-    public List<SelectCourseVo> getSelectCourseVoWithCond(SelectCourse selectCourse) {
-        return this.getBaseMapper().getSelectCourseVoWithCond(selectCourse);
-    }
-
-    @Override
-    public String addWithCheck(SelectCourse selectCourse) {
+    public String addWithCheck(SelectCourse selectCourse) throws Exception {
         //检测能否进行选课和是否有冲突
-        if(isSelectable(selectCourse) && haveConflict(selectCourse) == null){
+        if(isSelectable(selectCourse) && null == haveConflict(selectCourse)){
             //存储选课
             this.save(selectCourse);
             //为授课信息中选课人数加一
@@ -62,45 +58,27 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
             teachCourseService.update(new UpdateWrapper<TeachCourse>()
                     .set("student_num", teachCourse.getStudentNum() + 1)
             );
-            return "OK";
+            return "选课成功";
         }else if(!isSelectable(selectCourse)){
-            return "Can't Select";
+            return "课程不可选";
         }else{
-            return "Have Conflict";
+            return "存在时间冲突";
         }
     }
 
     @Override
     public boolean removeRequired(List<String> ids) {
-        //通过ids获得选课信息列表
-        List<SelectCourse> selectCourseList = (List<SelectCourse>) this.listByIds(ids);
         //遍历选课信息列表
-        for(SelectCourse selectCourse : selectCourseList){
-            //通过授课编号查看课程编号，再查看课程是否为选修课
-            TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
-                    .select("course_no, upper_num, student_num")
-                    .eq("teach_course_no", selectCourse.getTeachCourseNo())
-            );
-            Course course = courseService.getOne(new QueryWrapper<Course>()
-                    .select("is_required")
-                    .eq("course_no", teachCourse.getCourseNo())
-            );
-            //若课程为选修课，则允许删除
-            if(course.getIsRequired() == 0){
-                //删除选课
-                this.removeById(selectCourse.getId());
-                //为授课信息中选课人数减一
-                teachCourseService.update(new UpdateWrapper<TeachCourse>()
-                        .set("student_num", teachCourse.getStudentNum() - 1)
-                );
-            }
+        for(String id : ids){
+            //条件删除
+            this.removeById(id);
         }
         return true;
     }
 
-    //断定当前课程是否可选
     @Override
-    public boolean isSelectable(SelectCourse selectCourse) {
+    public boolean removeRequired(String id) {
+        SelectCourse selectCourse = this.getById(id);
         //通过授课编号查看课程编号，再查看课程是否为选修课
         TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
                 .select("course_no, upper_num, student_num")
@@ -110,15 +88,43 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
                 .select("is_required")
                 .eq("course_no", teachCourse.getCourseNo())
         );
-        if(course.getIsRequired() == 1) return false;
+        //若课程为选修课，则允许删除
+        if(course.getIsRequired() == 0){
+            //删除选课
+            this.removeById(selectCourse.getId());
+            //为授课信息中选课人数减一
+            teachCourseService.update(new UpdateWrapper<TeachCourse>()
+                    .set("student_num", teachCourse.getStudentNum() - 1)
+            );
+        }
+        return false;
+    }
+
+    //断定当前课程是否可选
+    @Override
+    public boolean isSelectable(SelectCourse selectCourse) throws Exception {
+        //通过授课编号查看课程编号，再查看课程是否为选修课
+        TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
+                .select("course_no, upper_num, student_num")
+                .eq("teach_course_no", selectCourse.getTeachCourseNo())
+        );
+        Course course = courseService.getOne(new QueryWrapper<Course>()
+                .select("is_required")
+                .eq("course_no", teachCourse.getCourseNo())
+        );
+        if(course.getIsRequired() == 1){
+            throw new Exception("该课程不为选修课");
+        }
         //查看通过授课编号查看当前课程是否有位置
-        if(teachCourse.getUpperNum() <= teachCourse.getStudentNum()) return false;
+        if(teachCourse.getUpperNum() <= teachCourse.getStudentNum()) {
+            throw new Exception("该课程人数已经达到上限");
+        }
         return true;
     }
 
     //对选课信息进行冲突检测
     @Override
-    public CourseArrange haveConflict(SelectCourse selectCourse){
+    public CourseArrange haveConflict(SelectCourse selectCourse) throws Exception {
         //对学生课程安排进行检测
         //通过授课编号，获得当前选课的排课信息
         CourseArrange courseArrange = courseArrangeService.getOne(new QueryWrapper<CourseArrange>()
@@ -139,7 +145,9 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
                     .eq("period", courseArrange.getPeriod())
             );
             //若找到重合课程，返回该课程信息
-            if(studentTest != null) return studentTest;
+            if(null != studentTest){
+                throw new Exception("存在时间重合授课，编号为：" + studentTest.getTeachCourseNo());
+            }
         }
         return null;
     }

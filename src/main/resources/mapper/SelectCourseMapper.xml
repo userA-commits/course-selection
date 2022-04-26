@@ -8,6 +8,7 @@
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="student_no" property="studentNo" />
         <result column="course_no" property="courseNo" />
+        <result column="clazz_no" property="clazzNo" />
         <result column="semester" property="semester" />
         <result column="normal_score" property="normalScore" />
         <result column="exam_score" property="examScore" />
@@ -20,6 +21,7 @@
         <result column="teach_course_no" property="teachCourseNo" />
         <result column="student_no" property="studentNo" />
         <result column="student_name" property="studentName" />
+        <result column="clazz_no" property="clazzNo" />
         <result column="course_no" property="courseNo" />
         <result column="course_name" property="courseName" />
         <result column="credit" property="credit" />
@@ -32,25 +34,12 @@
 
     <!-- 通用查询结果列 -->
     <sql id="Base_Column_List">
-        id, teach_course_no, student_no, semester, normal_score, exam_score, total_score, remark
+        id, teach_course_no, clazz_no, student_no, semester, normal_score, exam_score, total_score, remark
     </sql>
 
-    <!-- 选课管理联查结果列 -->
-    <select id="getSelectCourseVo" resultMap="SelectCourseMap">
-        select sc.id, sc.teach_course_no, s.name student_name,
-        tc.course_no, c.name course_name, c.credit, sc.semester,
-        sc.normal_score, sc.exam_score, sc.total_score, sc.remark
-        from xk_student s, xk_course c, xk_select_course sc,
-        (select teach_course_no, course_no from xk_teach_course) tc
-        where sc.teach_course_no = tc.teach_course_no
-        and sc.student_no = s.student_no
-        and tc.course_no = c.course_no
-        order by teach_course_no asc
-    </select>
-
     <!-- 选课管理条件查询联查结果列 -->
-    <select id="getSelectCourseVoWithCond" parameterType="com.graduation.demo.entity.business.SelectCourse" resultMap="SelectCourseMap">
-        select sc.id, sc.teach_course_no, s.name student_name,
+    <select id="loadAllSelectCourse" parameterType="com.graduation.demo.vo.business.SelectCourseVo" resultMap="SelectCourseMap">
+        select sc.id, sc.teach_course_no, s.student_no, s.name student_name, sc.clazz_no,
         tc.course_no, c.name course_name, c.credit, sc.semester,
         sc.normal_score, sc.exam_score, sc.total_score, sc.remark
         from xk_student s, xk_course c, xk_select_course sc,
@@ -58,9 +47,10 @@
         where sc.teach_course_no = tc.teach_course_no
         and sc.student_no = s.student_no
         and tc.course_no = c.course_no
-        <if test="teachCourseNo != null">and sc.teach_course_no = #{teachCourseNo}</if>
-        <if test="studentNo != null">and sc.student_no = #{studentNo}</if>
-        <if test="semester != null">and sc.semester = #{semester}</if>
+        <if test="scv.teachCourseNo != null">and sc.teach_course_no like '%${scv.teachCourseNo}%'}</if>
+        <if test="scv.studentNo != null">and sc.student_no like '%${scv.studentNo}%'}</if>
+        <if test="scv.semester != null">and sc.semester = #{scv.semester}</if>
+        <if test="scv.clazzNo != null">and sc.clazz_no like '%${scv.clazzNo}%'}</if>
         order by teach_course_no asc
     </select>
 </mapper>

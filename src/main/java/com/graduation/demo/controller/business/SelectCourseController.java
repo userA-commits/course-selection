@@ -1,9 +1,15 @@
 package com.graduation.demo.controller.business;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.graduation.demo.common.ActiveUser;
+import com.graduation.demo.common.Constant;
 import com.graduation.demo.entity.business.SelectCourse;
 import com.graduation.demo.service.SelectCourseService;
 import com.graduation.demo.utils.DataResult;
+import com.graduation.demo.utils.SemesterUtils;
+import com.graduation.demo.utils.WEBUtils;
 import com.graduation.demo.vo.business.SelectCourseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -25,47 +33,58 @@ public class SelectCourseController {
     @Autowired
     SelectCourseService selectCourseService;
 
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
+    @RequestMapping("/loadAllSelectCourse")
+    public DataResult loadAllSelectCourse(SelectCourseVo selectCourseVo){
+        //覆盖分页功能
+        IPage<SelectCourseVo> page = new Page<>(selectCourseVo.getPage(), selectCourseVo.getLimit());
+        //覆盖条件查询功能
+        selectCourseService.loadAllSelectCourse(page, selectCourseVo);
+
+        return DataResult.success(page.getRecords());
     }
 
-    //用于获取对应学生的所有选课信息
-    @PostMapping("/getSelectCourseVosByCond")
-    public DataResult getSelectCourseVosByCond(SelectCourse selectCourse){
-        List<SelectCourseVo> selectCourseVos = selectCourseService.getSelectCourseVoWithCond(selectCourse);
-        DataResult<List<SelectCourseVo>> result = new DataResult<>(selectCourseVos);
-        return result;
+    @RequestMapping("/addSelectCourse")
+    public DataResult addSelectCourse(SelectCourseVo selectCourseVo){
+        try{
+            //获取学生信息
+            ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
+            //填入学生编号和学期
+            String studentNo = user.getStudent().getStudentNo();
+            int semester = SemesterUtils.getSemester(user.getStudent().getGrade());
+            selectCourseVo.setStudentNo(studentNo);
+            selectCourseVo.setSemester(semester);
+            this.selectCourseService.addWithCheck(selectCourseVo);
+            return Constant.ADD_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return DataResult.getResult(401, e.getMessage());
+        }
     }
 
-    @PostMapping("/getSelectCourseVos")
-    public DataResult getSelectCourseVos(){
-        List<SelectCourseVo> selectCourseVos = selectCourseService.getSelectCourseVo();
-        DataResult<List<SelectCourseVo>> result = new DataResult<>(selectCourseVos);
-        return result;
+    @RequestMapping("/deleteSelectCourse")
+    public DataResult deleteSelectCourse(String id){
+        try{
+            selectCourseService.removeById(id);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-    @PostMapping("/query")
-    public DataResult query(){
-        List<SelectCourse> selectCourses = selectCourseService.list();
-        DataResult<List<SelectCourse>> result = new DataResult<>(selectCourses);
-        return result;
+    @RequestMapping("/batchDeleteSelectCourse")
+    public DataResult batchDeleteSelectCourseList(SelectCourseVo selectCourseVo){
+        try{
+            List<String> ids = new ArrayList<>(Arrays.asList(selectCourseVo.getIds()));
+            selectCourseService.removeByIds(ids);
+            return Constant.DELETE_SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return Constant.DELETE_ERROR;
+        }
     }
 
-    //只允许选择是选修并且存在人数空缺的课
-    @PostMapping("/add")
-    public DataResult add(SelectCourse selectCourse){
-        String msg = selectCourseService.addWithCheck(selectCourse);
-        if(msg.equals("OK")) return DataResult.success();
-        else return DataResult.getResult(401, msg);
-    }
 
-    //只允许取消选修课。在删除选课时，自动减一对应的授课人数
-    @PostMapping("/remove")
-    public DataResult remove(List<String> ids){
-        selectCourseService.removeRequired(ids);
-        return DataResult.success();
-    }
 }
 
 

@@ -103,9 +103,19 @@ public class SystemController {
     public String toTeachCourse() {
         return "business/teachCourse/teachCourseManager";
     }
-    //加载授课管理界面
+    //加载排课管理界面
     @RequestMapping("/toCourseArrange")
     public String toCourseArrange() {
         return "business/courseArrange/courseArrangeManager";
+    }
+    //加载排课管理界面
+    @RequestMapping("/toSelectCourse")
+    public String toSelectCourse() {
+        ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
+        if(user.getRoleType() == 3){
+            return "business/selectCourse/stuSelectCourse";
+        }else{
+            return "business/selectCourse/selectCourseManager";
+        }
     }
 }

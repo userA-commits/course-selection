@@ -91,10 +91,14 @@
             <label for="majorNo">所在专业</label>
             <div class="layui-select">
                 <!-- 用于填充数据的下拉列表 -->
-                <select id="majorNo" name="majorNo" class="layui-select" lay-verify="required" >
-                    <option value="">请选择所在专业</option>
+                <select id="majorNo" name="majorNo" class="layui-select" >
+                    <option value="">请选择所在专业（选修课不填）</option>
                 </select>
             </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="grade">年级</label>
+            <input type="number" placeholder="请输入年级" autocomplete="off" id="grade" name="grade" class="layui-input" lay-verify="required">
         </div>
         <div class="layui-form-item input-item">
             <label for="name">班级名</label>

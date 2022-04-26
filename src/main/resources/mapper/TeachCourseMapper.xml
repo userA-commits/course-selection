@@ -53,5 +53,6 @@
         <if test="tcv.courseNo != null">and tc.course_no like '%${tcv.courseNo}%'</if>
         <if test="tcv.clazzNo != null">and tc.clazz_no like '%${tcv.clazzNo}%'</if>
         <if test="tcv.state != null">and tc.state = #{tcv.state}</if>
+        <if test="tcv.isRequired != null">and cr.is_required = #{tcv.isRequired}</if>
     </select>
 </mapper>

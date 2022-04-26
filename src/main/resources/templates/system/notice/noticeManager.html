@@ -71,7 +71,6 @@
     </div>
     <hr>
     <div id="show_content"></div>
-
 </div>
 
 <!-- 添加和修改的弹出层 -->
@@ -180,8 +179,8 @@
                 title:"查看公告",
                 success:function () {
                     $("#show_title").html(data.noticeTitle);
-                    $("#show_createBy").html(data.createBy + '     ');
-                    $("#show_content").html('  ' + data.noticeContent);
+                    $("#show_createBy").html(data.createBy);
+                    $("#show_content").html(data.noticeContent);
                 }
             })
         }
