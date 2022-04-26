@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>成绩查看页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="icon" href="/resources/favicon.ico">
+    <link rel="stylesheet" href="/resources/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="/resources/css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<!-- 工具栏 -->
+<blockquote class="layui-elem-quote">
+    <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">学期</label>
+                <div class="layui-input-inline">
+                    <select name="semester" class="layui-select">
+                        <option value="">选择学期</option>
+                        <option value="1">第一学期</option>
+                        <option value="2">第而学期</option>
+                        <option value="3">第三学期</option>
+                        <option value="4">第四学期</option>
+                        <option value="5">第五学期</option>
+                        <option value="6">第六学期</option>
+                        <option value="7">第七学期</option>
+                        <option value="8">第八学期</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSearch"><span class="layui-icon layui-icon-search"></span>查询</button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh"></span>重置</button>
+            </div>
+        </div>
+    </form>
+</blockquote>
+
+<!-- 数据表格 -->
+<div>
+    <table class="layui-hide" id="courseScoreTable" lay-filter="courseScoreTable"></table>
+</div>
+
+<!-- 修改的弹出层 -->
+<div style="display: none; padding: 5px" id="addOrUpdateDiv">
+    <form action="" method="post" class="layui-form layui-form-pane" id="dataFrm" lay-filter="dataFrm">
+        <input type="hidden" name="id">
+        <div class="layui-form-item input-item">
+            <label for="teachCourseNo">授课编号</label>
+            <div class="layui-input">
+                <input type="text" placeholder="请输入授课编号" autocomplete="off" id="teachCourseNo" name="teachCourseNo" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="clazzNo">班级编号</label>
+            <div class="layui-input">
+                <input type="text" placeholder="请输入班级编号" autocomplete="off" id="clazzNo" name="clazzNo" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="studentNo">学生编号</label>
+            <div class="layui-input">
+                <input type="text" placeholder="请输入班级编号" autocomplete="off" id="studentNo" name="studentNo" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="normalScore">平时成绩</label>
+            <div class="layui-input">
+                <input type="number" placeholder="请输入平时成绩" autocomplete="off" id="normalScore" name="normalScore" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="examScore">考试成绩</label>
+            <div class="layui-input">
+                <input type="number" placeholder="请输入考试成绩" autocomplete="off" id="examScore" name="examScore" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="totalScore">总成绩</label>
+            <div class="layui-input">
+                <input type="number" placeholder="请输入总成绩" autocomplete="off" id="totalScore" name="totalScore" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
+            <label for="remark">备注</label>
+            <input type="text" placeholder="请输入备注" autocomplete="off" id="remark" name="remark" class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block" style="text-align: center;">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="doSubmit" id="doSubmit"><span class="layui-icon layui-icon-add-circle"></span>提交</button>
+                <button type="reset" class="layui-btn layui-btn-warm"><span class="layui-icon layui-icon-refresh"></span>重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript" src="/resources/layui/layui.js"></script>
+<script type="text/javascript">
+    layui.use(['jquery', 'form', 'table', 'layer'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var table = layui.table;
+        var layer = layui.layer;
+
+        //加载表格数据
+        var tableIns = table.render({
+            elem: '#courseScoreTable'
+            ,height: 'full'
+            ,url:'/courseScore/loadCourseScoreForStu'
+            ,title: '课程成绩列表'
+            ,page: true
+            ,cols: [ [
+                {field:'teachCourseNo', title:'授课编号', align:'center'}
+                ,{field:'semester', title:'学期', align:'center'}
+                ,{field:'courseNo', title:'课程编号', align:'center'}
+                ,{field:'courseName', title:'课程名称', align:'center'}
+                ,{field:'normalScore', title:'平时成绩', align:'center'}
+                ,{field:'examScore', title:'考试成绩', align:'center'}
+                ,{field:'totalScore', title:'总成绩', align:'center'}
+                ,{field:'remark', title:'备注', align:'center'}
+            ] ]
+        })
+        //工具栏表单模糊查询
+        form.on("submit(doSearch)", function (data) {
+            tableIns.reload({
+                where: data.field,
+                page: {
+                    curr: 1
+                }
+            });
+            return false;
+        })
+    })
+</script>
+</body>
+</html>

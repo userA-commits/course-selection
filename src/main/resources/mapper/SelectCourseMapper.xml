@@ -47,10 +47,10 @@
         where sc.teach_course_no = tc.teach_course_no
         and sc.student_no = s.student_no
         and tc.course_no = c.course_no
-        <if test="scv.teachCourseNo != null">and sc.teach_course_no like '%${scv.teachCourseNo}%'}</if>
-        <if test="scv.studentNo != null">and sc.student_no like '%${scv.studentNo}%'}</if>
+        <if test="scv.teachCourseNo != null">and sc.teach_course_no like '%${scv.teachCourseNo}%'</if>
+        <if test="scv.studentNo != null">and sc.student_no like '%${scv.studentNo}%'</if>
         <if test="scv.semester != null">and sc.semester = #{scv.semester}</if>
-        <if test="scv.clazzNo != null">and sc.clazz_no like '%${scv.clazzNo}%'}</if>
+        <if test="scv.clazzNo != null">and sc.clazz_no like '%${scv.clazzNo}%'</if>
         order by teach_course_no asc
     </select>
 </mapper>

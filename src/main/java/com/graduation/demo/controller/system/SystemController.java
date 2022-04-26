@@ -118,4 +118,14 @@ public class SystemController {
             return "business/selectCourse/selectCourseManager";
         }
     }
+    //加载成绩管理界面
+    @RequestMapping("/toCourseScore")
+    public String toCourseScore() {
+        ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
+        if(user.getRoleType() == 3){
+            return "business/courseScore/courseScoreSearch";
+        }else{
+            return "business/courseScore/courseScoreManager";
+        }
+    }
 }
