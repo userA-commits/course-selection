@@ -78,6 +78,7 @@ public class TeachCourseController {
             else{
                 teachCourseVo.setStudentNum(0);
             }
+            //存入授课信息，并为对应班级学生添加选课信息
             this.teachCourseService.saveRequired(teachCourseVo);
             return Constant.ADD_SUCCESS;
         }catch (Exception e){

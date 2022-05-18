@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>学生选课页面</title>
@@ -15,6 +15,13 @@
     <link rel="stylesheet" href="/resources/css/public.css" media="all" />
 </head>
 <body class="childrenBody">
+<!-- 顶部标题 -->
+<div class="layui-main">
+    <span style="display: none" id="studentNo" th:text="${session.user.getStudent().getStudentNo()}"></span>
+    <h2 style="text-align: center; font-weight: bold;">
+        选课界面
+    </h2>
+</div>
 <!-- 工具栏 -->
 <blockquote class="layui-elem-quote">
     <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
@@ -74,6 +81,14 @@
         <button type="button" lay-event="add" class="layui-btn layui-btn-sm layui-btn-normal"><span class="layui-icon layui-icon-add-1"></span>选课</button>
     </div>
 </div>
+<!-- 选课信息数据表格 -->
+<div>
+    <table class="layui-hide" id="selectCourseTable" lay-filter="selectCourseTable"></table>
+    <!-- 表格行内按钮 -->
+    <div id="selectCourseRowBar" style="display: none;">
+        <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>退选</button>
+    </div>
+</div>
 
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
@@ -83,8 +98,8 @@
         var table = layui.table;
         var layer = layui.layer;
 
-        //加载表格数据
-        var tableIns = table.render({
+        //加载授课表格数据
+        var tableIns1 = table.render({
             elem: '#teachCourseTable'
             ,height: 'full'
             ,url:'/teachCourse/loadAllTeachCourse?isRequired=0'
@@ -116,9 +131,30 @@
                 ,{fixed: 'right', title:'操作', toolbar: '#teachCourseRowBar', align:'center'}
             ] ]
         })
+        //加载选课表格数据
+        var tableIns = table.render({
+            elem: '#selectCourseTable'
+            ,height: 'full'
+            ,url:'/selectCourse/loadAllSelectCourse?studentNo=' + $('#studentNo').text()
+            ,toolbar: '#selectCourseToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '选课列表'
+            ,page: true
+            ,cols: [ [
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', align:'center'}
+                ,{field:'teachCourseNo', title:'授课编号', align:'center'}
+                ,{field:'studentNo', title:'学生编号', align:'center'}
+                ,{field:'studentName', title:'学生名字', align:'center'}
+                ,{field:'courseNo', title:'课程编号', align:'center'}
+                ,{field:'courseName', title:'课程名称', align:'center'}
+                ,{field:'clazzNo', title:'班级编号', align:'center'}
+                ,{field:'remark', title:'备注', align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#selectCourseRowBar', align:'center'}
+            ] ]
+        })
         //工具栏表单模糊查询
         form.on("submit(doSearch)", function (data) {
-            tableIns.reload({
+            tableIns1.reload({
                 where: data.field,
                 page: {
                     curr: 1
@@ -126,7 +162,7 @@
             });
             return false;
         })
-        //表格行内监听事件
+        //授课信息表格行内监听事件
         table.on("tool(teachCourseTable)",  function(obj){
             //获取当前行数据并传入
             var data = obj.data;
@@ -136,12 +172,36 @@
                     break;
             }
         })
+        //选课信息表格行内监听事件
+        table.on("tool(selectCourseTable)",  function(obj){
+            //获取当前行数据并传入
+            var data = obj.data;
+            switch(obj.event){
+                case 'delete':
+                    deleteSelectCourse(data);
+                    break;
+            }
+        })
         //选课方法
         function addSelectCourse(data) {
             //询问是否选课
             layer.confirm('确定要选此课程吗?', {icon: 3, title:'提示'}, function(index){
                 //返回课程编号和学生编号
-                $.post("/selectCourse/addSelectCourse", {teachCourseNo : data.teachCourseNo}, function (res) {
+                $.post("/selectCourse/addSelectCourse", {teachCourseNo : data.teachCourseNo, clazzNo : data.clazzNo}, function (res) {
+                    if(res.code == 0){
+                        tableIns1.reload();
+                    }
+                    layer.msg(res.msg);
+                })
+                layer.close(index);
+            });
+        }
+        //单条删除方法
+        function deleteSelectCourse(data) {
+            //询问是否删除
+            layer.confirm('确定要退选这条门课程吗?', {icon: 3, title:'提示'}, function(index){
+                //返回单个id
+                $.post("/selectCourse/deleteSelectCourse", {id : data.id}, function (res) {
                     if(res.code == 0){
                         tableIns.reload();
                     }

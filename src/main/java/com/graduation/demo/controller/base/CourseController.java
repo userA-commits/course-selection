@@ -34,7 +34,7 @@ public class CourseController {
 
     @RequestMapping("/loadAllCourse")
     public DataResult loadAllCourse(CourseVo courseVo){
-        //覆盖分页功能
+        //覆盖分页功能a
         IPage<Course> page = new Page<>(courseVo.getPage(), courseVo.getLimit());
         //覆盖条件查询功能
         courseService.page(page, new QueryWrapper<Course>()

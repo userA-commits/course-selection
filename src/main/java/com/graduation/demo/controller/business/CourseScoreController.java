@@ -48,7 +48,6 @@ public class CourseScoreController {
         return DataResult.success(page.getRecords());
     }
 
-
     @RequestMapping("/loadCourseScoreForStu")
     public DataResult loadCourseScoreForStu(SelectCourseVo selectCourseVo){
         //获取学生信息

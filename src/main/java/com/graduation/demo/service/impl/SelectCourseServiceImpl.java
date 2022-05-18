@@ -46,7 +46,7 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
 
     @Override
     public String addWithCheck(SelectCourse selectCourse) throws Exception {
-        //检测能否进行选课和是否有冲突
+        //检测课程能否进行选课和是否有冲突
         if(isSelectable(selectCourse) && null == haveConflict(selectCourse)){
             //存储选课
             this.save(selectCourse);

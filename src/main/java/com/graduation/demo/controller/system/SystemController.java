@@ -36,7 +36,12 @@ public class SystemController {
     //加载公告管理界面
     @RequestMapping("/toNotice")
     public String toNotice() {
-        return "system/notice/noticeManager";
+        //根据用户角色返回不同的界面
+        ActiveUser user = (ActiveUser) WEBUtils.getSession().getAttribute("user");
+        if(user.getRoleType() == 1){
+            return "system/notice/noticeManager";
+        }
+        return "system/notice/noticeSearch";
     }
 
     /**

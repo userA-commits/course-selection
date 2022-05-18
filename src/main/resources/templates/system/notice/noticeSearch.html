@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>选课管理页面</title>
+    <title>公告查看页面</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
@@ -20,21 +20,21 @@
     <form action="" method="post" id="searchFrm" lay-filter="searchFrm" class="layui-form layui-form-pane">
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">授课编号</label>
+                <label class="layui-form-label">公告编号</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="selectCourseNo" class="layui-input">
+                    <input type="text" name="noticeNo" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">班级编号</label>
+                <label class="layui-form-label">公告标题</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="clazzNo" class="layui-input">
+                    <input type="text" name="noticeTitle" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">学生编号</label>
+                <label class="layui-form-label">发布者</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="teacherNo" class="layui-input">
+                    <input type="text" name="createBy" class="layui-input">
                 </div>
             </div>
         </div>
@@ -49,13 +49,22 @@
 
 <!-- 数据表格 -->
 <div>
-    <table class="layui-hide" id="selectCourseTable" lay-filter="selectCourseTable"></table>
+    <table class="layui-hide" id="noticeTable" lay-filter="noticeTable"></table>
     <!-- 表格行内按钮 -->
-    <div id="selectCourseRowBar" style="display: none;">
-        <button type="button" lay-event="delete" class="layui-btn layui-btn-sm layui-btn-danger"><span class="layui-icon layui-icon-delete"></span>退选</button>
+    <div id="noticeRowBar" style="display: none;">
+        <button type="button" lay-event="show" class="layui-btn layui-btn-sm"><span class="layui-icon layui-icon-about"></span>查看公告</button>
     </div>
 </div>
 
+<!-- 查看公告弹出层 -->
+<div style="display: none; padding: 5px" id="showNoticeDiv">
+    <h2 id="show_title" align="center" style="font-weight: bold"></h2>
+    <div style="text-align: right;">
+        发布人：<span id="show_createBy"></span>
+    </div>
+    <hr>
+    <div id="show_content"></div>
+</div>
 <script type="text/javascript" src="/resources/layui/layui.js"></script>
 <script type="text/javascript">
     layui.use(['jquery', 'form', 'table', 'layer'], function () {
@@ -66,23 +75,20 @@
 
         //加载表格数据
         var tableIns = table.render({
-            elem: '#selectCourseTable'
+            elem: '#noticeTable'
             ,height: 'full'
-            ,url:'/selectCourse/loadAllSelectCourse'
-            ,toolbar: '#selectCourseToolBar' //开启头部工具栏，并为其绑定左侧模板
-            ,title: '选课列表'
+            ,url:'/notice/loadAllNotice'
+            ,toolbar: '#noticeToolBar' //开启头部工具栏，并为其绑定左侧模板
+            ,title: '系统公告列表'
             ,page: true
             ,cols: [ [
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID', align:'center'}
-                ,{field:'teachCourseNo', title:'授课编号', align:'center'}
-                ,{field:'studentNo', title:'学生编号', align:'center'}
-                ,{field:'studentName', title:'学生名字', align:'center'}
-                ,{field:'courseNo', title:'课程编号', align:'center'}
-                ,{field:'courseName', title:'课程名称', align:'center'}
-                ,{field:'clazzNo', title:'班级编号', align:'center'}
+                ,{field:'noticeNo', title:'公告编号', align:'center'}
+                ,{field:'noticeTitle', title:'公告标题', align:'center'}
+                ,{field:'createBy', title:'发布者', align:'center'}
                 ,{field:'remark', title:'备注', align:'center'}
-                ,{fixed: 'right', title:'操作', toolbar: '#selectCourseRowBar', align:'center'}
+                ,{fixed: 'right', title:'操作', toolbar: '#noticeRowBar', align:'center', width:'20%'}
             ] ]
         })
         //工具栏表单模糊查询
@@ -96,28 +102,30 @@
             return false;
         })
         //表格行内监听事件
-        table.on("tool(selectCourseTable)",  function(obj){
+        table.on("tool(noticeTable)",  function(obj){
             //获取当前行数据并传入
             var data = obj.data;
             switch(obj.event){
-                case 'delete':
-                    deleteSelectCourse(data);
+                case 'show':
+                    openShowLayer(data);
                     break;
             }
         })
-        //单条删除方法
-        function deleteSelectCourse(data) {
-            //询问是否删除
-            layer.confirm('确定要为学生退选这条门课程吗?', {icon: 3, title:'提示'}, function(index){
-                //返回单个id
-                $.post("/selectCourse/deleteSelectCourse", {id : data.id}, function (res) {
-                    if(res.code == 0){
-                        tableIns.reload();
-                    }
-                    layer.msg(res.msg);
-                })
-                layer.close(index);
-            });
+        //存储弹出层，用于在提交更改后关闭
+        var mainIndex;
+        //打开用于公告内容展示的弹出层
+        function openShowLayer(data) {
+            mainIndex = layer.open({
+                type:1,
+                content:$("#showNoticeDiv"),
+                area:['800px', '600px'],
+                title:"查看公告",
+                success:function () {
+                    $("#show_title").html(data.noticeTitle);
+                    $("#show_createBy").html(data.createBy);
+                    $("#show_content").html(data.noticeContent);
+                }
+            })
         }
     })
 </script>
