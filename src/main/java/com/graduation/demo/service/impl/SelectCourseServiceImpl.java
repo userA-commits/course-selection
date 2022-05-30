@@ -65,40 +65,40 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
             return "存在时间冲突";
         }
     }
-//
-//    @Override
-//    public boolean removeRequired(List<String> ids) {
-//        //遍历选课信息列表
-//        for(String id : ids){
-//            //条件删除
-//            this.removeById(id);
-//        }
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean removeRequired(String id) {
-//        SelectCourse selectCourse = this.getById(id);
-//        //通过授课编号查看课程编号，再查看课程是否为选修课
-//        TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
-//                .select("course_no, upper_num, student_num")
-//                .eq("teach_course_no", selectCourse.getTeachCourseNo())
-//        );
-//        Course course = courseService.getOne(new QueryWrapper<Course>()
-//                .select("is_required")
-//                .eq("course_no", teachCourse.getCourseNo())
-//        );
-//        //若课程为选修课，则允许删除
-//        if(course.getIsRequired() == 0){
-//            //删除选课
-//            this.removeById(selectCourse.getId());
-//            //为授课信息中选课人数减一
-//            teachCourseService.update(new UpdateWrapper<TeachCourse>()
-//                    .set("student_num", teachCourse.getStudentNum() - 1)
-//            );
-//        }
-//        return false;
-//    }
+
+    @Override
+    public boolean removeRequired(List<String> ids) {
+        //遍历选课信息列表
+        for(String id : ids){
+            //条件删除
+            this.removeById(id);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean removeRequired(String id) {
+        SelectCourse selectCourse = this.getById(id);
+        //通过授课编号查看课程编号，再查看课程是否为选修课
+        TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
+                .select("course_no, upper_num, student_num")
+                .eq("teach_course_no", selectCourse.getTeachCourseNo())
+        );
+        Course course = courseService.getOne(new QueryWrapper<Course>()
+                .select("is_required")
+                .eq("course_no", teachCourse.getCourseNo())
+        );
+        //若课程为选修课，则允许删除
+        if(course.getIsRequired() == 0){
+            //删除选课
+            this.removeById(selectCourse.getId());
+            //为授课信息中选课人数减一
+            teachCourseService.update(new UpdateWrapper<TeachCourse>()
+                    .set("student_num", teachCourse.getStudentNum() - 1)
+            );
+        }
+        return false;
+    }
 
     //断定当前课程是否可选
     @Override

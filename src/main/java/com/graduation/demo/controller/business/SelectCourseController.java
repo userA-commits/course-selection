@@ -64,7 +64,7 @@ public class SelectCourseController {
     @RequestMapping("/deleteSelectCourse")
     public DataResult deleteSelectCourse(String id){
         try{
-            selectCourseService.removeById(id);
+            selectCourseService.removeRequired(id);
             return Constant.DELETE_SUCCESS;
         }catch (Exception e){
             e.printStackTrace();
@@ -76,14 +76,13 @@ public class SelectCourseController {
     public DataResult batchDeleteSelectCourseList(SelectCourseVo selectCourseVo){
         try{
             List<String> ids = new ArrayList<>(Arrays.asList(selectCourseVo.getIds()));
-            selectCourseService.removeByIds(ids);
+            selectCourseService.removeRequired(ids);
             return Constant.DELETE_SUCCESS;
         }catch (Exception e){
             e.printStackTrace();
             return Constant.DELETE_ERROR;
         }
     }
-
 
 }
 
