@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 /**
- * 课表前端控制器，分教师与学生
+ * 课表前端控制器
  *
  * @author 王奥
  * @since 2022-04-14
@@ -25,25 +25,9 @@ public class CourseTableController {
     CourseTableService courseTableService;
 
 
-
-    @PostMapping("/index")
-    public String index(){
-        return "underinstruction";
-    }
-
-    //获取学生课表
-    @PostMapping("/getCourseTableForStu")
-    public DataResult getCourseTableForStu(Student student){
-        List<CourseTableVo> courseTableVos = courseTableService.getCourseTableForStu(student);
-        DataResult<List<CourseTableVo>> result = new DataResult<>(courseTableVos);
-        return result;
-    }
-
-    //获取教师课表
-    @PostMapping("/getCourseTableForTea")
-    public DataResult getCourseTableForTea(Teacher teacher){
-        List<CourseTableVo> courseTableVos = courseTableService.getCourseTableForTea(teacher);
-        DataResult<List<CourseTableVo>> result = new DataResult<>(courseTableVos);
-        return result;
+    //获取课表
+    @RequestMapping("/getCourseTable")
+    public DataResult getCourseTable(){
+        return DataResult.success(courseTableService.getCourseTable());
     }
 }

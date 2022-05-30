@@ -18,5 +18,7 @@ import java.util.List;
  * @since 2022-04-11
  */
 public interface CourseArrangeMapper extends BaseMapper<CourseArrange> {
-    IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, @Param("cav")CourseArrangeVo teachCourseVo);
+    IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, @Param("cav")CourseArrangeVo courseArrangeVo);
+
+    List<CourseArrangeVo> loadAllCourseArrange(@Param("cav")CourseArrangeVo courseArrangeVo);
 }

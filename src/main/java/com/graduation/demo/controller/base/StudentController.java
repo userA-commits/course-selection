@@ -2,6 +2,7 @@ package com.graduation.demo.controller.base;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.graduation.demo.common.Constant;
@@ -57,13 +58,13 @@ public class StudentController {
     @RequestMapping("/addStudent")
     public DataResult addStudent(StudentVo studentVo){
         try{
-            studentVo.setUserType(3);
-            studentVo.setGrade(
-                    clazzService.getOne(new QueryWrapper<Clazz>()
-                                    .select("grade")
-                                    .eq("clazz_no", studentVo.getClazzNo()))
-                    .getGrade()
+            Clazz clazz = clazzService.getOne(new QueryWrapper<Clazz>()
+                    .select("grade, student_num")
+                    .eq("clazz_no", studentVo.getClazzNo())
             );
+            clazzService.increaseStudentNumByStuNo(studentVo);
+            studentVo.setUserType(3);
+            studentVo.setGrade(clazz.getGrade());
             this.studentService.save(studentVo);
             return Constant.ADD_SUCCESS;
         }catch (Exception e){
@@ -92,6 +93,7 @@ public class StudentController {
     @RequestMapping("/deleteStudent")
     public DataResult deleteStudent(String id){
         try{
+            clazzService.decreaseStudentNumByStuNo(id);
             studentService.removeById(id);
             return Constant.DELETE_SUCCESS;
         }catch (Exception e){
@@ -104,6 +106,9 @@ public class StudentController {
     public DataResult batchDeleteStudentList(StudentVo studentVo){
         try{
             List<String> ids = new ArrayList<>(Arrays.asList(studentVo.getIds()));
+            for(String id : ids){
+                clazzService.decreaseStudentNumByStuNo(id);
+            }
             studentService.removeByIds(ids);
             return Constant.DELETE_SUCCESS;
         }catch (Exception e){

@@ -21,9 +21,6 @@ public interface SelectCourseService extends IService<SelectCourse> {
 
     String addWithCheck(SelectCourse selectCourse) throws Exception;
 
-    boolean removeRequired(List<String> ids);
-    boolean removeRequired(String id);
-
     boolean isSelectable(SelectCourse selectCourse) throws Exception;
 
     CourseArrange haveConflict(SelectCourse selectCourse) throws Exception;

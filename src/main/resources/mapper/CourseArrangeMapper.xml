@@ -29,7 +29,7 @@
     </sql>
 
     <!-- 排课管理条件查询联查结果列 -->
-    <select id="loadAllCourseArrange" parameterType="com.graduation.demo.entity.business.CourseArrange" resultMap="CourseArrangeMap">
+    <select id="loadAllCourseArrange" parameterType="com.graduation.demo.vo.business.CourseArrangeVo" resultMap="CourseArrangeMap">
         select ca.id, ca.teach_course_no, ca.classroom_no, c.name classroom_name,
         c.classroom_type, ca.week, ca.period, ca.remark
         from xk_course_arrange ca, xk_classroom c

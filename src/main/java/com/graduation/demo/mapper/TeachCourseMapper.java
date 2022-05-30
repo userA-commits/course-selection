@@ -18,4 +18,6 @@ import java.util.List;
  */
 public interface TeachCourseMapper extends BaseMapper<TeachCourse> {
     IPage<TeachCourseVo> loadAllTeachCourse(IPage<TeachCourseVo> page, @Param("tcv")TeachCourseVo teachCourseVo);
+
+    List<TeachCourseVo> loadAllTeachCourse(@Param("tcv")TeachCourseVo teachCourseVo);
 }

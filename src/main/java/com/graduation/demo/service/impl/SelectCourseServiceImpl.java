@@ -65,40 +65,40 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
             return "存在时间冲突";
         }
     }
-
-    @Override
-    public boolean removeRequired(List<String> ids) {
-        //遍历选课信息列表
-        for(String id : ids){
-            //条件删除
-            this.removeById(id);
-        }
-        return true;
-    }
-
-    @Override
-    public boolean removeRequired(String id) {
-        SelectCourse selectCourse = this.getById(id);
-        //通过授课编号查看课程编号，再查看课程是否为选修课
-        TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
-                .select("course_no, upper_num, student_num")
-                .eq("teach_course_no", selectCourse.getTeachCourseNo())
-        );
-        Course course = courseService.getOne(new QueryWrapper<Course>()
-                .select("is_required")
-                .eq("course_no", teachCourse.getCourseNo())
-        );
-        //若课程为选修课，则允许删除
-        if(course.getIsRequired() == 0){
-            //删除选课
-            this.removeById(selectCourse.getId());
-            //为授课信息中选课人数减一
-            teachCourseService.update(new UpdateWrapper<TeachCourse>()
-                    .set("student_num", teachCourse.getStudentNum() - 1)
-            );
-        }
-        return false;
-    }
+//
+//    @Override
+//    public boolean removeRequired(List<String> ids) {
+//        //遍历选课信息列表
+//        for(String id : ids){
+//            //条件删除
+//            this.removeById(id);
+//        }
+//        return true;
+//    }
+//
+//    @Override
+//    public boolean removeRequired(String id) {
+//        SelectCourse selectCourse = this.getById(id);
+//        //通过授课编号查看课程编号，再查看课程是否为选修课
+//        TeachCourse teachCourse = teachCourseService.getOne(new QueryWrapper<TeachCourse>()
+//                .select("course_no, upper_num, student_num")
+//                .eq("teach_course_no", selectCourse.getTeachCourseNo())
+//        );
+//        Course course = courseService.getOne(new QueryWrapper<Course>()
+//                .select("is_required")
+//                .eq("course_no", teachCourse.getCourseNo())
+//        );
+//        //若课程为选修课，则允许删除
+//        if(course.getIsRequired() == 0){
+//            //删除选课
+//            this.removeById(selectCourse.getId());
+//            //为授课信息中选课人数减一
+//            teachCourseService.update(new UpdateWrapper<TeachCourse>()
+//                    .set("student_num", teachCourse.getStudentNum() - 1)
+//            );
+//        }
+//        return false;
+//    }
 
     //断定当前课程是否可选
     @Override
@@ -126,27 +126,31 @@ public class SelectCourseServiceImpl extends ServiceImpl<SelectCourseMapper, Sel
     @Override
     public CourseArrange haveConflict(SelectCourse selectCourse) throws Exception {
         //对学生课程安排进行检测
-        //通过授课编号，获得当前选课的排课信息
-        CourseArrange courseArrange = courseArrangeService.getOne(new QueryWrapper<CourseArrange>()
+        //通过授课编号，获得当前待选课课程的所有排课信息
+        List<CourseArrange> courseArrangeList = courseArrangeService.list(new QueryWrapper<CourseArrange>()
                 .select("*")
                 .eq("teach_course_no", selectCourse.getTeachCourseNo())
         );
         //通过学生编号，在选课表获得当前学生所有选课的授课信息
-        List<SelectCourse> forTeachCourseNoList = this.list(new QueryWrapper<SelectCourse>()
+        List<SelectCourse> selectCourseList = this.list(new QueryWrapper<SelectCourse>()
                 .select("teach_course_no")
                 .eq("student_no", selectCourse.getStudentNo())
         );
-        //遍历学生选课的排课表，查找是否存在与当前课程排课重合的课程
-        for(SelectCourse forTeachCourseNo : forTeachCourseNoList){
-            CourseArrange studentTest = courseArrangeService.getOne(new QueryWrapper<CourseArrange>()
-                    .select("*")
-                    .eq("teach_course_no", forTeachCourseNo.getTeachCourseNo())
-                    .eq("week", courseArrange.getWeek())
-                    .eq("period", courseArrange.getPeriod())
-            );
-            //若找到重合课程，返回该课程信息
-            if(null != studentTest){
-                throw new Exception("存在时间重合授课，编号为：" + studentTest.getTeachCourseNo());
+        //如果课程不存在排课或学生没有选课，提前中止检测
+        if(selectCourseList.size() == 0 || courseArrangeList.size() == 0) return null;
+        //遍历学生选课的排课表，查找是否存在与当前课程排课有重合的课程
+        for(SelectCourse selectCourse1 : selectCourseList){
+            for(CourseArrange courseArrange : courseArrangeList){
+                CourseArrange studentTest = courseArrangeService.getOne(new QueryWrapper<CourseArrange>()
+                        .select("*")
+                        .eq("teach_course_no", selectCourse1.getTeachCourseNo())
+                        .eq("week", courseArrange.getWeek())
+                        .eq("period", courseArrange.getPeriod())
+                );
+                //若找到重合课程，返回该课程信息
+                if(null != studentTest){
+                    throw new Exception("存在时间重合授课，编号为：" + studentTest.getTeachCourseNo());
+                }
             }
         }
         return null;

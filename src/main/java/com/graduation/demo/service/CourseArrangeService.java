@@ -18,7 +18,9 @@ import java.util.List;
  */
 public interface CourseArrangeService extends IService<CourseArrange> {
 
-    IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, CourseArrangeVo teachCourseVo);
+    IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, CourseArrangeVo courseArrangeVo);
+
+    List<CourseArrangeVo> loadAllCourseArrange(CourseArrangeVo courseArrangeVo);
 
     boolean addWithConflictCheck(CourseArrange courseArrange) throws Exception;
 

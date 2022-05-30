@@ -45,6 +45,11 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
     }
 
     @Override
+    public List<TeachCourseVo> loadAllTeachCourse(TeachCourseVo teachCourseVo) {
+        return this.getBaseMapper().loadAllTeachCourse(teachCourseVo);
+    }
+
+    @Override
     public boolean isSameDept(TeachCourseVo teachCourseVo) {
         //获取教师学院编号
         QueryWrapper<Teacher> teacherQueryWrapper = new QueryWrapper<>();
@@ -77,6 +82,7 @@ public class TeachCourseServiceImpl extends ServiceImpl<TeachCourseMapper, Teach
             selectCourse = new SelectCourse();
             selectCourse.setStudentNo(student.getStudentNo());
             selectCourse.setTeachCourseNo(teachCourseVo.getTeachCourseNo());
+            selectCourse.setClazzNo(teachCourseVo.getClazzNo());
             //生成学期
             selectCourse.setSemester(SemesterUtils.getSemester(student.getGrade()));
             selectCourseService.save(selectCourse);

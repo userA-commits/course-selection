@@ -19,15 +19,11 @@ import java.util.List;
 @SpringBootTest
 class DemoApplicationTests {
     @Autowired
-    ClazzService clazzService;
+    CourseTableService courseTableService;
     @Test
     void test(){
-        //获得班级人数
-        Clazz clazz = clazzService.getOne(new QueryWrapper<Clazz>()
-                .select("student_num")
-                .eq("clazz_no", "CS181")
-        );
-        System.out.println("clazz="+clazz.getStudentNum());
+        System.out.println(courseTableService.getCourseTable());
+
     }
 
 }

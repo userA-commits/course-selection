@@ -38,6 +38,7 @@ public class CourseController {
         IPage<Course> page = new Page<>(courseVo.getPage(), courseVo.getLimit());
         //覆盖条件查询功能
         courseService.page(page, new QueryWrapper<Course>()
+                .eq(StringUtils.isNotBlank(courseVo.getDeptNo()), "dept_no", courseVo.getDeptNo())
                 .like(StringUtils.isNotBlank(courseVo.getCourseNo()), "course_no", courseVo.getCourseNo())
                 .like(StringUtils.isNotBlank(courseVo.getName()), "name", courseVo.getName())
                 .orderByAsc("course_no")

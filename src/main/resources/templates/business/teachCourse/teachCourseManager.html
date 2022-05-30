@@ -83,6 +83,15 @@
         <input type="hidden" name="id">
         <input type="hidden" name="teachCourseNo">
         <div class="layui-form-item input-item">
+            <label for="teacherNo">请选择课程所在学院</label>
+            <div class="layui-select">
+                <!-- 用于填充数据的下拉列表 -->
+                <select id="deptNo" name="deptNo" class="layui-select" lay-filter="deptSearch" lay-verify="required" >
+                    <option value="">请选择学院</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item input-item">
             <label for="teacherNo">请选择授课教师</label>
             <div class="layui-select">
                 <!-- 用于填充数据的下拉列表 -->
@@ -233,38 +242,20 @@
         }
         //为弹出层的下拉选择框填充数据
         function addOperation() {
-            //教师下拉框
+            //学院下拉框
             $.ajax({
-                url: '/teacher/loadAllTeacher',
+                url: '/dept/loadAllDept',
                 dataType: 'json', //服务器返回json格式数据
                 type: 'get', //HTTP请求类型
                 timeout: 10000, //超时时间设置为10秒；
-                success: function (teacherData) {
+                success: function (deptData) {
                     var inform = '';
                     //每次加载时清空原数据
-                    $('#teacherNo').children().remove();
+                    $('#deptNo').children().remove();
                     //重新载入一条提示信息
-                    $('#teacherNo').append(new Option('请选择授课教师', ''));
-                    $.each(teacherData.data, function (index, value) {
-                        $('#teacherNo').append(new Option(value.name, value.teacherNo));// 下拉菜单里添加元素
-                    });
-                    //刷新选项中的select标签
-                    layui.form.render("select");
-                }
-            });
-            //课程下拉框
-            $.ajax({
-                url: '/course/loadAllCourse',
-                dataType: 'json', //服务器返回json格式数据
-                type: 'get', //HTTP请求类型
-                timeout: 10000, //超时时间设置为10秒；
-                success: function (courseData) {
-                    //每次加载时清空原数据
-                    $('#courseNo').children().remove();
-                    //重新载入一条提示信息
-                    $('#courseNo').append(new Option('直接选择或搜索选择授课课程', ''));
-                    $.each(courseData.data, function (index, value) {
-                        $('#courseNo').append(new Option(value.name, value.courseNo));// 下拉菜单里添加元素
+                    $('#deptNo').append(new Option('请选择学院', ''));
+                    $.each(deptData.data, function (index, value) {
+                        $('#deptNo').append(new Option(value.name, value.deptNo));// 下拉菜单里添加元素
                     });
                     //刷新选项中的select标签
                     layui.form.render("select");
@@ -289,6 +280,48 @@
                 }
             });
         }
+        //专业下拉框重加载
+        form.on('select(deptSearch)', function () {
+            //获取一级的数据
+            var deptNo = $('#deptNo').val();
+            //教师下拉框
+            $.ajax({
+                url: '/teacher/loadAllTeacher?deptNo=' + deptNo,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (teacherData) {
+                    var inform = '';
+                    //每次加载时清空原数据
+                    $('#teacherNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#teacherNo').append(new Option('请选择授课教师', ''));
+                    $.each(teacherData.data, function (index, value) {
+                        $('#teacherNo').append(new Option(value.name, value.teacherNo));// 下拉菜单里添加元素
+                    });
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
+            //课程下拉框
+            $.ajax({
+                url: '/course/loadAllCourse?deptNo=' + deptNo,
+                dataType: 'json', //服务器返回json格式数据
+                type: 'get', //HTTP请求类型
+                timeout: 10000, //超时时间设置为10秒；
+                success: function (courseData) {
+                    //每次加载时清空原数据
+                    $('#courseNo').children().remove();
+                    //重新载入一条提示信息
+                    $('#courseNo').append(new Option('直接选择或搜索选择授课课程', ''));
+                    $.each(courseData.data, function (index, value) {
+                        $('#courseNo').append(new Option(value.name, value.courseNo));// 下拉菜单里添加元素
+                    });
+                    //刷新选项中的select标签
+                    layui.form.render("select");
+                }
+            });
+        })
         //添加和修改的提交
         form.on("submit(doSubmit)", function(data) {
             $.post(url, data.field, function (res) {

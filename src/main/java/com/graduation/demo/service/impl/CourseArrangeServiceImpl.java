@@ -33,8 +33,13 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
     TeacherService teacherService;
 
     @Override
-    public IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, CourseArrangeVo teachCourseVo) {
-        return this.getBaseMapper().loadAllCourseArrange(page, teachCourseVo);
+    public IPage<CourseArrangeVo> loadAllCourseArrange(IPage<CourseArrangeVo> page, CourseArrangeVo courseArrangeVo) {
+        return this.getBaseMapper().loadAllCourseArrange(page, courseArrangeVo);
+    }
+
+    @Override
+    public List<CourseArrangeVo> loadAllCourseArrange(CourseArrangeVo courseArrangeVo) {
+        return this.getBaseMapper().loadAllCourseArrange(courseArrangeVo);
     }
 
     //对排课信息进行冲突检测，如发生冲突则报错
@@ -69,20 +74,20 @@ public class CourseArrangeServiceImpl extends ServiceImpl<CourseArrangeMapper, C
                 .eq("teach_course_no", courseArrange.getTeachCourseNo())
         );
         //通过教师编号，从授课表获得该教师所有授课编号
-        List<TeachCourse> forTeachCourseNoList1 = teachCourseService.list(new QueryWrapper<TeachCourse>()
+        List<TeachCourse> teachCourseNoList = teachCourseService.list(new QueryWrapper<TeachCourse>()
                 .select("teach_course_no")
                 .eq("teacher_no", forTeacherNo.getTeacherNo())
         );
         //遍历授课编号列表，查询排课，若出现与当前排课相同安排则为冲突
-        for(TeachCourse forTeachCourseNo : forTeachCourseNoList1){
+        for(TeachCourse teachCourseNo : teachCourseNoList){
             CourseArrange teacherTest = this.getOne(new QueryWrapper<CourseArrange>()
                     .select("*")
-                    .eq("teach_course_no", forTeachCourseNo.getTeachCourseNo())
+                    .eq("teach_course_no", teachCourseNo.getTeachCourseNo())
                     .eq("week", courseArrange.getWeek())
                     .eq("period", courseArrange.getPeriod())
             );
             if(teacherTest != null) {
-                throw new Exception("存在教师安排冲突，教师编号：" + forTeachCourseNo.getTeacherNo());
+                throw new Exception("存在教师安排冲突，教师编号：" + forTeacherNo.getTeacherNo());
             }
         }
 

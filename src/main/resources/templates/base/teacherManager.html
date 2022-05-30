@@ -158,7 +158,10 @@
                 ,{field:'teacherNo', title:'教师编号', align:'center'}
                 ,{field:'name', title:'教师名称', align:'center'}
                 ,{field:'password', title:'密码', align:'center'}
-                ,{field:'sex', title:'教师性别', align:'center'}
+                ,{field:'sex', title:'教师性别', align:'center', templet:function (data) {
+                        if(data.sex == 0) return '女';
+                        else return '男';
+                    }}
                 ,{field:'position', title:'职位', align:'center'}
                 ,{field:'telephone', title:'电话', align:'center'}
                 ,{field:'email', title:'邮箱', align:'center'}
